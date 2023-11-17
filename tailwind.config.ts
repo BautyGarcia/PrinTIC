@@ -21,7 +21,11 @@ export default {
       },
     },
     colors: {
-      "purple_tic": "#030026"
+      "purple_tic": "#030026",
+      "blue_tic": "#0C043F",
+      "input_background": "#0a0a0a",
+      "input_border": "#282828",
+      "pink_tic": "#E61366",
     },
     fontFamily: {
       "raleway": ['Raleway'],

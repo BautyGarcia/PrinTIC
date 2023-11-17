@@ -3,8 +3,10 @@ import Head from "next/head";
 import HomeHeader from "~/components/home/homeHeader";
 import Glassbox from "~/components/utils/glassbox";
 import PrinterIcon from "~/components/icons/printerIcon";
-import { Text } from "@mantine/core";
+import { Button, Text, rem } from "@mantine/core";
 import GitHubButton from "react-github-btn";
+import TextZone from "~/components/utils/textZone";
+import HomeFooter from "~/components/home/homeFooter";
 
 const Home: NextPage = () => {
   return (
@@ -15,36 +17,62 @@ const Home: NextPage = () => {
         <link rel="icon" href="/general/ticLogo.ico" />
       </Head>
       <HomeHeader />
-      <main className="flex flex-col lg:flex-row min-h-screen items-center justify-around p-10 gap-10 lg:gap-0">
-        <Glassbox className="w-full lg:w-1/2 h-2/3 p-10" containerClassName="bg-none gap-5">
-          <div className="flex items-center justify-between">
-            <Text className="text-[50px] font-spacemono font-bold">{"¿Qué es PrinTIC?"}</Text>
-            <a
-              href="https://github.com/BautyGarcia/PrinTIC"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="3xl:w-15 3xl:h-15 2xl:w-13 2xl:h-13 lg:h-13 lg:w-13 md:h-11 md:w-11 sm:w-9 sm:h-9 bg-github bg-contain bg-no-repeat bg-center rounded-full mr-4"
-              aria-label="Repositorio en GitHub"
-            />
+      <main className="flex flex-col min-h-screen items-center justify-around p-10 pt-0 gap-10 lg:gap-0 -translate-y-[50px]">
+        <div className="flex flex-col items-center min-h-screen justify-center gap-4">
+          <div className="flex flex-col items-center">
+            <Text className="font-raleway text-[80px]">{'< PrinTIC />'}</Text>
+            <Text className="font-spacemono text-[30px]">Imprimí más fácil</Text>
           </div>
-          <Text className="text-[20px] font-spacemono">
-            Esta web busca facilitar la experiencia de usuario tanto para alumnos como para profesores en el momento de utilizar 
-            las impresoras de TIC. No mas formularios de Google, ni hojas de Excel, esta es una aplicación 100% hecha
-            por y para las personas de TIC.
-          </Text>
-          <Text className="text-[20px] font-spacemono">
-            Si te gusta este proyecto, ponete la 10 y dale una estrellita al repositorio de GitHub.
-          </Text>
-          <GitHubButton
-            href="https://github.com/BautyGarcia/PrinTIC"
-            data-icon="octicon-star"
-            data-size="large"
-            data-show-count="true"
-            aria-label="Star BautyGarcia/PrinTIC on GitHub"
-          />
-        </Glassbox>
-        <PrinterIcon height={350} width={350} />
+          <Button className="bg-blue_tic font-spacemono font-bold p-3 rounded-[18px]" styles={{
+            root: {
+              height: '60px',
+              padding: '0 32px',
+              fontSize: '24px',
+            },
+          }}>Entrar</Button>
+        </div>
+        <div className="flex flex-col lg:flex-row items-center justify-around gap-20 md:gap-0">
+          <Glassbox className="w-full lg:w-1/2 h-2/3 p-10" containerClassName="bg-none gap-5">
+            <div className="flex items-center justify-between">
+              <Text className="text-[50px] font-spacemono font-bold">¿Qué es esto?</Text>
+              <a
+                href="https://github.com/BautyGarcia/PrinTIC"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="3xl:w-15 3xl:h-15 2xl:w-13 2xl:h-13 lg:h-13 lg:w-13 md:h-11 md:w-11 sm:w-9 sm:h-9 bg-github bg-contain bg-no-repeat bg-center rounded-full mr-4"
+                aria-label="Repositorio en GitHub"
+              />
+            </div>
+            <Text className="text-[20px] font-spacemono">
+              Esta web busca facilitar la experiencia de usuario tanto para alumnos como para profesores en el momento de utilizar
+              las impresoras de TIC. No mas formularios de Google, ni hojas de Excel, esta es una aplicación 100% hecha
+              por y para las personas de TIC.
+            </Text>
+            <Text className="text-[20px] font-spacemono">
+              Si te gusta este proyecto, ponete la 10 y dale una estrellita al repositorio de GitHub.
+            </Text>
+            <GitHubButton
+              href="https://github.com/BautyGarcia/PrinTIC"
+              data-icon="octicon-star"
+              data-size="large"
+              data-show-count="true"
+              aria-label="Star BautyGarcia/PrinTIC on GitHub"
+            />
+          </Glassbox>
+          <PrinterIcon height={350} width={350} />
+        </div>
+        <div className="flex flex-col items-center min-h-screen w-screen justify-center gap-6">
+          <div className="flex flex-col items-center">
+          <Text className="font-raleway text-[80px]">{"< Feedback />"}</Text>
+          <Text className="font-spacemono text-[30px]">Ayudame a mejorar PrinTIC</Text>
+          </div>
+          <div className="flex flex-col items-center w-screen gap-8">
+          <TextZone placeholder="Cambiaría..." />
+          <Button className="bg-pink_tic w-2/3 max-w-[200px] font-spacemono font-bold p-3 rounded-[10px]" size="xl">Enviar</Button>
+          </div>
+        </div>
       </main>
+      <HomeFooter />
     </>
   );
 }

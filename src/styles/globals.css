@@ -48,4 +48,10 @@ body {
     background-repeat: no-repeat;
     background-position: center;
     font-family: "Roboto";
+    color: azure;
+}
+
+textarea:focus,
+input:focus {
+    outline: none;
 }

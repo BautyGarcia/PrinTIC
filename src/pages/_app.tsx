@@ -1,12 +1,12 @@
 import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { type AppType } from "next/app";
-import { MantineProvider, createTheme } from '@mantine/core';
+import { Button, MantineProvider, createTheme, rem } from '@mantine/core';
 import { api } from "~/utils/api";
 
 import "~/styles/globals.css";
 const theme = createTheme({
-  fontFamily: 'Comic sans ms, Open Sans, sans-serif',
+
 });
 
 const MyApp: AppType<{ session: Session | null }> = ({
