@@ -9,6 +9,14 @@ export default {
         sans: ["var(--font-sans)", ...fontFamily.sans],
       },
     },
+    colors: {
+      "purple_tic": "#030026"
+    },
+    fontFamily: {
+      "raleway": ['Raleway'],
+      "spacemono": ['Space Mono'],
+      "roboto": ['roboto'],
+    }
   },
   plugins: [],
 } satisfies Config;
