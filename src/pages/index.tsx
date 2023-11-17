@@ -7,8 +7,10 @@ import { Button, Text, rem } from "@mantine/core";
 import GitHubButton from "react-github-btn";
 import TextZone from "~/components/utils/textZone";
 import HomeFooter from "~/components/home/homeFooter";
-
+import { useRouter } from "next/router";
 const Home: NextPage = () => {
+  const router = useRouter();
+
   return (
     <>
       <Head>
@@ -23,13 +25,17 @@ const Home: NextPage = () => {
             <Text className="font-raleway text-[80px]">{'< PrinTIC />'}</Text>
             <Text className="font-spacemono text-[30px]">Imprimí más fácil</Text>
           </div>
-          <Button className="bg-blue_tic font-spacemono font-bold p-3 rounded-[18px]" styles={{
-            root: {
-              height: '60px',
-              padding: '0 32px',
-              fontSize: '24px',
-            },
-          }}>Entrar</Button>
+          <Button
+            className="bg-blue_tic font-spacemono font-bold p-3 rounded-[18px]"
+            styles={{
+              root: {
+                height: '60px',
+                padding: '0 32px',
+                fontSize: '24px',
+              },
+            }}
+            onClick={() => void router.push("/ingreso")}
+          >Entrar</Button>
         </div>
         <div className="flex flex-col lg:flex-row items-center justify-around gap-20 md:gap-0">
           <Glassbox className="w-full lg:w-1/2 h-2/3 p-10" containerClassName="bg-none gap-5">
@@ -63,12 +69,12 @@ const Home: NextPage = () => {
         </div>
         <div className="flex flex-col items-center min-h-screen w-screen justify-center gap-6">
           <div className="flex flex-col items-center">
-          <Text className="font-raleway text-[80px]">{"< Feedback />"}</Text>
-          <Text className="font-spacemono text-[30px]">Ayudame a mejorar PrinTIC</Text>
+            <Text className="font-raleway text-[80px]">{"< Feedback />"}</Text>
+            <Text className="font-spacemono text-[30px]">Ayudame a mejorar PrinTIC</Text>
           </div>
           <div className="flex flex-col items-center w-screen gap-8">
-          <TextZone placeholder="Cambiaría..." />
-          <Button className="bg-pink_tic w-2/3 max-w-[200px] font-spacemono font-bold p-3 rounded-[10px]" size="xl">Enviar</Button>
+            <TextZone placeholder="Cambiaría..." />
+            <Button className="bg-pink_tic w-2/3 max-w-[200px] font-spacemono font-bold p-3 rounded-[10px]" size="xl">Enviar</Button>
           </div>
         </div>
       </main>
