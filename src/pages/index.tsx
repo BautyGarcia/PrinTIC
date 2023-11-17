@@ -27,8 +27,14 @@ const Home: NextPage = () => {
               aria-label="Repositorio en GitHub"
             />
           </div>
-          <Text className="text-[20px] font-spacemono">Esta web busca facilitar la experiencia de usuario tanto para alumnos como para profesores en el momento de utilizar las impresoras de TIC. No mas formularios de Google, ni hojas de excel, esta es una aplicacion 100% hecha por y para las personas de TIC.</Text>
-          <Text className="text-[20px] font-spacemono">Si te gusta este proyecto, ponete la 10 y dale una estrellita al repositorio de Github</Text>
+          <Text className="text-[20px] font-spacemono">
+            Esta web busca facilitar la experiencia de usuario tanto para alumnos como para profesores en el momento de utilizar 
+            las impresoras de TIC. No mas formularios de Google, ni hojas de Excel, esta es una aplicación 100% hecha
+            por y para las personas de TIC.
+          </Text>
+          <Text className="text-[20px] font-spacemono">
+            Si te gusta este proyecto, ponete la 10 y dale una estrellita al repositorio de GitHub.
+          </Text>
           <GitHubButton
             href="https://github.com/BautyGarcia/PrinTIC"
             data-icon="octicon-star"
