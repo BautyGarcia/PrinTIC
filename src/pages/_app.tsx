@@ -7,7 +7,6 @@ import { api } from "~/utils/api";
 import "~/styles/globals.css";
 const theme = createTheme({
   fontFamily: 'Comic sans ms, Open Sans, sans-serif',
-  primaryColor: 'purple',
 });
 
 const MyApp: AppType<{ session: Session | null }> = ({
