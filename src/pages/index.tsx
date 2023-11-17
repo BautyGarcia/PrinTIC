@@ -1,6 +1,10 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import HomeHeader from "~/components/home/homeHeader";
+import Glassbox from "~/components/utils/glassbox";
+import PrinterIcon from "~/components/icons/printerIcon";
+import { Text } from "@mantine/core";
+import GitHubButton from "react-github-btn";
 
 const Home: NextPage = () => {
   return (
@@ -11,8 +15,29 @@ const Home: NextPage = () => {
         <link rel="icon" href="/general/ticLogo.ico" />
       </Head>
       <HomeHeader />
-      <main className=" flex min-h-screen flex-col items-center justify-center">
-        
+      <main className="flex min-h-screen items-center justify-around pl-20">
+        <Glassbox className="w-1/2 h-2/3 p-10" containerClassName="bg-none gap-5">
+          <div className="flex items-center justify-between">
+            <Text className="text-[50px] font-spacemono font-bold">{"¿Qué es PrinTIC?"}</Text>
+            <a
+              href="https://github.com/BautyGarcia/PrinTIC"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="3xl:w-15 3xl:h-15 2xl:w-13 2xl:h-13 lg:h-13 lg:w-13 md:h-11 md:w-11 sm:w-9 sm:h-9 bg-github bg-contain bg-no-repeat bg-center rounded-full mr-4"
+              aria-label="Repositorio en GitHub"
+            />
+          </div>
+          <Text className="text-[20px] font-spacemono">Esta web busca facilitar la experiencia de usuario tanto para alumnos como para profesores en el momento de utilizar las impresoras de TIC. No mas formularios de Google, ni hojas de excel, esta es una aplicacion 100% hecha por y para las personas de TIC.</Text>
+          <Text className="text-[20px] font-spacemono">Si te gusta este proyecto, ponete la 10 y dale una estrellita al repositorio de Github</Text>
+          <GitHubButton
+            href="https://github.com/BautyGarcia/PrinTIC"
+            data-icon="octicon-star"
+            data-size="large"
+            data-show-count="true"
+            aria-label="Star BautyGarcia/PrinTIC on GitHub"
+          />
+        </Glassbox>
+        <PrinterIcon height={500} width={500} />
       </main>
     </>
   );

@@ -23,6 +23,23 @@
     font-style: normal;
 }
 
+@layer components {
+    .glass-container {
+        @apply rounded-2xl;
+        background: linear-gradient(195deg,
+                rgba(255, 255, 255, 0.1) 5.52%,
+                rgba(255, 255, 255, 0) 62.6%);
+    }
+
+    .glass {
+        @apply text-[#FFF] filter drop-shadow-lg backdrop-blur-2xl rounded-2xl;
+        background-image: url(/utils/card_bg.png);
+        border: 1px solid rgba(255, 255, 255, 0.205);
+        border-bottom: 1px solid rgba(82, 75, 75, 0.205);
+        border-left: 1px solid rgba(82, 75, 75, 0.205);
+    }
+}
+
 html,
 body {
     background-color: rgb(8, 3, 39);
