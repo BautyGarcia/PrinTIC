@@ -15,8 +15,8 @@ const Home: NextPage = () => {
         <link rel="icon" href="/general/ticLogo.ico" />
       </Head>
       <HomeHeader />
-      <main className="flex min-h-screen items-center justify-around pl-20">
-        <Glassbox className="w-1/2 h-2/3 p-10" containerClassName="bg-none gap-5">
+      <main className="flex flex-col lg:flex-row min-h-screen items-center justify-around p-10 gap-10 lg:gap-0">
+        <Glassbox className="w-full lg:w-1/2 h-2/3 p-10" containerClassName="bg-none gap-5">
           <div className="flex items-center justify-between">
             <Text className="text-[50px] font-spacemono font-bold">{"¿Qué es PrinTIC?"}</Text>
             <a
@@ -37,7 +37,7 @@ const Home: NextPage = () => {
             aria-label="Star BautyGarcia/PrinTIC on GitHub"
           />
         </Glassbox>
-        <PrinterIcon height={500} width={500} />
+        <PrinterIcon height={350} width={350} />
       </main>
     </>
   );
