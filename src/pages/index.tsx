@@ -12,7 +12,7 @@ const Home: NextPage = () => {
       </Head>
       <HomeHeader />
       <main className=" flex min-h-screen flex-col items-center justify-center">
-        <h1 className="text-8xl text-[#FFF] font-spacemono">Home</h1>
+        
       </main>
     </>
   );

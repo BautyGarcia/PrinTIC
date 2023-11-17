@@ -2,13 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-    background-image: url('/general/background.svg');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-}
-
 @font-face {
     font-family: 'Raleway';
     src: url('/fonts/Raleway.ttf') format('truetype');
@@ -28,4 +21,14 @@ body {
     src: url('/fonts/Roboto.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
+}
+
+html,
+body {
+    background-color: rgb(8, 3, 39);
+    background-image: url('/general/background.svg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    font-family: "Roboto";
 }

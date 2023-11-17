@@ -7,7 +7,7 @@ export default {
     extend: {
       fontFamily: {
         sans: ["var(--font-sans)", ...fontFamily.sans],
-      },
+      }
     },
     colors: {
       "purple_tic": "#030026"
@@ -16,7 +16,7 @@ export default {
       "raleway": ['Raleway'],
       "spacemono": ['Space Mono'],
       "roboto": ['roboto'],
-    }
+    },
   },
   plugins: [],
 } satisfies Config;
