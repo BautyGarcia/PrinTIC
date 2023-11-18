@@ -37,7 +37,7 @@ const Home: NextPage = () => {
             onClick={() => void router.push("/ingreso")}
           >Entrar</Button>
         </div>
-        <div className="flex flex-col lg:flex-row items-center justify-around gap-20 md:gap-0">
+        <div className="flex flex-col min-h-screen lg:flex-row items-center justify-around gap-20 md:gap-0">
           <Glassbox className="w-full lg:w-1/2 h-2/3 p-10" containerClassName="bg-none gap-5">
             <div className="flex items-center justify-between">
               <Text className="text-[20px] md:text-[25px] font-spacemono font-bold">¿Qué es esto?</Text>
