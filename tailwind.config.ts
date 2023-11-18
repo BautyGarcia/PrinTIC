@@ -26,7 +26,8 @@ export default {
       "input_background": "#0a0a0a",
       "input_border": "#282828",
       "pink_tic": "#E61366",
-      'container_background': 'rgba(5, 4, 9, 0.7)'
+      'container_background': 'rgba(5, 4, 9, 0.7)',
+      "lightBlue_tic": "#00D1FF",
     },
     fontFamily: {
       "raleway": ['Raleway'],
