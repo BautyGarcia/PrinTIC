@@ -7,8 +7,8 @@ const HomeHeader = () => {
     return (
         <header className="flex items-center h-[100px] bg-purple_tic w-screen px-7">
             <div className="flex w-full justify-between">
-                <TicIcon />
-                <ShowcaseButton value="Entrar" onClick={() => void router.push("/ingreso")} className="bg-transparent p-3"/>
+                <TicIcon height={50} width={50}/>
+                <ShowcaseButton onClick={() => void router.push("/ingreso")} className="bg-transparent p-3">Entrar</ShowcaseButton>
             </div>
         </header>
     )

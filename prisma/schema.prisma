@@ -50,6 +50,8 @@ model User {
   email         String?   @unique
   emailVerified DateTime?
   image         String?
+  dni           String?
+  curso         String?
   role          RoleType  @default(STUDENT)
   accounts      Account[]
   sessions      Session[]

@@ -2,7 +2,7 @@ import Image from "next/image";
 
 const ORTIcon = ({ width, height }: { width: number, height: number }) => {
     return (
-        <Image src={"/general/ORT.png"} width={width} height={height} alt="ORT" />
+        <Image src={"/general/ORT.svg"} width={width} height={height} alt="ORT" />
     )
 }
 

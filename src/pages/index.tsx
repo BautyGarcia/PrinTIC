@@ -21,33 +21,41 @@ const Home: NextPage = () => {
         <link rel="icon" href="/general/ticLogo.ico" />
       </Head>
       <HomeHeader />
-      <main className="flex flex-col min-h-screen items-center justify-around p-10 pt-0 gap-10 lg:gap-0 -translate-y-[50px]">
-        <div className="flex flex-col items-center min-h-screen justify-center gap-4">
+      <main className="flex min-h-screen -translate-y-[50px] flex-col items-center justify-around gap-10 p-10 pt-0 lg:gap-0">
+        <div className="flex min-h-screen flex-col items-center justify-center gap-4">
           <div className="flex flex-col items-center">
             <Title>{"<PrinTIC/>"}</Title>
             <Subtitle>La forma más fácil de imprimir en TIC</Subtitle>
           </div>
-          <ShowcaseButton value="Entrar" onClick={() => void router.push("/ingreso")} />
+          <ShowcaseButton onClick={() => void router.push("/ingreso")}>
+            Entrar
+          </ShowcaseButton>
         </div>
-        <div className="flex flex-col min-h-screen lg:flex-row items-center justify-around gap-20 md:gap-0">
-          <Glassbox className="w-full lg:w-1/2 h-2/3 p-10" containerClassName="bg-none gap-5">
+        <div className="flex min-h-screen flex-col items-center justify-around gap-20 md:gap-0 lg:flex-row">
+          <Glassbox
+            className="h-2/3 w-full p-10 lg:w-1/2"
+            containerClassName="bg-none gap-5"
+          >
             <div className="flex items-center justify-between">
               <Heading>¿Qué es esto?</Heading>
               <a
                 href="https://github.com/BautyGarcia/PrinTIC"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="3xl:w-15 3xl:h-15 2xl:w-13 2xl:h-13 lg:h-13 lg:w-13 md:h-11 md:w-11 sm:w-9 sm:h-9 bg-github bg-contain bg-no-repeat bg-center rounded-full mr-4"
+                className="3xl:w-15 3xl:h-15 2xl:w-13 2xl:h-13 lg:h-13 lg:w-13 mr-4 rounded-full bg-github bg-contain bg-center bg-no-repeat sm:h-9 sm:w-9 md:h-11 md:w-11"
                 aria-label="Repositorio en GitHub"
               />
             </div>
             <Text>
-              Esta web busca facilitar la experiencia de usuario tanto para alumnos como para profesores en el momento de utilizar
-              las impresoras de TIC. No mas formularios de Google, ni hojas de Excel, esta es una aplicación 100% hecha
-              por y para las personas de TIC.
+              Esta web busca facilitar la experiencia de usuario tanto para
+              alumnos como para profesores en el momento de utilizar las
+              impresoras de TIC. No mas formularios de Google, ni hojas de
+              Excel, esta es una aplicación 100% hecha por y para las personas
+              de TIC.
             </Text>
             <Text>
-              Si te gusta este proyecto, ponete la 10 y dale una estrellita al repositorio de GitHub.
+              Si te gusta este proyecto, ponete la 10 y dale una estrellita al
+              repositorio de GitHub.
             </Text>
             <GitHubButton
               href="https://github.com/BautyGarcia/PrinTIC"
@@ -59,20 +67,20 @@ const Home: NextPage = () => {
           </Glassbox>
           <PrinterIcon height={350} width={350} />
         </div>
-        <div className="flex flex-col items-center min-h-screen w-screen justify-center gap-6">
+        <div className="flex min-h-screen w-screen flex-col items-center justify-center gap-6">
           <div className="flex flex-col items-center">
             <Title>{"<Feedback/>"}</Title>
             <Subtitle>¿Ayudame a mejorar PrinTIC?</Subtitle>
           </div>
-          <div className="flex flex-col items-center w-screen gap-8 p-10">
+          <div className="flex w-screen flex-col items-center gap-8 p-10">
             <TextZone placeholder="Cambiaría..." />
-            <ActionButton value="Enviar" className="w-2/3 max-w-[200px]"/>
+            <ActionButton className="w-2/3 max-w-[200px]">Enviar</ActionButton>
           </div>
         </div>
       </main>
       <HomeFooter />
     </>
   );
-}
+};
 
 export default Home;

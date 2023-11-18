@@ -9,6 +9,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { env } from "~/env.mjs";
 import { db } from "~/server/db";
 import bcrypt from "bcrypt";
+import { type RoleType } from "@prisma/client";
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
  * object and keep type safety.
@@ -16,18 +17,16 @@ import bcrypt from "bcrypt";
  * @see https://next-auth.js.org/getting-started/typescript#module-augmentation
  */
 declare module "next-auth" {
-  interface Session extends DefaultSession {
-    user: DefaultSession["user"] & {
+  interface Session {
+    user?: {
       id: string;
-      // ...other properties
-      // role: UserRole;
-    };
+      role: RoleType;
+    } & DefaultSession["user"];
   }
 
-  // interface User {
-  //   // ...other properties
-  //   // role: UserRole;
-  // }
+  interface User {
+    role: RoleType;
+  }
 }
 
 /**
@@ -38,10 +37,18 @@ declare module "next-auth" {
 export const authOptions: NextAuthOptions = {
   callbacks: {
     session: ({ session, token }) => {
-      if (session.user && token.sub) {
-        session.user.id = token.sub;
+      if (session.user && token.role) {
+        session.user.id = token.sub as string;
+        session.user.role = token.role as RoleType;
       }
       return session;
+    },
+    jwt({ token, user }) {
+      if (user) {
+        token.role = user.role;
+        token.sub = user.id;
+      }
+      return token;
     },
   },
   adapter: PrismaAdapter(db),
@@ -60,19 +67,18 @@ export const authOptions: NextAuthOptions = {
             email
           },
         });
-        
+
         if (!user) {
           throw new Error("Email incorrecto");
         }
 
         const validatedPassword = await bcrypt.compare(password, user.password!);
-        
+
         if (!validatedPassword) {
           throw new Error("Contraseña incorrecta");
         }
 
         return user;
-
       },
     })
   ],

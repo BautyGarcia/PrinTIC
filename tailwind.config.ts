@@ -29,6 +29,7 @@ export default {
       "pink_tic": "#E61366",
       "pink_tic_hover": "#BF0D53",
       'container_background': 'rgba(5, 4, 9, 0.7)',
+      'appshell_background': 'rgba(3, 0, 28, 0.3)',
       "lightBlue_tic": "#00D1FF",
       "red_tic": "#FF4343",
     },
