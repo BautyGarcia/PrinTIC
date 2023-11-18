@@ -3,7 +3,7 @@ import Head from "next/head";
 import HomeHeader from "~/components/home/homeHeader";
 import Glassbox from "~/components/utils/glassbox";
 import PrinterIcon from "~/components/icons/printerIcon";
-import { Button, Text, rem } from "@mantine/core";
+import { Button, Text } from "@mantine/core";
 import GitHubButton from "react-github-btn";
 import TextZone from "~/components/utils/textZone";
 import HomeFooter from "~/components/home/homeFooter";
