@@ -65,7 +65,7 @@ export const authOptions: NextAuthOptions = {
           throw new Error("Email incorrecto");
         }
 
-        const validatedPassword = await bcrypt.compare(password, user.password as string);
+        const validatedPassword = await bcrypt.compare(password, user.password!);
         
         if (!validatedPassword) {
           throw new Error("Contraseña incorrecta");
