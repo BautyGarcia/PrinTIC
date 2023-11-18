@@ -11,6 +11,7 @@ datasource db {
 enum RoleType {
   TEACHER
   STUDENT
+  ADMIN
 }
 
 // Necessary for Next auth
@@ -51,7 +52,7 @@ model User {
   emailVerified DateTime?
   image         String?
   dni           String?
-  curso         String?
+  curso         String
   role          RoleType  @default(STUDENT)
   accounts      Account[]
   sessions      Session[]
