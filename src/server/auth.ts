@@ -56,25 +56,23 @@ export const authOptions: NextAuthOptions = {
         };
 
         const user = await db.user.findUnique({
-          where: { 
+          where: {
             email
           },
         });
-
+        
         if (!user) {
           throw new Error("Email incorrecto");
         }
 
-        const salt = await bcrypt.genSalt();
-        const hashedPassword = await bcrypt.hash(password, salt);
+        const validatedPassword = await bcrypt.compare(password, user.password as string);
         
-        const isValid = await bcrypt.compare(password, hashedPassword);
-
-        if (!isValid) {
+        if (!validatedPassword) {
           throw new Error("Contraseña incorrecta");
         }
-        console.log(user);
+
         return user;
+
       },
     })
   ],
