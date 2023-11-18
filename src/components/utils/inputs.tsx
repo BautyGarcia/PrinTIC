@@ -2,7 +2,19 @@ import { Text } from "@mantine/core";
 import { type Dispatch, type SetStateAction, useState } from "react";
 import { IconEyeClosed, IconEye } from "@tabler/icons-react";
 
-export const TextInput = ({ label, placeholder, value, setValue }: { label: string, placeholder: string, value: string, setValue: Dispatch<SetStateAction<string>> }) => {
+export const TextInput = (
+    { 
+        label, 
+        placeholder, 
+        value, 
+        setValue, 
+        isError 
+    }: { 
+        label: string,
+        placeholder: string, 
+        value: string, 
+        setValue: Dispatch<SetStateAction<string>>, 
+        isError: boolean }) => {
     return (
         <div className="flex flex-col gap-1">
             <Text className="text-lg font-bold">{label}</Text>
@@ -10,15 +22,28 @@ export const TextInput = ({ label, placeholder, value, setValue }: { label: stri
                 type="text"
                 placeholder={placeholder}
                 value={value}
-                className="bg-input_background border-solid border-2 border-input_border rounded-md w-full p-3"
-                onChange={(e) => setValue(e.target.value)}
+                className={`bg-input_background border-solid border-2  rounded-md w-full p-3 ${ isError ? "border-red_tic" : "border-input_border" }`}
+                onChange={(e) => {setValue(e.target.value)}}
             />
         </div>
     )
 }
 
-export const PasswordInput = ({ label, placeholder, value, setValue }: { label: string, placeholder: string, value: string, setValue: Dispatch<SetStateAction<string>> }) => {
-    const [showPassword, setShowPassword] = useState(true)
+export const PasswordInput = (
+    { 
+        label, 
+        placeholder, 
+        value, 
+        setValue, 
+        isError 
+    }: { 
+        label: string, 
+        placeholder: string, 
+        value: string, 
+        setValue: Dispatch<SetStateAction<string>>, 
+        isError: boolean 
+    }) => {
+    const [showPassword, setShowPassword] = useState(false)
 
     return (
         <div className="flex flex-col gap-1">
@@ -27,7 +52,7 @@ export const PasswordInput = ({ label, placeholder, value, setValue }: { label: 
                 <input
                     type={showPassword ? "text" : "password"}
                     placeholder={showPassword ? placeholder : placeholder.replaceAll(/./g, "*")}
-                    className="bg-input_background border-solid border-2 border-input_border rounded-md w-full p-3"
+                    className={`bg-input_background border-solid border-2 rounded-md w-full p-3 ${ isError ? "border-red_tic" : "border-input_border" }`}
                     onChange={(e) => setValue(e.target.value)}
                     value={value}
                 />

@@ -28,6 +28,7 @@ export default {
       "pink_tic": "#E61366",
       'container_background': 'rgba(5, 4, 9, 0.7)',
       "lightBlue_tic": "#00D1FF",
+      "red_tic": "#FF4343",
     },
     fontFamily: {
       "raleway": ['Raleway'],
