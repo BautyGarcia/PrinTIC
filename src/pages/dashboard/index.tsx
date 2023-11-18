@@ -1,4 +1,4 @@
-import { type NextPage } from "next";gi
+import { type NextPage } from "next";
 import AppShell from "~/components/dashboard/appShell";
 
 interface DashboardProps {
