@@ -9,7 +9,7 @@ export const ShowcaseButton = ({
         value: string, 
         className?: string
         isLoading?: boolean
-        onClick?: () => any
+        onClick?: () => void
     }) => {
     return (
         <button
@@ -32,7 +32,7 @@ export const ActionButton = ({
     value: string, 
     className?: string
     isLoading?: boolean,
-    onClick?: () => any
+    onClick?: () => void
 }) => {
     return (
         <button

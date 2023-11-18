@@ -4,7 +4,7 @@ import { signIn } from "next-auth/react";
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Subtitle, Title, Text, Heading } from "~/components/utils/texts";
+import { Title } from "~/components/utils/texts";
 
 const Ingreso: NextPage = () => {
     const [mail, setMail] = useState("")
@@ -15,7 +15,7 @@ const Ingreso: NextPage = () => {
     
     return (
         <div className="flex flex-col h-screen w-screen items-center justify-center gap-3 px-5">
-            <Title>{"<PrinTIC/>"}</Title>
+            <Title>{"<Ingreso/>"}</Title>
             <div className="flex flex-col w-full min-h-2/6 md:w-2/3 lg:w-1/3 bg-container_background rounded-lg p-5 justify-between gap-10">
                 <div className="flex flex-col w-full gap-6">
                     <TextInput label="Mail" placeholder="DNI@est.ort.edu.ar" value={mail} setValue={setMail} isError={!(errorMessage.length === 0)}/>
