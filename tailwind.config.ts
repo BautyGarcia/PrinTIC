@@ -23,9 +23,11 @@ export default {
     colors: {
       "purple_tic": "#030026",
       "blue_tic": "#0C043F",
+      "blue_tic_hover": "#09032F",
       "input_background": "#0a0a0a",
       "input_border": "#282828",
       "pink_tic": "#E61366",
+      "pink_tic_hover": "#BF0D53",
       'container_background': 'rgba(5, 4, 9, 0.7)',
       "lightBlue_tic": "#00D1FF",
       "red_tic": "#FF4343",

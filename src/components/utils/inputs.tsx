@@ -1,4 +1,3 @@
-import { Text } from "@mantine/core";
 import { type Dispatch, type SetStateAction, useState } from "react";
 import { IconEyeClosed, IconEye } from "@tabler/icons-react";
 
@@ -17,7 +16,7 @@ export const TextInput = (
         isError: boolean }) => {
     return (
         <div className="flex flex-col gap-1">
-            <Text className="text-lg font-bold">{label}</Text>
+            <h2 className="text-lg font-bold">{label}</h2>
             <input
                 type="text"
                 placeholder={placeholder}
@@ -47,7 +46,7 @@ export const PasswordInput = (
 
     return (
         <div className="flex flex-col gap-1">
-            <Text className="text-lg font-bold">{label}</Text>
+            <h2 className="text-lg font-bold">{label}</h2>
             <div className="flex w-full items-center">
                 <input
                     type={showPassword ? "text" : "password"}

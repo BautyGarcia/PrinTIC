@@ -3,11 +3,13 @@ import Head from "next/head";
 import HomeHeader from "~/components/home/homeHeader";
 import Glassbox from "~/components/utils/glassbox";
 import PrinterIcon from "~/components/icons/printerIcon";
-import { Button, Text } from "@mantine/core";
 import GitHubButton from "react-github-btn";
 import TextZone from "~/components/utils/textZone";
 import HomeFooter from "~/components/home/homeFooter";
 import { useRouter } from "next/router";
+import { ShowcaseButton, ActionButton } from "~/components/utils/buttons";
+import { Subtitle, Title, Text, Heading } from "~/components/utils/texts";
+
 const Home: NextPage = () => {
   const router = useRouter();
 
@@ -22,25 +24,15 @@ const Home: NextPage = () => {
       <main className="flex flex-col min-h-screen items-center justify-around p-10 pt-0 gap-10 lg:gap-0 -translate-y-[50px]">
         <div className="flex flex-col items-center min-h-screen justify-center gap-4">
           <div className="flex flex-col items-center">
-            <Text className="font-raleway text-[40px] sm:text-[80px]">{'< PrinTIC />'}</Text>
-            <Text className="font-spacemono text-[20px] sm:text-[30px]">Imprimí más fácil</Text>
+            <Title>{"<PrinTIC/>"}</Title>
+            <Subtitle>La forma más fácil de imprimir en TIC</Subtitle>
           </div>
-          <Button
-            className="bg-blue_tic font-spacemono font-bold p-3 rounded-[18px]"
-            styles={{
-              root: {
-                height: '60px',
-                padding: '0 32px',
-                fontSize: '24px',
-              },
-            }}
-            onClick={() => void router.push("/ingreso")}
-          >Entrar</Button>
+          <ShowcaseButton value="Entrar" onClick={() => void router.push("/ingreso")} />
         </div>
         <div className="flex flex-col min-h-screen lg:flex-row items-center justify-around gap-20 md:gap-0">
           <Glassbox className="w-full lg:w-1/2 h-2/3 p-10" containerClassName="bg-none gap-5">
             <div className="flex items-center justify-between">
-              <Text className="text-[20px] md:text-[25px] font-spacemono font-bold">¿Qué es esto?</Text>
+              <Heading>¿Qué es esto?</Heading>
               <a
                 href="https://github.com/BautyGarcia/PrinTIC"
                 target="_blank"
@@ -49,12 +41,12 @@ const Home: NextPage = () => {
                 aria-label="Repositorio en GitHub"
               />
             </div>
-            <Text className="text-[15px] md:text-[20px] font-spacemono">
+            <Text>
               Esta web busca facilitar la experiencia de usuario tanto para alumnos como para profesores en el momento de utilizar
               las impresoras de TIC. No mas formularios de Google, ni hojas de Excel, esta es una aplicación 100% hecha
               por y para las personas de TIC.
             </Text>
-            <Text className="text-[15px] md:text-[20px] font-spacemono">
+            <Text>
               Si te gusta este proyecto, ponete la 10 y dale una estrellita al repositorio de GitHub.
             </Text>
             <GitHubButton
@@ -69,12 +61,12 @@ const Home: NextPage = () => {
         </div>
         <div className="flex flex-col items-center min-h-screen w-screen justify-center gap-6">
           <div className="flex flex-col items-center">
-            <Text className="font-raleway text-[40px] sm:text-[80px]">{"< Feedback />"}</Text>
-            <Text className="font-spacemono text-[20px] sm:text-[30px]">Ayudame a mejorar PrinTIC</Text>
+            <Title>{"<Feedback/>"}</Title>
+            <Subtitle>¿Ayudame a mejorar PrinTIC?</Subtitle>
           </div>
           <div className="flex flex-col items-center w-screen gap-8 p-10">
             <TextZone placeholder="Cambiaría..." />
-            <Button className="bg-pink_tic w-2/3 max-w-[200px] font-spacemono font-bold p-3 rounded-[10px]" size="xl">Enviar</Button>
+            <ActionButton value="Enviar" className="w-2/3 max-w-[200px]"/>
           </div>
         </div>
       </main>
