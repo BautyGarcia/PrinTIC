@@ -22,8 +22,8 @@ const Home: NextPage = () => {
       <main className="flex flex-col min-h-screen items-center justify-around p-10 pt-0 gap-10 lg:gap-0 -translate-y-[50px]">
         <div className="flex flex-col items-center min-h-screen justify-center gap-4">
           <div className="flex flex-col items-center">
-            <Text className="font-raleway text-[80px]">{'< PrinTIC />'}</Text>
-            <Text className="font-spacemono text-[30px]">Imprimí más fácil</Text>
+            <Text className="font-raleway text-[40px] sm:text-[80px]">{'< PrinTIC />'}</Text>
+            <Text className="font-spacemono text-[20px] sm:text-[30px]">Imprimí más fácil</Text>
           </div>
           <Button
             className="bg-blue_tic font-spacemono font-bold p-3 rounded-[18px]"
@@ -40,7 +40,7 @@ const Home: NextPage = () => {
         <div className="flex flex-col lg:flex-row items-center justify-around gap-20 md:gap-0">
           <Glassbox className="w-full lg:w-1/2 h-2/3 p-10" containerClassName="bg-none gap-5">
             <div className="flex items-center justify-between">
-              <Text className="text-[50px] font-spacemono font-bold">¿Qué es esto?</Text>
+              <Text className="text-[20px] md:text-[25px] font-spacemono font-bold">¿Qué es esto?</Text>
               <a
                 href="https://github.com/BautyGarcia/PrinTIC"
                 target="_blank"
@@ -49,12 +49,12 @@ const Home: NextPage = () => {
                 aria-label="Repositorio en GitHub"
               />
             </div>
-            <Text className="text-[20px] font-spacemono">
+            <Text className="text-[15px] md:text-[20px] font-spacemono">
               Esta web busca facilitar la experiencia de usuario tanto para alumnos como para profesores en el momento de utilizar
               las impresoras de TIC. No mas formularios de Google, ni hojas de Excel, esta es una aplicación 100% hecha
               por y para las personas de TIC.
             </Text>
-            <Text className="text-[20px] font-spacemono">
+            <Text className="text-[15px] md:text-[20px] font-spacemono">
               Si te gusta este proyecto, ponete la 10 y dale una estrellita al repositorio de GitHub.
             </Text>
             <GitHubButton
@@ -69,10 +69,10 @@ const Home: NextPage = () => {
         </div>
         <div className="flex flex-col items-center min-h-screen w-screen justify-center gap-6">
           <div className="flex flex-col items-center">
-            <Text className="font-raleway text-[80px]">{"< Feedback />"}</Text>
-            <Text className="font-spacemono text-[30px]">Ayudame a mejorar PrinTIC</Text>
+            <Text className="font-raleway text-[40px] sm:text-[80px]">{"< Feedback />"}</Text>
+            <Text className="font-spacemono text-[20px] sm:text-[30px]">Ayudame a mejorar PrinTIC</Text>
           </div>
-          <div className="flex flex-col items-center w-screen gap-8">
+          <div className="flex flex-col items-center w-screen gap-8 p-10">
             <TextZone placeholder="Cambiaría..." />
             <Button className="bg-pink_tic w-2/3 max-w-[200px] font-spacemono font-bold p-3 rounded-[10px]" size="xl">Enviar</Button>
           </div>
