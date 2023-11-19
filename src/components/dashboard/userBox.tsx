@@ -10,8 +10,8 @@ const UserBox = ({
     className?: string
 }) => {
     return (
-        <div className={twMerge("gap-5", className)}>
-            <Heading className="sm:text-[30px]">{nombre}</Heading>
+        <div className={twMerge("flex items-center gap-5", className)}>
+            <Heading className="sm:text-[30px]">{`${nombre} -`}</Heading>
             <Heading className="sm:text-[30px]">{curso}</Heading>
         </div>
     );

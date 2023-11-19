@@ -15,7 +15,7 @@ export const ShowcaseButton = ({
         <button
             onClick={onClick}
             className={twMerge(
-                "bg-blue_tic font-spacemono font-bold p-3 px-4 rounded-xl hover:bg-blue_tic_hover flex justify-center",
+                "bg-blue_tic font-spacemono font-bold p-3 px-4 rounded-xl hover:bg-blue_tic_hover flex justify-center button-animation",
                 className,
             )}>
             {children}
@@ -29,7 +29,7 @@ export const ActionButton = ({
     isLoading,
     onClick
 }: {
-    children: string,
+    children?: string,
     className?: string,
     isLoading?: boolean,
     onClick?: () => any
@@ -38,7 +38,7 @@ export const ActionButton = ({
         <button
             onClick={onClick}
             className={twMerge(
-                "bg-pink_tic hover:bg-pink_tic_hover font-bold py-2 px-4 rounded-md flex justify-center gap-4",
+                "bg-pink_tic hover:bg-pink_tic_hover font-bold py-2 px-4 rounded-md flex justify-center gap-4 button-animation",
                 className
             )}>
             {isLoading && <Loader />}

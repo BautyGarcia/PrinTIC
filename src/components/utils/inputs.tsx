@@ -1,5 +1,7 @@
 import { type Dispatch, type SetStateAction, useState, type ChangeEvent } from "react";
-import { IconEyeClosed, IconEye } from "@tabler/icons-react";
+import { IconEyeClosed, IconEye, IconUpload, IconCornerRightDown } from "@tabler/icons-react";
+import { ActionButton } from "./buttons";
+import { Heading } from "./texts";
 
 export const TextInput = ({
   label,
@@ -82,21 +84,37 @@ export const PasswordInput = ({
 };
 
 export const FileInput = ({
-  label,
+  title,
   handleFiles,
+  withArrowIcon,
 }: {
-  label: string;
+  title?: string,
+  withArrowIcon?: boolean,
   handleFiles: (e: ChangeEvent<HTMLInputElement>) => void;
   isError: boolean;
 }) => {
   return (
-    <div className="flex flex-col gap-1">
-      <h2 className="text-lg font-bold">{label}</h2>
-      <input
-        multiple
-        type="file"
-        onChange={(e) => { handleFiles(e) }}
-      />
+    <div className="flex flex-col h-full items-center justify-center gap-10 px-5">
+      <div className="flex items-center justify-center text-center">
+        <Heading>{title || ""}</Heading>
+        {withArrowIcon && <IconCornerRightDown size={50} className="hidden lg:block mt-8" />}
+      </div>
+      <label className="flex flex-col items-center justify-center w-full py-20 md:w-2/3 max-w-[800px] h-2/3 max-h-[500px] bg-appshell_background rounded-xl border-dashed border-[3px] border-pink_tic gap-10">
+        <input
+          multiple
+          type="file"
+          id="fileInput"
+          onChange={(e) => { handleFiles(e) }}
+          className="hidden"
+        />
+        <IconUpload size={120} />
+        <div className="flex flex-col lg:flex-row items-center gap-5">
+          <Heading className="sm:text-[20px]">
+            Arrastralos acá ó
+          </Heading>
+          <ActionButton onClick={() => document.getElementById("fileInput")?.click()} className="font-spacemono">Seleccionalos</ActionButton>
+        </div>
+      </label>
     </div>
   );
 };
