@@ -2,9 +2,6 @@ import { type NextPage } from "next";
 import Dashboard from ".";
 import { FileInput } from "~/components/utils/inputs";
 import { type ChangeEvent, useState } from "react";
-import { Heading } from "~/components/utils/texts";
-import Head from "next/head";
-import { IconCornerRightDown } from "@tabler/icons-react";
 
 const SubirArchivo: NextPage = () => {
   const [errorMessage, setErrorMessage] = useState("");

@@ -96,7 +96,7 @@ export const FileInput = ({
   return (
     <div className="flex flex-col h-full items-center justify-center gap-10 px-5">
       <div className="flex items-center justify-center text-center">
-        <Heading>{title || ""}</Heading>
+        <Heading>{title ?? ""}</Heading>
         {withArrowIcon && <IconCornerRightDown size={50} className="hidden lg:block mt-8" />}
       </div>
       <label className="flex flex-col items-center justify-center w-full py-20 md:w-2/3 max-w-[800px] h-2/3 max-h-[500px] bg-appshell_background rounded-xl border-dashed border-[3px] border-pink_tic gap-10">

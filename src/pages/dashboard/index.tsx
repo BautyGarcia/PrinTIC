@@ -20,7 +20,7 @@ const Dashboard: NextPage<DashboardProps> = ({ children }) => {
       sessionData?.user?.role === "STUDENT" && void router.push("/dashboard/subir");
       sessionData?.user?.role === "TEACHER" && void router.push("/dashboard/solicitudes");
     }
-  }, [sessionData]);
+  }, [sessionData, router]);
 
   return (
     <>
