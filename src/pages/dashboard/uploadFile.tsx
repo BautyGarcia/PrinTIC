@@ -1,7 +1,7 @@
 import { type NextPage } from "next";
 import Dashboard from ".";
 import { FileInput } from "~/components/utils/inputs";
-import { ChangeEvent, useState } from "react";
+import { type ChangeEvent, useState } from "react";
 
 const UploadFile: NextPage = () => {
   const [errorMessage, setErrorMessage] = useState("");

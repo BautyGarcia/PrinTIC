@@ -21,11 +21,13 @@ declare module "next-auth" {
     user?: {
       id: string;
       role: RoleType;
+      curso: string;
     } & DefaultSession["user"];
   }
 
   interface User {
     role: RoleType;
+    curso: string;
   }
 }
 
@@ -40,6 +42,7 @@ export const authOptions: NextAuthOptions = {
       if (session.user && token.role) {
         session.user.id = token.sub!;
         session.user.role = token.role as RoleType;
+        session.user.curso = token.curso as string;
       }
       return session;
     },
@@ -47,6 +50,7 @@ export const authOptions: NextAuthOptions = {
       if (user) {
         token.role = user.role;
         token.sub = user.id;
+        token.curso = user.curso;
       }
       return token;
     },

@@ -1,5 +1,6 @@
 import { type NextPage } from "next";
 import AppShell from "~/components/dashboard/appShell";
+import SessionChecker from "~/components/utils/sessionChecker";
 import { useSession } from "next-auth/react";
 
 interface DashboardProps {
@@ -7,14 +8,17 @@ interface DashboardProps {
 }
 
 const Dashboard: NextPage<DashboardProps> = ({ children }) => {
-  const { data: session } = useSession();
+  const { data: sessionData } = useSession();
   
   return (
-    <AppShell>
-      <div className="w-full h-full">
-        {children}
-      </div>
-    </AppShell>
+    <>
+      <SessionChecker />
+      <AppShell nombre={sessionData?.user?.name ?? "Anonimo"} curso={sessionData?.user?.curso ?? "Anonimo"}>
+        <div className="w-full h-full">
+          {children}
+        </div>
+      </AppShell>
+    </>
   );
 };
 

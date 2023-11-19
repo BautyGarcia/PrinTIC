@@ -1,4 +1,4 @@
-import { type Dispatch, type SetStateAction, useState, ChangeEvent } from "react";
+import { type Dispatch, type SetStateAction, useState, type ChangeEvent } from "react";
 import { IconEyeClosed, IconEye } from "@tabler/icons-react";
 
 export const TextInput = ({
@@ -84,7 +84,6 @@ export const PasswordInput = ({
 export const FileInput = ({
   label,
   handleFiles,
-  isError,
 }: {
   label: string;
   handleFiles: (e: ChangeEvent<HTMLInputElement>) => void;

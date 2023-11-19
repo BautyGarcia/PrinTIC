@@ -36,7 +36,7 @@ export const Heading = ({
 }) => {
     return <h2 className={twMerge(
         "text-[22px] sm:text-[40px] font-spacemono font-bold",
-        className
+        className,
     )}>{children}</h2>
 }
 

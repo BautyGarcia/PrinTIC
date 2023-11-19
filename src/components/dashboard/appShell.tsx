@@ -2,17 +2,19 @@ import DashboardNavBar from "./dashboardNavBar";
 import DashboardHeader from "./dashboardHeader";
 import React, { useState } from "react";
 
-const AppShell = ({ children }: { children: React.ReactNode }) => {
+const AppShell = ({ children, nombre, curso }: { children: React.ReactNode, nombre: string, curso: string }) => {
   const [opened, setOpened] = useState(false);
-  
+
   return (
-    <section className="flex h-screen flex-col">
-      <DashboardHeader opened={opened} setIsOpened={setOpened}/>
-      <div className="flex h-full">
-        <DashboardNavBar isOpened={opened}/>
-        {children}
-      </div>
-    </section>
+    <>
+      <section className="flex h-screen flex-col">
+        <DashboardHeader opened={opened} setIsOpened={setOpened} nombre={nombre} curso={curso} />
+        <div className="flex h-full">
+          <DashboardNavBar isOpened={opened} nombre={nombre} curso={curso} />
+          {children}
+        </div>
+      </section>
+    </>
   );
 };
 
