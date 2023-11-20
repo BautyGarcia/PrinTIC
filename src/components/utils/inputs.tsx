@@ -87,12 +87,16 @@ export const FileInput = ({
   title,
   handleFiles,
   withArrowIcon,
+  errorMessage,
+  inputFileRef,
 }: {
   title?: string,
   withArrowIcon?: boolean,
   handleFiles: (e: ChangeEvent<HTMLInputElement>) => void;
-  isError: boolean;
+  errorMessage: string;
+  inputFileRef: React.MutableRefObject<HTMLInputElement | null>;
 }) => {
+  const isError = !(errorMessage.length === 0);
   return (
     <div className="flex flex-col h-full items-center justify-center gap-10 px-5">
       <div className="flex items-center justify-center text-center">
@@ -102,17 +106,33 @@ export const FileInput = ({
       <label className="flex flex-col items-center justify-center w-full py-20 md:w-2/3 max-w-[800px] h-2/3 max-h-[500px] bg-appshell_background rounded-xl border-dashed border-[3px] border-pink_tic gap-10">
         <input
           multiple
+          ref={inputFileRef}
           type="file"
+          accept=".stl"
           id="fileInput"
           onChange={(e) => { handleFiles(e) }}
           className="hidden"
         />
         <IconUpload size={120} />
         <div className="flex flex-col lg:flex-row items-center gap-5">
-          <Heading className="sm:text-[20px]">
-            Arrastralos acá ó
-          </Heading>
-          <ActionButton onClick={() => document.getElementById("fileInput")?.click()} className="font-spacemono">Seleccionalos</ActionButton>
+          {
+            !isError && (
+              <>
+                <Heading className="sm:text-[20px]">
+                  Arrastralos acá ó
+                </Heading>
+                <ActionButton onClick={() => document.getElementById("fileInput")?.click()} className="font-spacemono">Seleccionalos</ActionButton>
+              </>
+            )
+          }
+          {
+            isError && (
+              <div className="flex flex-col items-center gap-10">
+                <Heading className="text-red_tic text-center text-lg">{errorMessage}</Heading>
+                <ActionButton onClick={() => document.getElementById("fileInput")?.click()} className="font-spacemono w-fit">Vamos de vuelta</ActionButton>
+              </div>
+            )
+          }
         </div>
       </label>
     </div>
