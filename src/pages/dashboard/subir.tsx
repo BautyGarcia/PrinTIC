@@ -10,6 +10,7 @@ const SubirArchivo: NextPage = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const inputFileRef = React.useRef<HTMLInputElement | null>(null);
   const { mutate: getSignedUrls } = api.files.signFiles.useMutation();
+  const { mutate: crearPedido } = api.pedidos.crearPedido.useMutation();
   const { data: sessionData } = useSession();
 
   const handleFiles = (e: ChangeEvent<HTMLInputElement>) => {
@@ -53,7 +54,30 @@ const SubirArchivo: NextPage = () => {
               'Content-Type': "application/octet-stream",
             },
           }).then(() => {
-            console.log("Archivo subido");
+            if (index === data.length - 1) {
+              const piezasObject = data.map((object) => {
+                const currentFileIndex = data.indexOf(object);
+                const currentFile = files[currentFileIndex];
+                return {
+                  nombre: currentFile?.name.split(".")[0] ?? "",
+                  url: object.fileUrl,
+                  cantidad: currentFileIndex + 1
+                }
+              });
+
+              crearPedido({
+                materia: "Proyecto",
+                notas: "Esto es una prueba",
+                piezas: piezasObject,
+              }, {
+                onSuccess: () => {
+                  console.log("Pedido creado");
+                },
+                onError: () => {
+                  console.log("Error creando el pedido");
+                }
+              })
+            }
           }).catch()
         }
       },
