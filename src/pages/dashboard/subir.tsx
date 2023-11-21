@@ -5,17 +5,24 @@ import { type ChangeEvent, useState } from "react";
 import React from "react";
 import { api } from "~/utils/api";
 import { useSession } from "next-auth/react";
+import { Heading } from "~/components/utils/texts";
+import { ActionButton } from "~/components/utils/buttons";
 
 const SubirArchivo: NextPage = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const inputFileRef = React.useRef<HTMLInputElement | null>(null);
+  const [files, setFiles] = useState<FileList | null>(null);
+  const [fileNameList, setFileNameList] = useState<Array<string>>([]);
+  const [areFilesSelected, setAreFilesSelected] = useState(false);
   const { mutate: getSignedUrls } = api.files.signFiles.useMutation();
   const { mutate: crearPedido } = api.pedidos.crearPedido.useMutation();
+  const [notes, setNotes] = useState("");
+  const [materia, setMateria] = useState("");
+  const [cantidades, setCantidades] = useState<Array<number>>([]);
   const { data: sessionData } = useSession();
 
-  const handleFiles = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleFiles = (files: FileList, e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    const files = inputFileRef.current?.files;
     const allowedExtensions = ["stl"];
     const fileNames: Array<string> = [];
 
@@ -67,7 +74,7 @@ const SubirArchivo: NextPage = () => {
 
               crearPedido({
                 materia: "Proyecto",
-                notas: "Esto es una prueba",
+                notas: notes,
                 piezas: piezasObject,
               }, {
                 onSuccess: () => {
@@ -90,13 +97,34 @@ const SubirArchivo: NextPage = () => {
   return (
     <Dashboard>
       <div className="flex flex-col h-full justify-center">
-        <FileInput
-          inputFileRef={inputFileRef}
-          errorMessage={errorMessage}
-          handleFiles={handleFiles}
-          title="Soltá tus problemas acá abajo"
-          withArrowIcon
-        />
+        {
+          !areFilesSelected ? (
+            <FileInput
+              inputFileRef={inputFileRef}
+              errorMessage={errorMessage}
+              setFilesSelected={setAreFilesSelected}
+              setFiles={setFiles}
+              setFileNameList={setFileNameList}
+              title="Soltá tus problemas acá abajo"
+              withArrowIcon
+            />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center">
+              <div className="flex flex-col gap-10 justify-between w-full h-full md:max-h-[80%] md:max-w-[80%] overflow-auto">
+                <>
+                {
+                  fileNameList.map((fileName) => (
+                    <div className="flex h-[150px] bg-appshell_background rounded-lg">
+                      <Heading className="sm:text-[30px]">{fileName.split(".")[0] || ""}</Heading>
+                    </div>
+                  ))
+                }
+                </>
+                <ActionButton className="font-spacemono self-end justify-self-end mb-1">Enviar</ActionButton>
+              </div>
+            </div>
+          )
+        }
       </div>
     </Dashboard>
   );

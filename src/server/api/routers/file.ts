@@ -41,7 +41,7 @@ export const fileRouter = createTRPCRouter({
 
                 response.push({ 
                     fetchUrl: url, 
-                    fileUrl: `https://storage.googleapis.com/${process.env.PROJECT_ID}/${fileName}` 
+                    fileUrl: `https://storage.cloud.google.com/${process.env.PROJECT_ID}/${fileName}` 
                 });
             }
 

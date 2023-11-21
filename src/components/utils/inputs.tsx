@@ -85,14 +85,18 @@ export const PasswordInput = ({
 
 export const FileInput = ({
   title,
-  handleFiles,
+  setFilesSelected,
+  setFiles,
+  setFileNameList,
   withArrowIcon,
   errorMessage,
   inputFileRef,
 }: {
   title?: string,
   withArrowIcon?: boolean,
-  handleFiles: (e: ChangeEvent<HTMLInputElement>) => void;
+  setFilesSelected: React.Dispatch<React.SetStateAction<boolean>>
+  setFiles: React.Dispatch<React.SetStateAction<FileList | null>>,
+  setFileNameList: React.Dispatch<React.SetStateAction<string[]>>,
   errorMessage: string;
   inputFileRef: React.MutableRefObject<HTMLInputElement | null>;
 }) => {
@@ -110,7 +114,14 @@ export const FileInput = ({
           type="file"
           accept=".stl"
           id="fileInput"
-          onChange={(e) => { handleFiles(e) }}
+          onChange={() => {
+            setFiles(inputFileRef.current?.files ?? null);
+            setFilesSelected(true);
+
+            for (const file of inputFileRef.current?.files ?? []) {
+              setFileNameList((prev) => [...prev, file.name]);
+            }
+          }}
           className="hidden"
         />
         <IconUpload size={120} />
