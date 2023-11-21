@@ -1,7 +1,7 @@
 import { type NextPage } from "next";
 import Dashboard from ".";
 import { FileInput } from "~/components/utils/inputs";
-import { type ChangeEvent, useState } from "react";
+import { useState } from "react";
 import React from "react";
 import { api } from "~/utils/api";
 import { useSession } from "next-auth/react";
@@ -113,9 +113,9 @@ const SubirArchivo: NextPage = () => {
               <div className="flex flex-col gap-10 justify-between w-full h-full md:max-h-[80%] md:max-w-[80%] overflow-auto">
                 <>
                 {
-                  fileNameList.map((fileName) => (
-                    <div className="flex h-[150px] bg-appshell_background rounded-lg">
-                      <Heading className="sm:text-[30px]">{fileName.split(".")[0] || ""}</Heading>
+                  fileNameList.map((fileName, index) => (
+                    <div key={index} className="flex h-[150px] bg-appshell_background rounded-lg">
+                      <Heading className="sm:text-[30px]">{fileName.split(".")[0] ?? ""}</Heading>
                     </div>
                   ))
                 }
