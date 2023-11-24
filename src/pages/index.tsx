@@ -25,7 +25,7 @@ const Home: NextPage = () => {
         <div className="flex min-h-screen flex-col items-center justify-center gap-4">
           <div className="flex flex-col items-center">
             <Title>{"<PrinTIC/>"}</Title>
-            <Subtitle>La forma más fácil de imprimir en TIC</Subtitle>
+            <Subtitle className="text-center">La forma más fácil de imprimir en TIC</Subtitle>
           </div>
           <ActionButton className="font-spacemono text-lg" onClick={() => void router.push("/ingreso")}>
             Entrar
