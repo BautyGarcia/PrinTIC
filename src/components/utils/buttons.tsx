@@ -38,6 +38,7 @@ export const ActionButton = ({
     return (
         <button
             onClick={onClick}
+            disabled={isLoading}
             className={twMerge(
                 "bg-pink_tic hover:bg-pink_tic_hover font-bold py-2 px-4 rounded-md flex justify-center gap-4 button-animation",
                 className
@@ -51,15 +52,18 @@ export const ActionButton = ({
 export const TrashButton = ({
     onClick,
     className,
-    bodyText
+    bodyText,
+    isLoading
 }: {
     onClick: () => any,
     className?: string
-    bodyText?: string
+    bodyText?: string,
+    isLoading?: boolean
 }) => {
     return (
         <button
             onClick={onClick}
+            disabled={isLoading}
             className={twMerge(
                 "bg-red_tic hover:bg-red_tic_hover font-bold py-3 px-4 rounded-md flex justify-center gap-4 button-animation",
                 className

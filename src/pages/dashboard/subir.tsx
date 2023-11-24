@@ -23,6 +23,17 @@ const SubirArchivo: NextPage = () => {
   const [cantidades, setCantidades] = useState<Array<number>>([]);
   const { data: sessionData } = useSession();
 
+  const handleReset = () => {
+    setErrorMessage("");
+    setFiles(null);
+    setFileNameList([]);
+    setAreFilesSelected(false);
+    setIsUploading(false);
+    setNotes("");
+    setMateria("Proyecto");
+    setCantidades([]);
+  }
+
   const handleFiles = (files: FileList, e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     return new Promise<void>((resolve, reject) => {
@@ -84,6 +95,7 @@ const SubirArchivo: NextPage = () => {
                   onSuccess: () => {
                     resolve();
                     setIsUploading(false);
+                    handleReset();
                   },
                   onError: () => {
                     reject();
@@ -133,7 +145,7 @@ const SubirArchivo: NextPage = () => {
                   ))
                 }
               </div>
-              <div className="flex flex-col w-4/6 lg:w-1/3 h-fit bg-appshell_background rounded-lg p-5 gap-5">
+              <div className="flex flex-col w-full lg:w-1/3 h-fit bg-appshell_background rounded-lg p-5 gap-5">
                 <SelectInput
                   setValue={setMateria}
                   title="Materia"
@@ -149,9 +161,10 @@ const SubirArchivo: NextPage = () => {
                 <div className="flex gap-3">
                   <ActionButton
                     className="font-spacemono mb-1 text-[20px] w-full"
-                    onClick={(e) => {
-                      toast.promise(
-                        handleFiles(files ?? new FileList, e),
+                    isLoading={isUploading}
+                    onClick={async (e) => {
+                      await toast.promise(
+                        handleFiles(files ?? new FileList, e as React.MouseEvent<HTMLButtonElement, MouseEvent>),
                         {
                           pending: 'Subiendo archivos 📤',
                           success: 'Subido 👌',
@@ -159,12 +172,11 @@ const SubirArchivo: NextPage = () => {
                         }
                       )
                     }}
-                  >Enviar</ActionButton>
+                  >{isUploading ? "Enviando..." : "Enviar"}</ActionButton>
                   <TrashButton
                     className="h-fit mb-1 flex items-center justify-center"
                     onClick={() => {
-                      setAreFilesSelected(false);
-                      setFileNameList([]);
+                      handleReset();
                     }} />
                 </div>
               </div>
