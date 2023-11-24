@@ -1,5 +1,5 @@
 import TicXIcon from "../icons/ticIcon";
-import { IconMenu2, IconX } from "@tabler/icons-react";
+import { IconMenu2 } from "@tabler/icons-react";
 import UserBox from "./userBox";
 import { useWindowSize } from "~/hooks/useWindowSize";
 
