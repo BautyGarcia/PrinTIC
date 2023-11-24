@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { twMerge } from "tailwind-merge"
 import { Loader } from "~/components/utils/loaders";
+import { IconTrash } from "@tabler/icons-react";
 
 export const ShowcaseButton = ({
     children,
@@ -43,6 +44,28 @@ export const ActionButton = ({
             )}>
             {isLoading && <Loader />}
             {children}
+        </button>
+    )
+}
+
+export const TrashButton = ({
+    onClick,
+    className,
+    bodyText
+}: {
+    onClick: () => any,
+    className?: string
+    bodyText?: string
+}) => {
+    return (
+        <button
+            onClick={onClick}
+            className={twMerge(
+                "bg-red_tic hover:bg-red_tic_hover font-bold py-3 px-4 rounded-md flex justify-center gap-4 button-animation",
+                className
+            )}>
+                {bodyText}
+            <IconTrash/>
         </button>
     )
 }

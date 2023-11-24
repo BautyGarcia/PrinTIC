@@ -34,6 +34,7 @@ export default {
       "appshell_background_hover": "rgba(3, 0, 28, 0.2)",
       "lightBlue_tic": "#00D1FF",
       "red_tic": "#FF4343",
+      "red_tic_hover": "#D12C2C",
     },
     fontFamily: {
       "raleway": ['Raleway'],

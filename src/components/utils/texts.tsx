@@ -35,7 +35,7 @@ export const Heading = ({
     className?: string 
 }) => {
     return <h2 className={twMerge(
-        "text-[22px] sm:text-[40px] font-spacemono font-bold",
+        "text-[40px] font-spacemono font-bold",
         className,
     )}>{children}</h2>
 }
@@ -48,7 +48,7 @@ export const Text = ({
     className?: string 
 }) => {
     return <p className={twMerge(
-        "text-[15px] sm:text-[20px] font-spacemono",
+        "text-[20px] font-spacemono",
         className
     )}>{children}</p>
 }

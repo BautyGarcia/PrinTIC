@@ -4,14 +4,16 @@ import HomeHeader from "~/components/home/homeHeader";
 import Glassbox from "~/components/utils/glassbox";
 import PrinterIcon from "~/components/icons/printerIcon";
 import GitHubButton from "react-github-btn";
-import TextZone from "~/components/utils/textZone";
 import HomeFooter from "~/components/home/homeFooter";
 import { useRouter } from "next/router";
-import { ShowcaseButton, ActionButton } from "~/components/utils/buttons";
+import { ActionButton } from "~/components/utils/buttons";
 import { Subtitle, Title, Text, Heading } from "~/components/utils/texts";
+import { TextZone } from "~/components/utils/inputs";
+import { useState } from "react";
 
 const Home: NextPage = () => {
   const router = useRouter();
+  const [feedback, setFeedback] = useState("");
 
   return (
     <>
@@ -73,7 +75,11 @@ const Home: NextPage = () => {
             <Subtitle>¿Ayudame a mejorar PrinTIC?</Subtitle>
           </div>
           <div className="flex w-screen flex-col items-center gap-8 p-10">
-            <TextZone placeholder="Cambiaría..." />
+            <TextZone
+              placeholder="Cambiaría..."
+              className="w-full md:w-1/3 h-[300px] max-w-[800px] max-h-[800px]"
+              setValue={setFeedback}
+            />
             <ActionButton className="w-2/3 max-w-[200px] font-spacemono">Enviar</ActionButton>
           </div>
         </div>

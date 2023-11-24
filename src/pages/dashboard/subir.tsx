@@ -1,12 +1,13 @@
 import { type NextPage } from "next";
 import Dashboard from ".";
-import { FileInput } from "~/components/utils/inputs";
+import { FileInput, AmountInput, TextZone, SelectInput } from "~/components/utils/inputs";
 import { useState } from "react";
 import React from "react";
 import { api } from "~/utils/api";
 import { useSession } from "next-auth/react";
 import { Heading } from "~/components/utils/texts";
-import { ActionButton } from "~/components/utils/buttons";
+import { ActionButton, TrashButton } from "~/components/utils/buttons";
+import { toast } from "react-toastify";
 
 const SubirArchivo: NextPage = () => {
   const [errorMessage, setErrorMessage] = useState("");
@@ -14,89 +15,96 @@ const SubirArchivo: NextPage = () => {
   const [files, setFiles] = useState<FileList | null>(null);
   const [fileNameList, setFileNameList] = useState<Array<string>>([]);
   const [areFilesSelected, setAreFilesSelected] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
   const { mutate: getSignedUrls } = api.files.signFiles.useMutation();
   const { mutate: crearPedido } = api.pedidos.crearPedido.useMutation();
   const [notes, setNotes] = useState("");
-  const [materia, setMateria] = useState("");
+  const [materia, setMateria] = useState("Proyecto");
   const [cantidades, setCantidades] = useState<Array<number>>([]);
   const { data: sessionData } = useSession();
 
   const handleFiles = (files: FileList, e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    const allowedExtensions = ["stl"];
-    const fileNames: Array<string> = [];
+    return new Promise<void>((resolve, reject) => {
+      const allowedExtensions = ["stl"];
+      const fileNames: Array<string> = [];
 
-    if (!files) {
-      return;
-    }
-
-    for (const file of files) {
-      const extension = file.name.split(".").pop();
-      if (!allowedExtensions.includes(extension!)) {
-        setErrorMessage('Todos los archivos tienen que ser .stl');
-        break;
+      if (!files) {
+        return;
       }
-      fileNames.push(`${sessionData?.user?.name}_${file.name.split(".")[0]}_${Date.now()}.stl`);
-    }
 
-    getSignedUrls({
-      fileNames: fileNames
-    }, {
-      // eslint-disable-next-line @typescript-eslint/no-misused-promises
-      onSuccess: async (data) => {
-        for (const object of data) {
-          const index = data.indexOf(object);
-
-          const currentFile = files[index];
-
-          const newFile = new File([currentFile ?? ""], fileNames[index] ?? "", {
-            type: "application/octet-stream",
-            lastModified: currentFile?.lastModified,
-          });
-
-          await fetch(object.fetchUrl, {
-            method: "PUT",
-            body: newFile,
-            headers: {
-              'Content-Type': "application/octet-stream",
-            },
-          }).then(() => {
-            if (index === data.length - 1) {
-              const piezasObject = data.map((object) => {
-                const currentFileIndex = data.indexOf(object);
-                const currentFile = files[currentFileIndex];
-                return {
-                  nombre: currentFile?.name.split(".")[0] ?? "",
-                  url: object.fileUrl,
-                  cantidad: currentFileIndex + 1
-                }
-              });
-
-              crearPedido({
-                materia: "Proyecto",
-                notas: notes,
-                piezas: piezasObject,
-              }, {
-                onSuccess: () => {
-                  console.log("Pedido creado");
-                },
-                onError: () => {
-                  console.log("Error creando el pedido");
-                }
-              })
-            }
-          }).catch()
+      for (const file of files) {
+        const extension = file.name.split(".").pop();
+        if (!allowedExtensions.includes(extension!)) {
+          setErrorMessage('Todos los archivos tienen que ser .stl');
+          break;
         }
-      },
-      onError: () => {
-        console.log("Error generando la URL de google");
+        fileNames.push(`${sessionData?.user?.name}_${file.name.split(".")[0]}_${Date.now()}.stl`);
       }
-    })
+
+      setIsUploading(true);
+      getSignedUrls({
+        fileNames: fileNames
+      }, {
+        // eslint-disable-next-line @typescript-eslint/no-misused-promises
+        onSuccess: async (data) => {
+          for (const object of data) {
+            const index = data.indexOf(object);
+
+            const currentFile = files[index];
+
+            const newFile = new File([currentFile ?? ""], fileNames[index] ?? "", {
+              type: "application/octet-stream",
+              lastModified: currentFile?.lastModified,
+            });
+
+            await fetch(object.fetchUrl, {
+              method: "PUT",
+              body: newFile,
+              headers: {
+                'Content-Type': "application/octet-stream",
+              },
+            }).then(() => {
+              if (index === data.length - 1) {
+                const piezasObject = data.map((object) => {
+                  const currentFileIndex = data.indexOf(object);
+                  const currentFile = files[currentFileIndex];
+                  return {
+                    nombre: currentFile?.name.split(".")[0] ?? "",
+                    url: object.fileUrl,
+                    cantidad: cantidades[currentFileIndex] ?? 1
+                  }
+                });
+
+                crearPedido({
+                  materia: materia,
+                  notas: notes,
+                  piezas: piezasObject,
+                }, {
+                  onSuccess: () => {
+                    resolve();
+                    setIsUploading(false);
+                  },
+                  onError: () => {
+                    reject();
+                    setIsUploading(false);
+                  }
+                })
+              }
+            }).catch()
+          }
+        },
+        onError: () => {
+          console.log("Error generando la URL de google");
+          setIsUploading(false);
+        }
+      })
+    });
   }
 
   return (
     <Dashboard>
-      <div className="flex flex-col h-full justify-center p-5 md:p-0">
+      <div className="flex flex-col w-full h-full justify-center items-center p-8 md:p-12">
         {
           !areFilesSelected ? (
             <FileInput
@@ -110,19 +118,56 @@ const SubirArchivo: NextPage = () => {
               withArrowIcon
             />
           ) : (
-            <div className="w-full h-full flex flex-col items-center justify-center gap-10">
-              <div className="flex flex-col justify-between w-full h-full md:max-h-[75%] md:max-w-[80%] overflow-auto">
-                <div className="flex flex-col gap-8">
+            <div className="w-full h-full flex flex-col lg:flex-row gap-8 items-center lg:items-start">
+              <div className="flex flex-col w-full lg:w-2/3 rounded-lg gap-8">
                 {
                   fileNameList.map((fileName, index) => (
-                    <div key={index} className="flex h-[150px] bg-appshell_background rounded-lg p-5">
-                      <Heading className="sm:text-[30px]">{fileName.split(".")[0] ?? ""}</Heading>
+                    <div key={index} className="flex flex-col bg-appshell_background rounded-lg p-5 gap-3">
+                      <Heading className="sm:text-[30px] min-h-[100px] break-all">{fileName.split(".")[0] ?? ""}</Heading>
+                      <AmountInput
+                        index={index}
+                        cantidades={cantidades}
+                        setCantidades={setCantidades}
+                      />
                     </div>
                   ))
                 }
+              </div>
+              <div className="flex flex-col w-4/6 lg:w-1/3 h-fit bg-appshell_background rounded-lg p-5 gap-5">
+                <SelectInput
+                  setValue={setMateria}
+                  title="Materia"
+                  options={["Proyecto", "TIMI"]}
+                  value={materia}
+                />
+                <TextZone
+                  placeholder="Fijate que..."
+                  className="w-full resize-y max-h-[400px] min-h-[200px]"
+                  title="Notas"
+                  setValue={setNotes}
+                />
+                <div className="flex gap-3">
+                  <ActionButton
+                    className="font-spacemono mb-1 text-[20px] w-full"
+                    onClick={(e) => {
+                      toast.promise(
+                        handleFiles(files ?? new FileList, e),
+                        {
+                          pending: 'Subiendo archivos 📤',
+                          success: 'Subido 👌',
+                          error: 'Hubo un problema 🤯'
+                        }
+                      )
+                    }}
+                  >Enviar</ActionButton>
+                  <TrashButton
+                    className="h-fit mb-1 flex items-center justify-center"
+                    onClick={() => {
+                      setAreFilesSelected(false);
+                      setFileNameList([]);
+                    }} />
                 </div>
               </div>
-              <ActionButton className="font-spacemono mb-1 text-[20px]">Enviar</ActionButton>
             </div>
           )
         }

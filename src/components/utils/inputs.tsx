@@ -1,7 +1,8 @@
 import { type Dispatch, type SetStateAction, useState } from "react";
-import { IconEyeClosed, IconEye, IconUpload, IconCornerRightDown } from "@tabler/icons-react";
+import { IconEyeClosed, IconEye, IconUpload, IconCornerRightDown, IconPlus, IconMinus } from "@tabler/icons-react";
 import { ActionButton } from "./buttons";
 import { Heading } from "./texts";
+import { twMerge } from "tailwind-merge"
 
 export const TextInput = ({
   label,
@@ -104,7 +105,7 @@ export const FileInput = ({
 }) => {
   const isError = !(errorMessage.length === 0);
   return (
-    <div className="flex flex-col h-full items-center justify-center gap-10 px-5">
+    <div className="flex flex-col h-full w-full items-center justify-center gap-10 px-5">
       <div className="flex items-center justify-center text-center">
         <Heading>{title ?? ""}</Heading>
         {withArrowIcon && <IconCornerRightDown size={50} className="hidden lg:block mt-8" />}
@@ -152,3 +153,99 @@ export const FileInput = ({
     </div>
   );
 };
+
+export const AmountInput = ({
+  index,
+  cantidades,
+  setCantidades,
+}: {
+  index: number;
+  cantidades: number[];
+  setCantidades: React.Dispatch<React.SetStateAction<number[]>>;
+}) => {
+  return (
+    <div className="flex justify-center items-center gap-5 w-fit h-[50px] bg-pink_tic p-3 rounded-lg">
+      <div className="w-1/3 hover:bg-pink_tic_hover rounded-lg p-1 button-animation"
+        onClick={() => {
+          setCantidades(prev => {
+            const newCantidades = [...prev];
+            newCantidades[index] -= 1;
+            if (newCantidades[index]! < 1) newCantidades[index] = 1;
+            return newCantidades;
+          });
+        }}>
+        <IconMinus />
+      </div>
+      <div className="w-1/3">
+        <Heading className="sm:text-[18px] text-center">{`${cantidades[index]}`}</Heading>
+      </div>
+      <div className="w-1/3 hover:bg-pink_tic_hover rounded-lg p-1 button-animation"
+        onClick={() => {
+          setCantidades(prev => {
+            const newCantidades = [...prev];
+            newCantidades[index] += 1;
+            return newCantidades;
+          });
+        }}>
+        <IconPlus />
+      </div>
+    </div>
+  );
+}
+
+export const TextZone = ({
+  title,
+  placeholder,
+  className,
+  setValue,
+}: {
+  title?: string;
+  placeholder: string;
+  className?: string;
+  setValue: Dispatch<SetStateAction<string>>;
+}) => {
+  return (
+    <>
+      {title && <Heading className="text-[25px]">{title}</Heading>}
+      <textarea
+        className={twMerge(
+          'p-3 resize rounded-md bg-input_background border-solid border-2 border-input_border',
+          className
+        )}
+        placeholder={placeholder}
+        onChange={(e) => {
+          setValue(e.target.value);
+        }}
+      />
+    </>
+  );
+}
+
+export const SelectInput = ({
+  title,
+  options,
+  value,
+  setValue,
+}: {
+  title: string;
+  options: string[];
+  value: string;
+  setValue: Dispatch<SetStateAction<string>>;
+}) => {
+  return (
+    <>
+      {title && <Heading className="text-[25px]">{title}</Heading>}
+      <select
+        className="w-full rounded-md border-2 border-solid bg-input_background p-3 border-input_border outline-none"
+        onChange={(e) => setValue(e.target.value)}
+        value={value}
+      >
+        {options.map((option, index) => (
+          <option key={index} value={option}>
+            {option}
+          </option>
+        ))}
+      </select>
+    </>
+  );
+}

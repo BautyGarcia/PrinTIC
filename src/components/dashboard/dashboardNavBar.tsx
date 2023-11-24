@@ -22,15 +22,15 @@ const DashboardNavBar = ({ isOpened, nombre, curso }: { isOpened: boolean, nombr
 
     return (
         <section className={isMobile ?
-            `${isOpened ? "dashboard-nav-open w-screen" : "dashboard-nav"} absolute h-full bg-appshell_background` :
-            `w-[300px] h-full bg-appshell_background`
+            `${isOpened ? "dashboard-nav-open w-screen" : "dashboard-nav"} absolute flex flex-col grow h-full bg-appshell_background` :
+            `flex flex-col grow w-[300px] h-full bg-appshell_background`
         }>
             {/* Este div se muestra solo en Mobile mode */}
             <div className="flex flex-col md:hidden">
                 <UserBox nombre={nombre} curso={curso} className="flex" />
             </div>
             {/* Este div se muestra solo en Desktop mode */}
-            <div className="hidden md:flex flex-col p-5 gap-5">
+            <div className="hidden md:flex flex-col p-5 pt-0 gap-5">
                 {
                     sessionData?.user?.role !== "STUDENT" && (
                         <ActionButton className="font-spacemono" onClick={() => void router.push("/dashboard/solicitudes")}>Solicitudes</ActionButton>
