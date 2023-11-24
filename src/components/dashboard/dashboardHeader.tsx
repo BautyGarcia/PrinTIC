@@ -23,7 +23,7 @@ const DashboardHeader = ({
       <TicXIcon width={isMobile ? 40 : 55} height={isMobile ? 40 : 55} />
       <UserBox nombre={nombre} curso={curso} className="hidden md:flex"/>
       <div onClick={() => setIsOpened(!opened)} className="md:hidden hover:bg-appshell_background_hover rounded-md">
-        {opened ? <IconX className="" size={50} /> : <IconMenu2 className="" size={50} />}
+        <IconMenu2 className="" size={50} />
       </div>
     </header>
   );

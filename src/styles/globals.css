@@ -53,21 +53,24 @@ input:focus {
 }
 
 .dashboard-nav {
-    position: absolute;
-    margin-top: 60px;
-    top: 0;
+    position: fixed;
     left: 0;
+    bottom: 0;
     width: 100vw;
+    height: 100vh;
     backdrop-filter: blur(0px);
     transform: translateX(-100%);
     transition: transform 0.3s ease-in-out, backdrop-filter .5s linear;
 }
 
 .dashboard-nav-open {
+    height: 100vh;
+    bottom: 0;
     transform: translateX(0);
     backdrop-filter: blur(24px);
     transition: transform 0.3s ease-in-out, backdrop-filter .3s linear;
 }
+
 
 .button-animation {
     transition: all 0.1s linear;
