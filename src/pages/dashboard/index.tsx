@@ -4,6 +4,7 @@ import SessionChecker from "~/components/utils/sessionChecker";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import Head from "next/head";
 
 interface DashboardProps {
   children: React.ReactNode;
@@ -16,7 +17,7 @@ const Dashboard: NextPage<DashboardProps> = ({ children }) => {
   useEffect(() => {
     const route = router.pathname;
 
-    if(route === "/dashboard") {
+    if (route === "/dashboard") {
       sessionData?.user?.role === "STUDENT" && void router.push("/dashboard/subir");
       sessionData?.user?.role === "TEACHER" && void router.push("/dashboard/solicitudes");
     }
@@ -24,6 +25,11 @@ const Dashboard: NextPage<DashboardProps> = ({ children }) => {
 
   return (
     <>
+      <Head>
+        <title>PrinTIC - Dashboard</title>
+        <meta name="description" content="PrinTIC" />
+        <link rel="icon" href="/general/ticLogo.ico" />
+      </Head>
       <SessionChecker />
       <AppShell nombre={sessionData?.user?.name ?? "Anonimo"} curso={sessionData?.user?.curso ?? "Anonimo"}>
         <div className="w-full h-full">
