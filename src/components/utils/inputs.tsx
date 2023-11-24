@@ -88,6 +88,7 @@ export const FileInput = ({
   setFilesSelected,
   setFiles,
   setFileNameList,
+  setCantidades,
   withArrowIcon,
   errorMessage,
   inputFileRef,
@@ -97,6 +98,7 @@ export const FileInput = ({
   setFilesSelected: React.Dispatch<React.SetStateAction<boolean>>
   setFiles: React.Dispatch<React.SetStateAction<FileList | null>>,
   setFileNameList: React.Dispatch<React.SetStateAction<string[]>>,
+  setCantidades: React.Dispatch<React.SetStateAction<number[]>>,
   errorMessage: string;
   inputFileRef: React.MutableRefObject<HTMLInputElement | null>;
 }) => {
@@ -120,6 +122,7 @@ export const FileInput = ({
 
             for (const file of inputFileRef.current?.files ?? []) {
               setFileNameList((prev) => [...prev, file.name]);
+              setCantidades((prev) => [...prev, 1]);
             }
           }}
           className="hidden"

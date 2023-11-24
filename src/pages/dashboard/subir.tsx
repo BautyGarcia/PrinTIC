@@ -96,7 +96,7 @@ const SubirArchivo: NextPage = () => {
 
   return (
     <Dashboard>
-      <div className="flex flex-col h-full justify-center">
+      <div className="flex flex-col h-full justify-center p-5 md:p-0">
         {
           !areFilesSelected ? (
             <FileInput
@@ -105,23 +105,24 @@ const SubirArchivo: NextPage = () => {
               setFilesSelected={setAreFilesSelected}
               setFiles={setFiles}
               setFileNameList={setFileNameList}
+              setCantidades={setCantidades}
               title="Soltá tus problemas acá abajo"
               withArrowIcon
             />
           ) : (
-            <div className="w-full h-full flex items-center justify-center">
-              <div className="flex flex-col gap-10 justify-between w-full h-full md:max-h-[80%] md:max-w-[80%] overflow-auto">
-                <>
+            <div className="w-full h-full flex flex-col items-center justify-center gap-10">
+              <div className="flex flex-col justify-between w-full h-full md:max-h-[75%] md:max-w-[80%] overflow-auto">
+                <div className="flex flex-col gap-8">
                 {
                   fileNameList.map((fileName, index) => (
-                    <div key={index} className="flex h-[150px] bg-appshell_background rounded-lg">
+                    <div key={index} className="flex h-[150px] bg-appshell_background rounded-lg p-5">
                       <Heading className="sm:text-[30px]">{fileName.split(".")[0] ?? ""}</Heading>
                     </div>
                   ))
                 }
-                </>
-                <ActionButton className="font-spacemono self-end justify-self-end mb-1">Enviar</ActionButton>
+                </div>
               </div>
+              <ActionButton className="font-spacemono mb-1 text-[20px]">Enviar</ActionButton>
             </div>
           )
         }
