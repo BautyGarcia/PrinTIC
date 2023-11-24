@@ -18,6 +18,7 @@ export default {
       },
       backgroundImage: {
         github: "url('/utils/GitHubLogo.png')",
+        main: "url('/general/background.svg')",
       },
     },
     colors: {

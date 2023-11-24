@@ -15,7 +15,7 @@ const Ingreso: NextPage = () => {
     const router = useRouter();
 
     return (
-        <div className="flex flex-col h-screen w-screen items-center justify-center gap-3 px-5">
+        <div className="relative z-10 flex flex-col h-screen w-screen items-center justify-center gap-3 px-5">
             <Title>{"<Ingreso/>"}</Title>
             <div className="flex flex-col w-full min-h-2/6 md:w-2/3 lg:w-1/3 bg-container_background rounded-lg p-5 justify-between gap-10">
                 <div className="flex flex-col w-full gap-6">

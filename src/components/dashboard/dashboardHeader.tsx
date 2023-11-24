@@ -15,7 +15,7 @@ const DashboardHeader = ({
 }) => {
 
   return (
-    <header className="z-10 flex justify-between w-screen h-[100px] bg-appshell_background items-center p-5">
+    <header className="flex justify-between w-screen h-[100px] bg-appshell_background items-center p-5">
       <TicXIcon width={75} height={75} />
       <UserBox nombre={nombre} curso={curso} className="hidden md:flex"/>
       <div onClick={() => setIsOpened(!opened)} className="md:hidden p-1 hover:bg-appshell_background_hover rounded-md">

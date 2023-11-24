@@ -43,10 +43,6 @@
 html,
 body {
     background-color: rgb(8, 3, 39);
-    background-image: url('/general/background.svg');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
     font-family: "Roboto";
     color: azure;
 }

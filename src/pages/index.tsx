@@ -21,7 +21,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/general/ticLogo.ico" />
       </Head>
       <HomeHeader />
-      <main className="flex min-h-screen -translate-y-[50px] flex-col items-center justify-around gap-10 p-10 pt-0 lg:gap-0">
+      <main className="relative z-10 flex min-h-screen -translate-y-[50px] flex-col items-center justify-around gap-10 p-10 pt-0 lg:gap-0">
         <div className="flex min-h-screen flex-col items-center justify-center gap-4">
           <div className="flex flex-col items-center">
             <Title>{"<PrinTIC/>"}</Title>
