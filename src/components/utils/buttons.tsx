@@ -32,7 +32,7 @@ export const ActionButton = ({
     children?: string,
     className?: string,
     isLoading?: boolean,
-    onClick?: () => any
+    onClick?: (e: any) => any
 }) => {
     return (
         <button

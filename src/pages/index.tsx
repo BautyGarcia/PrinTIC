@@ -27,9 +27,9 @@ const Home: NextPage = () => {
             <Title>{"<PrinTIC/>"}</Title>
             <Subtitle>La forma más fácil de imprimir en TIC</Subtitle>
           </div>
-          <ShowcaseButton onClick={() => void router.push("/ingreso")}>
+          <ActionButton className="font-spacemono text-lg" onClick={() => void router.push("/ingreso")}>
             Entrar
-          </ShowcaseButton>
+          </ActionButton>
         </div>
         <div className="flex min-h-screen flex-col items-center justify-around gap-20 md:gap-0 lg:flex-row">
           <Glassbox
@@ -74,7 +74,7 @@ const Home: NextPage = () => {
           </div>
           <div className="flex w-screen flex-col items-center gap-8 p-10">
             <TextZone placeholder="Cambiaría..." />
-            <ActionButton className="w-2/3 max-w-[200px]">Enviar</ActionButton>
+            <ActionButton className="w-2/3 max-w-[200px] font-spacemono">Enviar</ActionButton>
           </div>
         </div>
       </main>
