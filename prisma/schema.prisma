@@ -26,17 +26,22 @@ enum Estado {
   CADUCADO
 }
 
+enum Materia {
+  TIMI
+  PROYECTO
+}
+
 model Pedido {
   id                    String   @id @default(cuid())
   fecha                 DateTime
   estado                Estado   @default(PENDIENTE)
   user                  User     @relation("Alumno", fields: [userId], references: [id], onDelete: Cascade)
   userId                String
-  materia               String
+  materia               Materia
   piezas                Pieza[]
   aprobador             User?    @relation("Profesor", fields: [aprobadorId], references: [id])
   aprobadorId           String?
-  observacionesAlumno   String?
+  observacionesAlumno   String?  @db.Text
   observacionesProfesor String?
 
   @@index([userId])
