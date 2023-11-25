@@ -10,22 +10,28 @@ export const TextInput = ({
   value,
   setValue,
   isError,
+  className,
+  titleClassName,
 }: {
-  label: string;
-  placeholder: string;
-  value: string;
-  setValue: Dispatch<SetStateAction<string>>;
-  isError: boolean;
+  label: string,
+  placeholder: string,
+  value: string,
+  setValue: Dispatch<SetStateAction<string>>,
+  isError: boolean,
+  className?: string
+  titleClassName?: string
 }) => {
   return (
-    <div className="flex flex-col gap-1">
-      <h2 className="text-lg font-bold">{label}</h2>
+    <div className="flex flex-col">
+      {label && <Heading className={twMerge("text-[25px]", titleClassName)}>{label}</Heading>}
       <input
         type="text"
         placeholder={placeholder}
         value={value}
-        className={`w-full rounded-md border-2  border-solid bg-input_background p-3 ${isError ? "border-red_tic" : "border-input_border"
-          }`}
+        className={
+          twMerge(
+            `rounded-md border-2 border-solid bg-input_background p-3 ${isError ? "border-red_tic" : "border-input_border"}`,
+            className)}
         onChange={(e) => {
           setValue(e.target.value);
         }}
@@ -40,12 +46,14 @@ export const PasswordInput = ({
   value,
   setValue,
   isError,
+  className,
 }: {
   label: string;
   placeholder: string;
   value: string;
   setValue: Dispatch<SetStateAction<string>>;
   isError: boolean;
+  className?: string;
 }) => {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -58,8 +66,10 @@ export const PasswordInput = ({
           placeholder={
             showPassword ? placeholder : placeholder.replaceAll(/./g, "*")
           }
-          className={`w-full rounded-md border-2 border-solid bg-input_background p-3 ${isError ? "border-red_tic" : "border-input_border"
-            }`}
+          className={twMerge(
+            `rounded-md border-2 p-3 border-solid bg-input_background ${isError ? "border-red_tic" : "border-input_border"}`,
+            className
+          )}
           onChange={(e) => setValue(e.target.value)}
           value={value}
         />

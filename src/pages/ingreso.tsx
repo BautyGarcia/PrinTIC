@@ -50,8 +50,8 @@ const Ingreso: NextPage = () => {
                 <Title>{"<Ingreso/>"}</Title>
                 <div className="flex flex-col w-full min-h-2/6 md:w-2/3 lg:w-1/3 bg-container_background rounded-lg p-5">
                     <form className="flex flex-col w-full gap-6" onSubmit={(e) => handleSubmit(e)}>
-                        <TextInput label="Mail" placeholder="DNI@est.ort.edu.ar" value={mail} setValue={setMail} isError={!(errorMessage.length === 0)} />
-                        <PasswordInput label="Contraseña" placeholder="inventaronelVAR" value={password} setValue={setPassword} isError={!(errorMessage.length === 0)} />
+                        <TextInput titleClassName="text-lg font-roboto" label="Mail" placeholder="DNI@est.ort.edu.ar" value={mail} setValue={setMail} isError={!(errorMessage.length === 0)} />
+                        <PasswordInput className="w-full" label="Contraseña" placeholder="inventaronelVAR" value={password} setValue={setPassword} isError={!(errorMessage.length === 0)} />
                         {errorMessage.length > 0 && <p className="text-red_tic text-center text-lg">{errorMessage}</p>}
 
                         <div className="flex flex-col gap-1 mt-5">
