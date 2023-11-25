@@ -4,23 +4,19 @@ import Head from "next/head";
 import { api } from "~/utils/api";
 import { Heading, Text } from "~/components/utils/texts";
 import { ActionButton } from "~/components/utils/buttons";
+import { SelectInput } from "~/components/utils/inputs";
+import { useState } from "react";
+import { coloresPedido } from "~/utils/objects";
+import { estadosPedidoKeys, estadosPedidoValues } from "~/utils/objects";
+import { type Estado } from "@prisma/client";
 
 const Solicitudes: NextPage = () => {
-    const { data: pedidosData } = api.pedidos.getAllPedidos.useQuery({});
-
-    const coloresPedido = {
-        "PENDIENTE": "bg-[#ff6c31]",
-        "APROBADO": "bg-[#65FF7E]",
-        "IMPRIMIENDO": "bg-[#5e2b97]",
-        "ESPERANDO_RETIRO": "bg-[#18d0da]",
-        "ENTREGADO": "bg-[#E61366]",
-        'CON_ERRORES': "bg-[#FF4343]",
-        "DENEGADO": "bg-[#6A6A6A]",
-        'FALTA_HACER_PIEZAS': "bg-[#ed58ec]",
-        "CADUCADO": "bg-[#6A6A6A]",
-        "TIMI": "bg-[#008080]",
-        "PROYECTO": "bg-[#18d0da]"
-    }
+    const [materia, setMateria] = useState("");
+    const [estado, setEstado] = useState("");
+    const { data: pedidosData, refetch: refetchPedidos } = api.pedidos.getAllPedidos.useQuery({
+        materia,
+        estado
+    });
 
     const formatDate = (date: Date) => {
         const now = new Date();
@@ -49,8 +45,29 @@ const Solicitudes: NextPage = () => {
                 <link rel="icon" href="/general/ticLogo.ico" />
             </Head>
             <Dashboard>
-                <div className="w-full h-[100px] bg-appshell_secondary">
-
+                <div className="flex items-center p-3 px-5 gap-5 w-full h-[120px] bg-appshell_secondary">
+                    <SelectInput
+                        title="Materia"
+                        labels={["Proyecto", "TIMI", "Todos"]}
+                        options={["PROYECTO", "TIMI", ""]}
+                        setValue={(e) => {
+                            setMateria(e);
+                            void refetchPedidos();
+                        }}
+                        value={materia ?? "Todos"}
+                        className="w-[200px] h-[50px]"
+                    />
+                    <SelectInput
+                        title="Estado"
+                        labels={estadosPedidoValues}
+                        options={estadosPedidoKeys}
+                        setValue={(e) => {
+                            setEstado(e);
+                            void refetchPedidos();
+                        }}
+                        value={estado as Estado}
+                        className="w-[200px] h-[50px]"
+                    />
                 </div>
                 <div className="flex flex-wrap w-full justify-evenly h-full p-8 pb-[250px] gap-8 overflow-scroll">
                     {

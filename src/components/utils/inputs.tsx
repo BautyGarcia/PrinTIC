@@ -227,18 +227,23 @@ export const SelectInput = ({
   labels,
   value,
   setValue,
+  className
 }: {
   title: string;
   options: string[];
   labels: string[];
-  value: string;
+  value?: string;
   setValue: Dispatch<SetStateAction<string>>;
+  className?: string;
 }) => {
   return (
-    <>
+    <div className="flex flex-col">
       {title && <Heading className="text-[25px]">{title}</Heading>}
       <select
-        className="w-full rounded-md border-2 border-solid bg-input_background p-3 border-input_border outline-none"
+        className={twMerge(
+          "rounded-md border-2 border-solid bg-input_background p-3 border-input_border outline-none",
+          className
+        )}
         onChange={(e) => setValue((e.target.value).toUpperCase())}
         value={value}
       >
@@ -248,6 +253,6 @@ export const SelectInput = ({
           </option>
         ))}
       </select>
-    </>
+    </div>
   );
 }

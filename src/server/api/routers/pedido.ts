@@ -4,14 +4,15 @@ import {
     protectedProcedure,
     publicProcedure,
 } from "~/server/api/trpc";
-import { Materia } from "@prisma/client";
+import type { Materia, Estado } from "@prisma/client";
 
 export const pedidoRouter = createTRPCRouter({
     crearPedido: protectedProcedure
-        .input(z.object({ 
-            materia: z.string(), 
-            notas: z.string(), 
-            piezas: z.array(z.object({ nombre: z.string(), cantidad: z.number(), url: z.string() })) }))
+        .input(z.object({
+            materia: z.string(),
+            notas: z.string(),
+            piezas: z.array(z.object({ nombre: z.string(), cantidad: z.number(), url: z.string() }))
+        }))
         .mutation(async ({ input, ctx }) => {
             const { materia, notas, piezas } = input;
 
@@ -36,8 +37,10 @@ export const pedidoRouter = createTRPCRouter({
             return pedido.id;
         }),
     getAllPedidos: publicProcedure
-        .input(z.object({}))
-        .query(async ({ ctx }) => {
+        .input(z.object({ materia: z.string().optional(), estado: z.string().optional() }))
+        .query(async ({ ctx, input }) => {
+            const { materia, estado } = input;
+
             const pedidos = await ctx.db.pedido.findMany({
                 select: {
                     id: true,
@@ -62,7 +65,11 @@ export const pedidoRouter = createTRPCRouter({
                     }
                 },
                 orderBy: {
-                    fecha: "desc"
+                    fecha: "desc",
+                },
+                where: {
+                    estado: estado ? estado as Estado : {},
+                    materia: materia ? materia as Materia : {},
                 }
             });
 
