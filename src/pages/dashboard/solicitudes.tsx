@@ -4,7 +4,7 @@ import Head from "next/head";
 import { api } from "~/utils/api";
 import { Heading, Text } from "~/components/utils/texts";
 import { ActionButton } from "~/components/utils/buttons";
-import { SelectInput } from "~/components/utils/inputs";
+import { SelectInput, TextInput } from "~/components/utils/inputs";
 import { useState } from "react";
 import { estadosPedidoKeys, estadosPedidoValues } from "~/utils/objects";
 import { type Estado } from "@prisma/client";
@@ -26,6 +26,8 @@ const coloresPedido = {
 const Solicitudes: NextPage = () => {
     const [materia, setMateria] = useState("");
     const [estado, setEstado] = useState("");
+    const [alumnoName, setAlumnoName] = useState("");
+    const [curso, setCurso] = useState("");
     const { data: pedidosData } = api.pedidos.getAllPedidos.useQuery({});
 
     const formatDate = (date: Date) => {
@@ -62,6 +64,18 @@ const Solicitudes: NextPage = () => {
             });
         }
 
+        if (alumnoName !== "") {
+            filteredData = filteredData?.filter((pedido) => {
+                return pedido.user.name?.toLowerCase().includes(alumnoName.toLowerCase() ?? "");
+            });
+        }
+
+        if (curso !== "") {
+            filteredData = filteredData?.filter((pedido) => {
+                return pedido.user.curso?.toLowerCase().includes(curso.toLowerCase() ?? "");
+            });
+        }
+
         return filteredData;
     }
 
@@ -73,7 +87,7 @@ const Solicitudes: NextPage = () => {
                 <link rel="icon" href="/general/ticLogo.ico" />
             </Head>
             <Dashboard>
-                <div className="flex items-center p-3 px-5 gap-5 w-full h-[120px] bg-appshell_secondary">
+                <div className="flex flex-wrap items-center p-3 px-5 gap-5 w-full h-min bg-appshell_secondary">
                     <SelectInput
                         title="Materia"
                         labels={["Proyecto", "TIMI", "Todos"]}
@@ -83,7 +97,7 @@ const Solicitudes: NextPage = () => {
                             filterData();
                         }}
                         value={materia ?? "Todos"}
-                        className="w-[200px] h-[50px]"
+                        className="w-[150px] md:w-[200px]"
                     />
                     <SelectInput
                         title="Estado"
@@ -94,7 +108,29 @@ const Solicitudes: NextPage = () => {
                             filterData();
                         }}
                         value={estado as Estado}
-                        className="w-[200px] h-[50px]"
+                        className="w-[150px] md:w-[200px]"
+                    />
+                    <TextInput
+                        className="p-[10.5px]"
+                        label="Nombre"
+                        setValue={(e) => {
+                            setAlumnoName(e);
+                            filterData();
+                        }}
+                        placeholder="Dario Misch..."
+                        isError={false}
+                        value={alumnoName}
+                    />
+                    <TextInput
+                        className="p-[10.5px]"
+                        label="Curso"
+                        setValue={(e) => {
+                            setCurso(e);
+                            filterData();
+                        }}
+                        placeholder="5E"
+                        isError={false}
+                        value={curso}
                     />
                 </div>
                 <div className="flex flex-wrap w-full justify-evenly h-full p-8 pb-[250px] gap-8 overflow-scroll">
@@ -111,7 +147,7 @@ const Solicitudes: NextPage = () => {
                                     <div className="w-full h-[5px] bg-pink_tic" />
 
                                     <div className="h-full">
-                                        <Text className="break-all text-clip line-clamp-4 truncate-none overflow-scroll">{`${pedido.observacionesAlumno ? pedido.observacionesAlumno : "No hay notas"}`}</Text>
+                                        <Text className="break-all line-clamp-4 overflow-scroll">{`${pedido.observacionesAlumno ? pedido.observacionesAlumno : "No hay notas"}`}</Text>
                                     </div>
 
                                     <div className="flex w-full h-min self-end">
