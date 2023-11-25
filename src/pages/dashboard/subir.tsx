@@ -20,7 +20,7 @@ const SubirArchivo: NextPage = () => {
   const { mutate: getSignedUrls } = api.files.signFiles.useMutation();
   const { mutate: crearPedido } = api.pedidos.crearPedido.useMutation();
   const [notes, setNotes] = useState("");
-  const [materia, setMateria] = useState("Proyecto");
+  const [materia, setMateria] = useState("PROYECTO");
   const [cantidades, setCantidades] = useState<Array<number>>([]);
   const { data: sessionData } = useSession();
 
@@ -31,7 +31,7 @@ const SubirArchivo: NextPage = () => {
     setAreFilesSelected(false);
     setIsUploading(false);
     setNotes("");
-    setMateria("Proyecto");
+    setMateria("PROYECTO");
     setCantidades([]);
   }
 
@@ -156,7 +156,8 @@ const SubirArchivo: NextPage = () => {
                   <SelectInput
                     setValue={setMateria}
                     title="Materia"
-                    options={["Proyecto", "TIMI"]}
+                    options={["PROYECTO", "TIMI"]}
+                    labels={["Proyecto", "TIMI"]}
                     value={materia}
                   />
                   <TextZone
