@@ -165,7 +165,7 @@ export const AmountInput = ({
 }) => {
   return (
     <div className="flex justify-center items-center gap-5 w-fit h-[50px] bg-pink_tic p-3 rounded-lg">
-      <div className="w-1/3 hover:bg-pink_tic_hover rounded-lg p-1 button-animation"
+      <button className="w-1/3 hover:bg-pink_tic_hover rounded-lg p-1 button-animation"
         onClick={() => {
           setCantidades(prev => {
             const newCantidades = [...prev];
@@ -175,11 +175,11 @@ export const AmountInput = ({
           });
         }}>
         <IconMinus />
-      </div>
+      </button>
       <div className="w-1/3">
         <Heading className="sm:text-[18px] text-center">{`${cantidades[index]}`}</Heading>
       </div>
-      <div className="w-1/3 hover:bg-pink_tic_hover rounded-lg p-1 button-animation"
+      <button className="w-1/3 hover:bg-pink_tic_hover rounded-lg p-1 button-animation"
         onClick={() => {
           setCantidades(prev => {
             const newCantidades = [...prev];
@@ -188,7 +188,7 @@ export const AmountInput = ({
           });
         }}>
         <IconPlus />
-      </div>
+      </button>
     </div>
   );
 }
