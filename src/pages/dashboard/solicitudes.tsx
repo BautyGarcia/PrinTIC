@@ -26,10 +26,7 @@ const coloresPedido = {
 const Solicitudes: NextPage = () => {
     const [materia, setMateria] = useState("");
     const [estado, setEstado] = useState("");
-    const { data: pedidosData, refetch: refetchPedidos } = api.pedidos.getAllPedidos.useQuery({
-        materia,
-        estado
-    });
+    const { data: pedidosData } = api.pedidos.getAllPedidos.useQuery({});
 
     const formatDate = (date: Date) => {
         const now = new Date();
@@ -50,6 +47,24 @@ const Solicitudes: NextPage = () => {
         }
     }
 
+    const filterData = () => {
+        let filteredData = pedidosData;
+
+        if (materia !== "") {
+            filteredData = filteredData?.filter((pedido) => {
+                return pedido.materia === materia;
+            });
+        }
+
+        if (estado !== "") {
+            filteredData = filteredData?.filter((pedido) => {
+                return pedido.estado === estado;
+            });
+        }
+
+        return filteredData;
+    }
+
     return (
         <>
             <Head>
@@ -65,7 +80,7 @@ const Solicitudes: NextPage = () => {
                         options={["PROYECTO", "TIMI", ""]}
                         setValue={(e) => {
                             setMateria(e);
-                            void refetchPedidos();
+                            filterData();
                         }}
                         value={materia ?? "Todos"}
                         className="w-[200px] h-[50px]"
@@ -76,7 +91,7 @@ const Solicitudes: NextPage = () => {
                         options={estadosPedidoKeys}
                         setValue={(e) => {
                             setEstado(e);
-                            void refetchPedidos();
+                            filterData();
                         }}
                         value={estado as Estado}
                         className="w-[200px] h-[50px]"
@@ -84,7 +99,7 @@ const Solicitudes: NextPage = () => {
                 </div>
                 <div className="flex flex-wrap w-full justify-evenly h-full p-8 pb-[250px] gap-8 overflow-scroll">
                     {
-                        pedidosData?.map((pedido) => {
+                        filterData()?.map((pedido) => {
                             return (
                                 <div key={pedido.id} className="solicitud flex flex-col w-[450px] h-[450px] bg-appshell_background rounded-lg p-6 gap-5">
                                     <Heading className="text-[40px]">{`${pedido.user.name} - ${pedido.user.curso}`}</Heading>

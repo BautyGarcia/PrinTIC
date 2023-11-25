@@ -37,10 +37,8 @@ export const pedidoRouter = createTRPCRouter({
             return pedido.id;
         }),
     getAllPedidos: publicProcedure
-        .input(z.object({ materia: z.string().optional(), estado: z.string().optional() }))
-        .query(async ({ ctx, input }) => {
-            const { materia, estado } = input;
-
+        .input(z.object({}))
+        .query(async ({ ctx }) => {
             const pedidos = await ctx.db.pedido.findMany({
                 select: {
                     id: true,
@@ -66,10 +64,6 @@ export const pedidoRouter = createTRPCRouter({
                 },
                 orderBy: {
                     fecha: "desc",
-                },
-                where: {
-                    estado: estado ? estado as Estado : {},
-                    materia: materia ? materia as Materia : {},
                 }
             });
 
