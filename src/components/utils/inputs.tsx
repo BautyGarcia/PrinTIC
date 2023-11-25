@@ -110,7 +110,7 @@ export const FileInput = ({
         <Heading>{title ?? ""}</Heading>
         {withArrowIcon && <IconCornerRightDown size={50} className="hidden lg:block mt-8" />}
       </div>
-      <label className="flex flex-col items-center justify-center w-full py-20 md:w-2/3 max-w-[800px] h-2/3 max-h-[500px] bg-appshell_background rounded-xl border-dashed border-[3px] border-pink_tic gap-10">
+      <label className="flex flex-col items-center justify-center w-full py-20 md:w-2/3 max-w-[800px] h-2/3 max-h-[500px] bg-appshell_background rounded-xl border-solid border-[3px] border-pink_tic gap-10">
         <input
           multiple
           ref={inputFileRef}
@@ -224,11 +224,13 @@ export const TextZone = ({
 export const SelectInput = ({
   title,
   options,
+  labels,
   value,
   setValue,
 }: {
   title: string;
   options: string[];
+  labels: string[];
   value: string;
   setValue: Dispatch<SetStateAction<string>>;
 }) => {
@@ -237,11 +239,11 @@ export const SelectInput = ({
       {title && <Heading className="text-[25px]">{title}</Heading>}
       <select
         className="w-full rounded-md border-2 border-solid bg-input_background p-3 border-input_border outline-none"
-        onChange={(e) => setValue(e.target.value)}
+        onChange={(e) => setValue((e.target.value).toUpperCase())}
         value={value}
       >
         {options.map((option, index) => (
-          <option key={index} value={option}>
+          <option key={index} value={option} label={labels[index]}>
             {option}
           </option>
         ))}
