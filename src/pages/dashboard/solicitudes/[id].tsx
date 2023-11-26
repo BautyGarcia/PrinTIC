@@ -39,7 +39,7 @@ const Solicitud: NextPage = () => {
                 <link rel='icon' href='/general/ticLogo.ico' />
             </Head>
             <div className='relative z-10 w-screen h-screen max-h-screen'>
-                <div className='flex flex-col h-full w-full justify-between gap-8 p-5'>
+                <div className='flex flex-col h-full w-full justify-between gap-8 p-5 px-10'>
                     <div className='flex flex-col gap-8'>
                         <Heading className='truncate'>{`${nombrePieza}`}</Heading>
                         <Heading className='truncate'>{`Cantidad: ${cantidadPieza}`}</Heading>
