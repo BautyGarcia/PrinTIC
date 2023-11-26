@@ -2,6 +2,12 @@
 import { twMerge } from "tailwind-merge"
 import { Loader } from "~/components/utils/loaders";
 import { IconTrash } from "@tabler/icons-react";
+import { useState } from "react";
+
+interface options {
+    label: string,
+    onClick: () => any
+}[]
 
 export const ShowcaseButton = ({
     children,
@@ -73,3 +79,36 @@ export const TrashButton = ({
         </button>
     )
 }
+
+export const DropdownMenu = ({ options }: { options: options[] }) => {
+    const [isOpen, setIsOpen] = useState(false);
+
+    return (
+        <div className="relative inline-block">
+            <ActionButton 
+                onClick={() => setIsOpen(!isOpen)}
+                className="font-spacemono text-[18px]"
+            >
+                Acciones
+            </ActionButton>
+            {isOpen && (
+                <div className="solicitud absolute flex flex-col right-0 w-[178px] p-1 mt-1 rounded-lg items-center bg-pink_tic">
+                    {options.map((option, index) => (
+                        <ActionButton 
+                            key={index} 
+                            className="block font-spacemono"
+                            onClick={() => {
+                                setIsOpen(false);
+                                option.onClick();
+                            }}
+                        >
+                            {option.label}
+                        </ActionButton>
+                    ))}
+                </div>
+            )}
+        </div>
+    );
+};
+
+export default DropdownMenu;

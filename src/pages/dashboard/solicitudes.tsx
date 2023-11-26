@@ -3,11 +3,14 @@ import Dashboard from ".";
 import Head from "next/head";
 import { api } from "~/utils/api";
 import { Heading, Text } from "~/components/utils/texts";
-import { ActionButton } from "~/components/utils/buttons";
+import DropdownMenu, { ActionButton } from "~/components/utils/buttons";
 import { SelectInput, TextInput } from "~/components/utils/inputs";
 import { useState } from "react";
 import { estadosPedidoKeys, estadosPedidoValues } from "~/utils/objects";
 import { type Estado } from "@prisma/client";
+import JSZip from 'jszip';
+import { saveAs } from 'file-saver';
+import { date } from "zod";
 
 const coloresPedido = {
     "PENDIENTE": "bg-[#ff6c31]",
@@ -77,6 +80,19 @@ export const Solicitudes: NextPage = () => {
         }
 
         return filteredData;
+    }
+
+    async function downloadAsZip(urls: { url: string, name: string }[], studentInfo: { studentName: string, curso: string }) {
+        const zip = new JSZip();
+        
+        for (const url of urls) {
+            const response = await fetch(url.url);
+            const blob = await response.blob();
+            zip.file(`${url.name}.stl`, blob);
+        }
+    
+        const zipBlob = await zip.generateAsync({ type: "blob" });
+        saveAs(zipBlob, `${studentInfo.studentName}_${studentInfo.curso}_${Date.now()}.zip`);
     }
 
     return (
@@ -150,13 +166,33 @@ export const Solicitudes: NextPage = () => {
                                         <Text className="break-all line-clamp-4 overflow-scroll">{`${pedido.observacionesAlumno ? pedido.observacionesAlumno : "No hay notas"}`}</Text>
                                     </div>
 
-                                    <div className="flex w-full h-min self-end">
-                                        <ActionButton 
+                                    <div className="flex w-full h-min self-end justify-between">
+                                        <ActionButton
                                             className="font-spacemono text-[18px]"
                                             onClick={() => {
                                                 void window.open(`solicitudes/${pedido.id}`, "_blank");
-                                            }}    
+                                            }}
                                         >Ver</ActionButton>
+                                        <DropdownMenu options={
+                                            [
+                                                {
+                                                    label: "Cambiar Estado",
+                                                    onClick: () => {
+                                                        console.log("Cambiar Estado");
+                                                    }
+                                                },
+                                                {
+                                                    label: "Descargar Todo",
+                                                    onClick: () => {
+                                                        const urls:  { url: string, name: string }[] = [];
+                                                        pedido.piezas.forEach((pieza) => {
+                                                            urls.push({ url: pieza.url, name: pieza.nombre });
+                                                        });
+                                                        downloadAsZip(urls, { studentName: pedido.user.name ?? "", curso: pedido.user.curso });
+                                                    }
+                                                }
+                                            ]
+                                        }/>
                                     </div>
                                 </div>
                             )

@@ -87,9 +87,9 @@ const Solicitud: NextPage = () => {
                         <div className='flex flex-col justify-between w-[50%] h-[95%] pb-10 gap-5 md:gap-0 md:pb-0 '>
                             <Heading className='w-min'>{`${pedido?.observacionesAlumno}`}</Heading>
                             <ActionButton 
-                                className='text-xl w-min p-3 font-spacemono'
+                                className='text-xl w-fit p-3 font-spacemono'
                                 onClick={() => handleDownload(urlPieza, nombrePieza)}
-                            >Descargar</ActionButton>
+                            >Descargar esta pieza</ActionButton>
                         </div>
                     </div>
                 </div>

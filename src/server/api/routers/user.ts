@@ -10,7 +10,7 @@ export const userRotuer = createTRPCRouter({
     .input(z.object({ name: z.string(), email: z.string(), password: z.string() }))
     .mutation(async ({ input, ctx }) => {
         const { email, password, name } = input;
-
+      
         const salt = await bcrypt.genSalt();
         const hashedPassword = await bcrypt.hash(password, salt);
 
