@@ -2,7 +2,7 @@
 import { twMerge } from "tailwind-merge"
 import { Loader } from "~/components/utils/loaders";
 import { IconTrash } from "@tabler/icons-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface options {
     label: string,
@@ -84,9 +84,23 @@ export const TrashButton = ({
 
 export const DropdownMenu = ({ options }: { options: options[] }) => {
     const [isOpen, setIsOpen] = useState(false);
+    const dropdownRef = useRef<HTMLDivElement>(null);
 
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+  
+    useEffect(() => {
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => {
+        document.removeEventListener('mousedown', handleClickOutside);
+      };
+    }, []);
+    
     return (
-        <div className="relative inline-block">
+        <div className="relative inline-block" ref={dropdownRef}>
             <ActionButton 
                 onClick={() => setIsOpen(!isOpen)}
                 className="font-spacemono text-[18px]"
