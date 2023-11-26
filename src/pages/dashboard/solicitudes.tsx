@@ -3,8 +3,8 @@ import Dashboard from ".";
 import Head from "next/head";
 import { api } from "~/utils/api";
 import { Heading, Text } from "~/components/utils/texts";
-import DropdownMenu, { ActionButton } from "~/components/utils/buttons";
-import { SelectInput, TextInput } from "~/components/utils/inputs";
+import { ActionButton, DropdownMenu } from "~/components/utils/buttons";
+import { SelectInput, TextInput, DropdownSelect } from "~/components/utils/inputs";
 import { useState } from "react";
 import { estadosPedidoKeys, estadosPedidoValues } from "~/utils/objects";
 import { type Estado } from "@prisma/client";
@@ -83,13 +83,13 @@ export const Solicitudes: NextPage = () => {
 
     async function downloadAsZip(urls: { url: string, name: string }[], studentInfo: { studentName: string, curso: string }) {
         const zip = new JSZip();
-        
+
         for (const url of urls) {
             const response = await fetch(url.url);
             const blob = await response.blob();
             zip.file(`${url.name}.stl`, blob);
         }
-    
+
         const zipBlob = await zip.generateAsync({ type: "blob" });
         saveAs(zipBlob, `${studentInfo.studentName}_${studentInfo.curso}_${Date.now()}.zip`);
     }
@@ -103,30 +103,26 @@ export const Solicitudes: NextPage = () => {
             </Head>
             <Dashboard>
                 <div className="flex flex-wrap items-center p-3 px-5 gap-5 w-full h-min bg-appshell_secondary">
-                    <SelectInput
+                    <DropdownSelect 
                         title="Materia"
-                        labels={["Proyecto", "TIMI", "Todos"]}
-                        options={["PROYECTO", "TIMI", ""]}
+                        labels={["Proyecto", "TIMI", "Todas"]}
+                        values={["PROYECTO", "TIMI", ""]}
                         setValue={(e) => {
                             setMateria(e);
                             filterData();
                         }}
-                        value={materia ?? "Todos"}
-                        className="w-[150px] md:w-[200px]"
                     />
-                    <SelectInput
+                    <DropdownSelect 
                         title="Estado"
                         labels={estadosPedidoValues}
-                        options={estadosPedidoKeys}
+                        values={estadosPedidoKeys}
                         setValue={(e) => {
                             setEstado(e);
                             filterData();
                         }}
-                        value={estado as Estado}
-                        className="w-[150px] md:w-[200px]"
                     />
                     <TextInput
-                        className="p-[10.5px]"
+                        className="p-2"
                         label="Nombre"
                         setValue={(e) => {
                             setAlumnoName(e);
@@ -137,7 +133,7 @@ export const Solicitudes: NextPage = () => {
                         value={alumnoName}
                     />
                     <TextInput
-                        className="p-[10.5px]"
+                        className="p-2"
                         label="Curso"
                         setValue={(e) => {
                             setCurso(e);
@@ -148,7 +144,7 @@ export const Solicitudes: NextPage = () => {
                         value={curso}
                     />
                 </div>
-                <div className="flex flex-wrap w-full justify-center h-full p-8 pb-[250px] gap-8 overflow-scroll">
+                <div className="flex flex-wrap w-full justify-center h-full p-8 pb-[400px] gap-8 overflow-scroll">
                     {
                         filterData()?.map((pedido) => {
                             return (
@@ -172,26 +168,27 @@ export const Solicitudes: NextPage = () => {
                                                 void window.open(`solicitudes/${pedido.id}`, "_blank");
                                             }}
                                         >Ver</ActionButton>
-                                        <DropdownMenu options={
-                                            [
-                                                {
-                                                    label: "Cambiar Estado",
-                                                    onClick: () => {
-                                                        console.log("Cambiar Estado");
+                                        <DropdownMenu
+                                            options={
+                                                [
+                                                    {
+                                                        label: "Cambiar Estado",
+                                                        onClick: () => {
+                                                            console.log("Cambiar Estado");
+                                                        }
+                                                    },
+                                                    {
+                                                        label: "Descargar Todo",
+                                                        onClick: () => {
+                                                            const urls: { url: string, name: string }[] = [];
+                                                            pedido.piezas.forEach((pieza) => {
+                                                                urls.push({ url: pieza.url, name: pieza.nombre });
+                                                            });
+                                                            void downloadAsZip(urls, { studentName: pedido.user.name ?? "", curso: pedido.user.curso });
+                                                        }
                                                     }
-                                                },
-                                                {
-                                                    label: "Descargar Todo",
-                                                    onClick: () => {
-                                                        const urls:  { url: string, name: string }[] = [];
-                                                        pedido.piezas.forEach((pieza) => {
-                                                            urls.push({ url: pieza.url, name: pieza.nombre });
-                                                        });
-                                                        void downloadAsZip(urls, { studentName: pedido.user.name ?? "", curso: pedido.user.curso });
-                                                    }
-                                                }
-                                            ]
-                                        }/>
+                                                ]
+                                            } />
                                     </div>
                                 </div>
                             )

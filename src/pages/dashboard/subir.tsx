@@ -1,6 +1,6 @@
 import { type NextPage } from "next";
 import Dashboard from ".";
-import { FileInput, AmountInput, TextZone, SelectInput } from "~/components/utils/inputs";
+import { FileInput, AmountInput, TextZone, DropdownSelect } from "~/components/utils/inputs";
 import { useState } from "react";
 import React from "react";
 import { api } from "~/utils/api";
@@ -153,12 +153,12 @@ const SubirArchivo: NextPage = () => {
                   }
                 </div>
                 <div className="flex flex-col w-full lg:w-1/3 h-fit bg-appshell_background rounded-lg p-5 gap-5">
-                  <SelectInput
-                    setValue={setMateria}
+                  <DropdownSelect 
                     title="Materia"
-                    options={["PROYECTO", "TIMI"]}
                     labels={["Proyecto", "TIMI"]}
-                    value={materia}
+                    values={["PROYECTO", "TIMI"]}
+                    setValue={setMateria}
+                    inputClassName="w-full md:w-full"
                   />
                   <TextZone
                     placeholder="Fijate que..."

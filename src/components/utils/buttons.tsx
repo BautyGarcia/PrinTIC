@@ -34,19 +34,21 @@ export const ActionButton = ({
     children,
     className,
     isLoading,
-    onClick
+    onClick,
+    withAnimation = true
 }: {
-    children?: string,
+    children?: any,
     className?: string,
     isLoading?: boolean,
     onClick?: (e: any) => any
+    withAnimation?: boolean
 }) => {
     return (
         <button
             onClick={onClick}
             disabled={isLoading}
             className={twMerge(
-                "bg-pink_tic hover:bg-pink_tic_hover font-bold py-2 px-4 rounded-md flex justify-center gap-4 button-animation",
+                `bg-pink_tic hover:bg-pink_tic_hover font-bold py-2 px-4 rounded-md flex justify-center gap-4 ${withAnimation ? "button-animation" : ""}`,
                 className
             )}>
             {isLoading && <Loader />}

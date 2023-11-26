@@ -1,5 +1,5 @@
 import { type Dispatch, type SetStateAction, useState } from "react";
-import { IconEyeClosed, IconEye, IconUpload, IconCornerRightDown, IconPlus, IconMinus } from "@tabler/icons-react";
+import { IconEyeClosed, IconEye, IconUpload, IconCornerRightDown, IconPlus, IconMinus, IconChevronDown } from "@tabler/icons-react";
 import { ActionButton } from "./buttons";
 import { Heading } from "./texts";
 import { twMerge } from "tailwind-merge"
@@ -263,6 +263,56 @@ export const SelectInput = ({
           </option>
         ))}
       </select>
+    </div>
+  );
+}
+
+export const DropdownSelect = ({
+  labels,
+  values,
+  setValue,
+  title,
+  inputClassName
+}: {
+  labels: string[],
+  values: string[],
+  setValue: Dispatch<SetStateAction<string>>,
+  title: string
+  inputClassName?: string
+}) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [label, setLabel] = useState("");
+  return (
+    <div className="flex flex-col">
+      <Heading className="text-[25px]">{title}</Heading>
+      <div className="relative inline-block">
+        <ActionButton
+          className={twMerge("bg-input_background border-2 border-input_border w-[150px] md:w-[200px] hover:bg-[#000] flex justify-between px-2", inputClassName)}
+          onClick={() => setIsOpen(!isOpen)}
+          withAnimation={false}
+        >
+          {label || "Todas"} <IconChevronDown />
+        </ActionButton>
+        {
+          isOpen && (
+            <div className="absolute flex flex-col right-0 w-[178px] p-1 mt-1 rounded-lg bg-input_background">
+              {labels.map((label, index) => (
+                <ActionButton
+                  key={index}
+                  className="block font-spacemono bg-input_background text-left hover:bg-input_border"
+                  onClick={() => {
+                    setIsOpen(false);
+                    setLabel(label);
+                    setValue(values[index] ?? "");
+                  }}
+                >
+                  {label}
+                </ActionButton>
+              ))}
+            </div>
+          )
+        }
+      </div>
     </div>
   );
 }

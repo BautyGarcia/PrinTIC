@@ -12,4 +12,4 @@ const estadosPedido = {
 }
 
 export const estadosPedidoValues = Object.values(estadosPedido);
-export const estadosPedidoKeys = Object.keys(estadosPedido);
+export const estadosPedidoKeys = Object.keys(estadosPedido); 
