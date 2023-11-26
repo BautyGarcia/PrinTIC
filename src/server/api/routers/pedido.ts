@@ -4,7 +4,7 @@ import {
     protectedProcedure,
     publicProcedure,
 } from "~/server/api/trpc";
-import type { Materia, Estado } from "@prisma/client";
+import type { Materia } from "@prisma/client";
 
 export const pedidoRouter = createTRPCRouter({
     crearPedido: protectedProcedure
@@ -68,5 +68,39 @@ export const pedidoRouter = createTRPCRouter({
             });
 
             return pedidos;
-        })
+        }),
+    getPedidoById: publicProcedure
+        .input(z.object({ id: z.string() }))
+        .query(async ({ input, ctx }) => {
+            const { id } = input;
+
+            const pedido = await ctx.db.pedido.findUnique({
+                where: {
+                    id,
+                },
+                select: {
+                    aprobador: true,
+                    materia: true,
+                    observacionesAlumno: true,
+                    observacionesProfesor: true,
+                    estado: true,
+                    fecha: true,
+                    user: {
+                        select: {
+                            name: true,
+                            curso: true,
+                        }
+                    },
+                    piezas: {
+                        select: {
+                            nombre: true,
+                            cantidad: true,
+                            url: true,
+                        }
+                    }
+                },
+            });
+
+            return pedido;
+        }),
 });

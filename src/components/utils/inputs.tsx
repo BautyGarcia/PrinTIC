@@ -187,7 +187,7 @@ export const AmountInput = ({
         <IconMinus />
       </button>
       <div className="w-1/3">
-        <Heading className="sm:text-[18px] text-center">{`${cantidades[index]}`}</Heading>
+        <Heading className="text-[18px] text-center">{`${cantidades[index]}`}</Heading>
       </div>
       <button className="w-1/3 hover:bg-pink_tic_hover rounded-lg p-1 button-animation"
         onClick={() => {

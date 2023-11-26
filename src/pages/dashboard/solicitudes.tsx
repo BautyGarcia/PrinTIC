@@ -23,7 +23,7 @@ const coloresPedido = {
     "PROYECTO": "bg-[#18d0da]"
 }
 
-const Solicitudes: NextPage = () => {
+export const Solicitudes: NextPage = () => {
     const [materia, setMateria] = useState("");
     const [estado, setEstado] = useState("");
     const [alumnoName, setAlumnoName] = useState("");
@@ -133,11 +133,11 @@ const Solicitudes: NextPage = () => {
                         value={curso}
                     />
                 </div>
-                <div className="flex flex-wrap w-full justify-evenly h-full p-8 pb-[250px] gap-8 overflow-scroll">
+                <div className="flex flex-wrap w-full justify-center h-full p-8 pb-[250px] gap-8 overflow-scroll">
                     {
                         filterData()?.map((pedido) => {
                             return (
-                                <div key={pedido.id} className="solicitud flex flex-col w-[450px] h-[450px] bg-appshell_background rounded-lg p-6 gap-5">
+                                <div key={pedido.id} className="solicitud flex flex-col w-[500px] h-[500px] bg-appshell_background rounded-lg p-6 gap-5">
                                     <Heading className="text-[40px]">{`${pedido.user.name} - ${pedido.user.curso}`}</Heading>
                                     <div className="flex gap-4">
                                         <Heading className={`text-[15px] ${coloresPedido[pedido.estado]} w-min p-2 px-4 rounded-full`}>{pedido.estado}</Heading>
@@ -151,7 +151,12 @@ const Solicitudes: NextPage = () => {
                                     </div>
 
                                     <div className="flex w-full h-min self-end">
-                                        <ActionButton className="font-spacemono text-[18px]">Ver</ActionButton>
+                                        <ActionButton 
+                                            className="font-spacemono text-[18px]"
+                                            onClick={() => {
+                                                void window.open(`solicitudes/${pedido.id}`, "_blank");
+                                            }}    
+                                        >Ver</ActionButton>
                                     </div>
                                 </div>
                             )
@@ -163,4 +168,4 @@ const Solicitudes: NextPage = () => {
     )
 }
 
-export default Solicitudes
+export default Solicitudes;
