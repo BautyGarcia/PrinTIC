@@ -10,7 +10,6 @@ import { estadosPedidoKeys, estadosPedidoValues } from "~/utils/objects";
 import { type Estado } from "@prisma/client";
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
-import { date } from "zod";
 
 const coloresPedido = {
     "PENDIENTE": "bg-[#ff6c31]",
@@ -188,7 +187,7 @@ export const Solicitudes: NextPage = () => {
                                                         pedido.piezas.forEach((pieza) => {
                                                             urls.push({ url: pieza.url, name: pieza.nombre });
                                                         });
-                                                        downloadAsZip(urls, { studentName: pedido.user.name ?? "", curso: pedido.user.curso });
+                                                        void downloadAsZip(urls, { studentName: pedido.user.name ?? "", curso: pedido.user.curso });
                                                     }
                                                 }
                                             ]
