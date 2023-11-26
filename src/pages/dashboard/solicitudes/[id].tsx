@@ -50,7 +50,7 @@ const Solicitud: NextPage = () => {
                     <div className='flex flex-col gap-8'>
                         <Heading className='truncate'>{`${sessionData?.user?.name} - ${nombrePieza}`}</Heading>
                         <Heading className='truncate'>{`Cantidad: ${cantidadPieza}`}</Heading>
-                        <div className='flex w-[50%] h-[80px] gap-5 overflow-x-scroll'>
+                        <div className='flex w-full md:w-[50%] h-[80px] gap-5 overflow-x-scroll'>
                             {
                                 pedido?.piezas.map((pieza, index) => {
                                     return (
@@ -69,7 +69,7 @@ const Solicitud: NextPage = () => {
                             }
                         </div>
                     </div>
-                    <div className='flex flex-row w-full h-full gap-6 self-end'>
+                    <div className='flex flex-col md:flex-row w-full h-full gap-6 self-end'>
                         {
                             urlPieza && (
                                 <Glassbox
@@ -84,8 +84,8 @@ const Solicitud: NextPage = () => {
                                 </Glassbox>
                             )
                         }
-                        <div className='flex flex-col justify-between h-[95%]'>
-                            <Heading className='w-[50%] h-[70%]'>{`${pedido?.observacionesAlumno}`}</Heading>
+                        <div className='flex flex-col justify-between w-[50%] h-[95%] pb-10 gap-5 md:gap-0 md:pb-0 '>
+                            <Heading className='w-min'>{`${pedido?.observacionesAlumno}`}</Heading>
                             <ActionButton 
                                 className='text-xl w-min p-3 font-spacemono'
                                 onClick={() => handleDownload(urlPieza, nombrePieza)}
