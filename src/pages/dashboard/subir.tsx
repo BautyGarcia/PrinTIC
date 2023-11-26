@@ -23,7 +23,7 @@ const SubirArchivo: NextPage = () => {
   const [materia, setMateria] = useState("PROYECTO");
   const [cantidades, setCantidades] = useState<Array<number>>([]);
   const { data: sessionData } = useSession();
-
+  
   const handleReset = () => {
     setErrorMessage("");
     setFiles(null);

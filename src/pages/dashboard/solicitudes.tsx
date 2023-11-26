@@ -4,10 +4,9 @@ import Head from "next/head";
 import { api } from "~/utils/api";
 import { Heading, Text } from "~/components/utils/texts";
 import { ActionButton, DropdownMenu } from "~/components/utils/buttons";
-import { SelectInput, TextInput, DropdownSelect } from "~/components/utils/inputs";
+import { TextInput, DropdownSelect } from "~/components/utils/inputs";
 import { useState } from "react";
 import { estadosPedidoKeys, estadosPedidoValues } from "~/utils/objects";
-import { type Estado } from "@prisma/client";
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 

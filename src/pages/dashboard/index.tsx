@@ -17,7 +17,7 @@ const Dashboard: NextPage<DashboardProps> = ({ children }) => {
   useEffect(() => {
     const route = router.pathname;
 
-    if (route === "/dashboard") {
+    if (route !== "/dashboard/cuantoFalta" && route !== "/dashboard/subir" && route !== "/dashboard/solicitudes") {
       sessionData?.user?.role === "STUDENT" && void router.push("/dashboard/subir");
       sessionData?.user?.role === "TEACHER" && void router.push("/dashboard/solicitudes");
     }

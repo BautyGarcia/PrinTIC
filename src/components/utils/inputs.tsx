@@ -1,4 +1,4 @@
-import { type Dispatch, type SetStateAction, useState } from "react";
+import { type Dispatch, type SetStateAction, useState, useEffect, useRef } from "react";
 import { IconEyeClosed, IconEye, IconUpload, IconCornerRightDown, IconPlus, IconMinus, IconChevronDown } from "@tabler/icons-react";
 import { ActionButton } from "./buttons";
 import { Heading } from "./texts";
@@ -282,10 +282,25 @@ export const DropdownSelect = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [label, setLabel] = useState("");
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      setIsOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+  
   return (
     <div className="flex flex-col">
       <Heading className="text-[25px]">{title}</Heading>
-      <div className="relative inline-block">
+      <div className="relative inline-block" ref={dropdownRef}>
         <ActionButton
           className={twMerge("bg-input_background border-2 border-input_border w-[150px] md:w-[200px] hover:bg-[#000] flex justify-between px-2", inputClassName)}
           onClick={() => setIsOpen(!isOpen)}
