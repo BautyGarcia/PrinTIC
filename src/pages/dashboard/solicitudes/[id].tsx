@@ -73,7 +73,7 @@ const Solicitud: NextPage = () => {
                         {
                             urlPieza && (
                                 <Glassbox
-                                    className='w-[50%] h-[95%]'
+                                    className='min-w-[50%] h-[95%]'
                                     containerClassName='w-full h-full'
                                 >
                                     <StlViewer
