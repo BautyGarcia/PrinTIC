@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Heading, Title } from '~/components/utils/texts';
+import { Heading } from '~/components/utils/texts';
 import { useRouter } from 'next/router';
 import { type NextPage } from 'next';
-import DashboardHeader from '~/components/dashboard/dashboardHeader';
 import { useSession } from 'next-auth/react';
 import { api } from '~/utils/api';
 import { StlViewer } from 'react-stl-viewer';
@@ -14,7 +13,6 @@ const Solicitud: NextPage = () => {
     const router = useRouter();
     const { id } = router.query;
     const { data: sessionData } = useSession();
-    const [opened, setOpened] = useState(false);
     const { data: pedido } = api.pedidos.getPedidoById.useQuery({
         id: id as string
     });
@@ -31,6 +29,15 @@ const Solicitud: NextPage = () => {
         }
     }, [pedido]);
 
+    const handleDownload = (url: string, fileName: string) => {
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = fileName || 'download';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    }
+
     return (
         <>
             <Head>
@@ -41,13 +48,14 @@ const Solicitud: NextPage = () => {
             <div className='relative z-10 w-screen h-screen max-h-screen'>
                 <div className='flex flex-col h-full w-full justify-between gap-8 p-5 px-10'>
                     <div className='flex flex-col gap-8'>
-                        <Heading className='truncate'>{`${nombrePieza}`}</Heading>
+                        <Heading className='truncate'>{`${sessionData?.user?.name} - ${nombrePieza}`}</Heading>
                         <Heading className='truncate'>{`Cantidad: ${cantidadPieza}`}</Heading>
                         <div className='flex w-[50%] h-[80px] gap-5 overflow-x-scroll'>
                             {
                                 pedido?.piezas.map((pieza, index) => {
                                     return (
                                         <ActionButton
+                                            key={index}
                                             className={`w-min h-min p-5 px-8 text-xl font-spacemono  ${activeIndex === index ? "bg-[#FFF] text-pink_tic hover:bg-[#DDD]" : ""}`}
                                             onClick={() => {
                                                 setNombrePieza(pieza.nombre);
@@ -76,7 +84,13 @@ const Solicitud: NextPage = () => {
                                 </Glassbox>
                             )
                         }
-                        <Heading className='w-[50%] h-[70%]'>{`${pedido?.observacionesAlumno}`}</Heading>
+                        <div className='flex flex-col justify-between h-[95%]'>
+                            <Heading className='w-[50%] h-[70%]'>{`${pedido?.observacionesAlumno}`}</Heading>
+                            <ActionButton 
+                                className='text-xl w-min p-3 font-spacemono'
+                                onClick={() => handleDownload(urlPieza, nombrePieza)}
+                            >Descargar</ActionButton>
+                        </div>
                     </div>
                 </div>
             </div>
