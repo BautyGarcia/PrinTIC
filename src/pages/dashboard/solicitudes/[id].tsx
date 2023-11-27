@@ -50,7 +50,7 @@ const Solicitud: NextPage = () => {
                     <div className='flex flex-col gap-8'>
                         <Heading className='truncate'>{`${sessionData?.user?.name} - ${nombrePieza}`}</Heading>
                         <Heading className='truncate'>{`Cantidad: ${cantidadPieza}`}</Heading>
-                        <div className='flex w-full md:w-[50%] h-[80px] gap-5 overflow-x-scroll'>
+                        <div className='flex w-full md:w-[50%] h-[80px] gap-5 overflow-x-auto'>
                             {
                                 pedido?.piezas.map((pieza, index) => {
                                     return (

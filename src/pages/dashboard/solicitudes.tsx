@@ -157,7 +157,7 @@ export const Solicitudes: NextPage = () => {
                                     <div className="w-full h-[5px] bg-pink_tic" />
 
                                     <div className="h-full">
-                                        <Text className="break-all line-clamp-4 overflow-scroll">{`${pedido.observacionesAlumno ? pedido.observacionesAlumno : "No hay notas"}`}</Text>
+                                        <Text className="break-all line-clamp-4 overflow-auto">{`${pedido.observacionesAlumno ? pedido.observacionesAlumno : "No hay notas"}`}</Text>
                                     </div>
 
                                     <div className="flex w-full h-min self-end justify-between">

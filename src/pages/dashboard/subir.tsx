@@ -137,7 +137,7 @@ const SubirArchivo: NextPage = () => {
                 withArrowIcon
               />
             ) : (
-              <div className="w-full h-full flex flex-col lg:flex-row gap-8 items-center lg:items-start pb-20 overflow-scroll">
+              <div className="w-full h-full flex flex-col lg:flex-row gap-8 items-center lg:items-start pb-20 overflow-auto">
                 <div className="flex flex-col w-full lg:w-2/3 rounded-lg gap-8">
                   {
                     fileNameList.map((fileName, index) => (

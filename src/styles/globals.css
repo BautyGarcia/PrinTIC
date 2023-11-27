@@ -46,7 +46,6 @@ body {
     font-family: "Roboto";
     color: azure;
     outline: none;
-    overflow: hidden;
 }
 
 textarea,
