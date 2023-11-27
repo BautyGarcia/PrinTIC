@@ -72,7 +72,7 @@ const Home: NextPage = () => {
         <div className="flex min-h-screen w-screen flex-col items-center justify-center gap-6">
           <div className="flex flex-col items-center">
             <Title>{"<Feedback/>"}</Title>
-            <Subtitle>¿Ayudame a mejorar PrinTIC?</Subtitle>
+            <Subtitle>Ayudame a mejorar PrinTIC</Subtitle>
           </div>
           <div className="flex w-screen flex-col items-center gap-8 p-10">
             <TextZone
