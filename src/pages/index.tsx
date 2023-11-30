@@ -23,7 +23,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/general/ticLogo.ico" />
       </Head>
       <HomeHeader />
-      <main className="relative z-10 flex min-h-screen flex-col items-center justify-around gap-10 p-10 pt-0 lg:gap-0">
+      <main className="relative z-10 flex min-h-screen flex-col items-center justify-around gap-10 p-10 pt-0 lg:gap-0 overflow-x-hidden">
         <div className="flex min-h-screen flex-col items-center justify-center gap-4">
           <div className="flex flex-col items-center">
             <Title>{"<PrinTIC/>"}</Title>
@@ -35,7 +35,7 @@ const Home: NextPage = () => {
         </div>
         <div className="flex min-h-screen flex-col items-center justify-around gap-20 md:gap-0 lg:flex-row">
           <Glassbox
-            className="h-2/3 w-full p-10 lg:w-1/2"
+            className="h-fit w-full p-10 lg:w-1/2"
             containerClassName="bg-none gap-5"
           >
             <div className="flex items-center justify-between">
@@ -77,7 +77,7 @@ const Home: NextPage = () => {
           <div className="flex w-screen flex-col items-center gap-8 p-10">
             <TextZone
               placeholder="Cambiaría..."
-              className="w-full md:w-1/3 h-[300px] max-w-[800px] max-h-[800px]"
+              className="w-full md:w-1/3 min-h-[300px] md:min-w-[550px] max-w-[250px] sm:max-w-[400px] md:max-w-[800px] max-h-[800px]"
               setValue={setFeedback}
             />
             <ActionButton className="w-2/3 max-w-[200px] font-spacemono">Enviar</ActionButton>

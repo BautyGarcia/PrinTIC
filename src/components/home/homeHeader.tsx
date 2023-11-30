@@ -10,8 +10,8 @@ const HomeHeader = () => {
     
     return (
         <header className="relative z-10 flex items-center h-[60px] md:h-[100px] bg-purple_tic w-screen px-7">
-            <div className="flex w-full justify-between">
-                <TicIcon height={isMobile ? 35 : 50} width={isMobile ? 35 : 50}/>
+            <div className="flex w-full justify-between items-center">
+                <TicIcon/>
                 <ShowcaseButton onClick={() => void router.push("/ingreso")} className="bg-transparent p-3">Entrar</ShowcaseButton>
             </div>
         </header>

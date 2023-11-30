@@ -73,9 +73,10 @@ export const PasswordInput = ({
           onChange={(e) => setValue(e.target.value)}
           value={value}
         />
-        <div
+        <button
           className="flex justify-end"
           onClick={() => setShowPassword(!showPassword)}
+          type="button"
         >
           {showPassword ? (
             <IconEye
@@ -88,7 +89,7 @@ export const PasswordInput = ({
               size={30}
             />
           )}
-        </div>
+        </button>
       </div>
     </div>
   );

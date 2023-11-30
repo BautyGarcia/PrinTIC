@@ -1,8 +1,8 @@
 import Image from "next/image";
 
-const TicIcon = ({ width, height }: { width: number; height: number }) => {
+const TicIcon = () => {
   return (
-    <Image src={"/general/ticLogo.svg"} width={width} height={height} alt="Tic" priority/>
+    <Image src={"/general/ticLogo.svg"} width={10} height={10} className="w-[30px] h-[30px] md:w-[45px] md:h-[45px]" alt="Tic" priority/>
   );
 };
 

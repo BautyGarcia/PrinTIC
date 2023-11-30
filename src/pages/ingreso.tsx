@@ -59,7 +59,7 @@ const Ingreso: NextPage = () => {
                                 isLoading={loading}
                                 onClick={(e: React.FormEvent<HTMLFormElement>) => handleSubmit(e)}
                             >{loading ? "Ingresando..." : "Ingresar"}</ActionButton>
-                            <p className="text-lg text-center">ó <Link href={"/"} passHref className="text-lightBlue_tic underline">volver</Link></p>
+                            <Link href={"/"} passHref className="text-lg text-center text-lightBlue_tic underline">volver</Link>
                         </div>
                     </form>
                 </div>
