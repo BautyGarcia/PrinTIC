@@ -10,7 +10,7 @@ const AppShell = ({ children, nombre, curso }: { children: React.ReactNode, nomb
 
   return (
     <>
-      <section className={`relative ${isOverflowHidden ? "overflow-hidden" : ""} z-10 flex h-screen flex-col`}>
+      <section className={`relative overflow-hidden z-10 flex h-screen flex-col`}>
         <DashboardHeader opened={opened} setIsOpened={setOpened} nombre={nombre} curso={curso} />
         <div className="flex h-full">
           <DashboardNavBar isOpened={opened} nombre={nombre} curso={curso} setOpen={setOpened}/>
