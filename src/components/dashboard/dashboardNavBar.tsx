@@ -23,7 +23,7 @@ const DashboardNavBar = ({ isOpened, nombre, curso, setOpen }: { isOpened: boole
 
     return (
         <section className={isMobile ?
-            `${isOpened ? "dashboard-nav-open w-screen" : "dashboard-nav"} fixed flex flex-col h-full bg-appshell_background` :
+            `${isOpened ? "dashboard-nav-open w-screen z-10" : "dashboard-nav"} fixed flex flex-col h-full bg-appshell_background` :
             `flex flex-col w-[300px] h-full bg-appshell_background`
         }>
             {/* Este div se muestra solo en Mobile mode */}

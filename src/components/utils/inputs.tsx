@@ -301,7 +301,7 @@ export const DropdownSelect = ({
   return (
     <div className="flex flex-col">
       <Heading className="text-[25px]">{title}</Heading>
-      <div className="relative inline-block" ref={dropdownRef}>
+      <div className="relative z-0 inline-block" ref={dropdownRef}>
         <ActionButton
           className={twMerge("bg-input_background border-2 border-input_border w-[150px] md:w-[200px] hover:bg-[#000] flex justify-between px-2", inputClassName)}
           onClick={() => setIsOpen(!isOpen)}
