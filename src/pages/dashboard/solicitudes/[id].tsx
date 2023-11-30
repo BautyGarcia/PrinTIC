@@ -27,7 +27,7 @@ const Solicitud: NextPage = () => {
             setCantidadPieza(pedido.piezas[activeIndex]?.cantidad ?? 0);
             setUrlPieza(pedido.piezas[activeIndex]?.url ?? "");
         }
-    }, [pedido]);
+    }, [pedido, activeIndex]);
 
     const handleDownload = (url: string, fileName: string) => {
         const a = document.createElement("a");
@@ -116,6 +116,7 @@ const Solicitud: NextPage = () => {
                                 </div>
                                 <div>
                                     <Heading>
+                                        {/*eslint-disable-next-line*/}
                                         {pedido?.observacionesAlumno || "No hay notas"}
                                     </Heading>
                                 </div>
