@@ -1,12 +1,9 @@
 import DashboardNavBar from "./dashboardNavBar";
 import DashboardHeader from "./dashboardHeader";
 import React, { useState } from "react";
-import { useWindowSize } from "~/hooks/useWindowSize";
 
 const AppShell = ({ children, nombre, curso }: { children: React.ReactNode, nombre: string, curso: string }) => {
   const [opened, setOpened] = useState(false);
-  const { width } = useWindowSize();
-  const isOverflowHidden = width > 1120;
 
   return (
     <>

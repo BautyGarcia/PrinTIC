@@ -9,6 +9,7 @@ import { useState } from "react";
 import { estadosPedidoKeys, estadosPedidoValues } from "~/utils/objects";
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
+import { PageLoader } from "~/components/utils/loaders";
 
 const coloresPedido = {
     "PENDIENTE": "bg-[#ff6c31]",
@@ -29,7 +30,7 @@ export const Solicitudes: NextPage = () => {
     const [estado, setEstado] = useState("");
     const [alumnoName, setAlumnoName] = useState("");
     const [curso, setCurso] = useState("");
-    const { data: pedidosData } = api.pedidos.getAllPedidos.useQuery({});
+    const { data: pedidosData, isLoading } = api.pedidos.getAllPedidos.useQuery({});
 
     const formatDate = (date: Date) => {
         const now = new Date();
@@ -102,7 +103,7 @@ export const Solicitudes: NextPage = () => {
             </Head>
             <Dashboard>
                 <div className="flex flex-wrap items-center p-3 px-5 gap-5 w-full h-min bg-appshell_secondary">
-                    <DropdownSelect 
+                    <DropdownSelect
                         title="Materia"
                         labels={["Proyecto", "TIMI", "Todas"]}
                         values={["PROYECTO", "TIMI", ""]}
@@ -111,7 +112,7 @@ export const Solicitudes: NextPage = () => {
                             filterData();
                         }}
                     />
-                    <DropdownSelect 
+                    <DropdownSelect
                         title="Estado"
                         labels={estadosPedidoValues}
                         values={estadosPedidoKeys}
@@ -145,53 +146,59 @@ export const Solicitudes: NextPage = () => {
                 </div>
                 <div className="flex flex-wrap w-full justify-center h-full p-8 pb-[400px] gap-8 overflow-scroll">
                     {
-                        filterData()?.map((pedido) => {
-                            return (
-                                <div key={pedido.id} className="solicitud flex flex-col w-[500px] h-[500px] bg-appshell_background rounded-lg p-6 gap-5">
-                                    <Heading className="text-[40px]">{`${pedido.user.name} - ${pedido.user.curso}`}</Heading>
-                                    <div className="flex gap-4">
-                                        <Heading className={`text-[15px] ${coloresPedido[pedido.estado]} w-min p-2 px-4 rounded-full`}>{pedido.estado}</Heading>
-                                        <Heading className={`text-[15px] ${coloresPedido[pedido.materia]} w-min p-2 px-4 rounded-full`}>{pedido.materia}</Heading>
-                                    </div>
-                                    <Text>{formatDate(pedido.fecha)}</Text>
-                                    <div className="w-full h-[5px] bg-pink_tic" />
+                        isLoading ? (
+                            <div className="flex w-full h-full justify-center items-end pb-10">
+                                <PageLoader />
+                            </div>
+                        ) : (
+                            filterData()?.map((pedido) => {
+                                return (
+                                    <div key={pedido.id} className="solicitud flex flex-col w-[500px] h-[500px] bg-appshell_background rounded-lg p-6 gap-5">
+                                        <Heading className="text-[40px]">{`${pedido.user.name} - ${pedido.user.curso}`}</Heading>
+                                        <div className="flex gap-4">
+                                            <Heading className={`text-[15px] ${coloresPedido[pedido.estado]} w-min p-2 px-4 rounded-full`}>{pedido.estado}</Heading>
+                                            <Heading className={`text-[15px] ${coloresPedido[pedido.materia]} w-min p-2 px-4 rounded-full`}>{pedido.materia}</Heading>
+                                        </div>
+                                        <Text>{formatDate(pedido.fecha)}</Text>
+                                        <div className="w-full h-[5px] bg-pink_tic" />
 
-                                    <div className="h-full">
-                                        <Text className="break-all line-clamp-4 overflow-auto">{`${pedido.observacionesAlumno ? pedido.observacionesAlumno : "No hay notas"}`}</Text>
-                                    </div>
+                                        <div className="h-full">
+                                            <Text className="break-all line-clamp-4 overflow-auto">{`${pedido.observacionesAlumno ? pedido.observacionesAlumno : "No hay notas"}`}</Text>
+                                        </div>
 
-                                    <div className="flex w-full h-min self-end justify-between">
-                                        <ActionButton
-                                            className="font-spacemono text-[18px]"
-                                            onClick={() => {
-                                                void window.open(`solicitudes/${pedido.id}`, "_blank");
-                                            }}
-                                        >Ver</ActionButton>
-                                        <DropdownMenu
-                                            options={
-                                                [
-                                                    {
-                                                        label: "Cambiar Estado",
-                                                        onClick: () => {
-                                                            console.log("Cambiar Estado");
+                                        <div className="flex w-full h-min self-end justify-between">
+                                            <ActionButton
+                                                className="font-spacemono text-[18px]"
+                                                onClick={() => {
+                                                    void window.open(`solicitudes/${pedido.id}`, "_blank");
+                                                }}
+                                            >Ver</ActionButton>
+                                            <DropdownMenu
+                                                options={
+                                                    [
+                                                        {
+                                                            label: "Cambiar Estado",
+                                                            onClick: () => {
+                                                                console.log("Cambiar Estado");
+                                                            }
+                                                        },
+                                                        {
+                                                            label: "Descargar Todo",
+                                                            onClick: () => {
+                                                                const urls: { url: string, name: string }[] = [];
+                                                                pedido.piezas.forEach((pieza) => {
+                                                                    urls.push({ url: pieza.url, name: pieza.nombre });
+                                                                });
+                                                                void downloadAsZip(urls, { studentName: pedido.user.name ?? "", curso: pedido.user.curso });
+                                                            }
                                                         }
-                                                    },
-                                                    {
-                                                        label: "Descargar Todo",
-                                                        onClick: () => {
-                                                            const urls: { url: string, name: string }[] = [];
-                                                            pedido.piezas.forEach((pieza) => {
-                                                                urls.push({ url: pieza.url, name: pieza.nombre });
-                                                            });
-                                                            void downloadAsZip(urls, { studentName: pedido.user.name ?? "", curso: pedido.user.curso });
-                                                        }
-                                                    }
-                                                ]
-                                            } />
+                                                    ]
+                                                } />
+                                        </div>
                                     </div>
-                                </div>
-                            )
-                        })
+                                )
+                            })
+                        )
                     }
                 </div>
             </Dashboard>

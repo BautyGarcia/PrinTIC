@@ -168,7 +168,7 @@ const SubirArchivo: NextPage = () => {
                   />
                   <div className="flex gap-3">
                     <ActionButton
-                      className="font-spacemono mb-1 text-[20px] w-full"
+                      className="font-spacemono mb-1 items-center text-[20px] w-full"
                       isLoading={isUploading}
                       onClick={async (e) => {
                         await toast.promise(

@@ -1,7 +1,6 @@
 import TicXIcon from "../icons/ticIcon";
 import { IconMenu2 } from "@tabler/icons-react";
 import UserBox from "./userBox";
-import { useWindowSize } from "~/hooks/useWindowSize";
 
 const DashboardHeader = ({ 
   opened, 
@@ -14,10 +13,6 @@ const DashboardHeader = ({
   nombre: string,
   curso: string
 }) => {
-
-  const { width } = useWindowSize();
-  const isMobile = width < 800;
-
   return (
     <header className={`${ opened ? "hidden": "flex" } justify-between relative z-10 w-full h-[60px] md:h-[100px] bg-appshell_background items-center p-5`}>
       <TicXIcon />

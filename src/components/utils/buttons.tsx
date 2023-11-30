@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { twMerge } from "tailwind-merge"
-import { Loader } from "~/components/utils/loaders";
+import { ButtonLoader } from "~/components/utils/loaders";
 import { IconTrash } from "@tabler/icons-react";
 import { useEffect, useRef, useState } from "react";
 
@@ -51,7 +51,7 @@ export const ActionButton = ({
                 `bg-pink_tic hover:bg-pink_tic_hover font-bold py-2 px-4 rounded-md flex justify-center gap-4 ${withAnimation ? "button-animation" : ""}`,
                 className
             )}>
-            {isLoading && <Loader />}
+            {isLoading && <ButtonLoader/>}
             {children}
         </button>
     )

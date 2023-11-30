@@ -1,12 +1,9 @@
 import TicIcon from "~/components/icons/ticIcon";
 import { useRouter } from "next/router";
 import { ShowcaseButton } from "../utils/buttons";
-import { useWindowSize } from "~/hooks/useWindowSize";
 
 const HomeHeader = () => {
     const router = useRouter();
-    const { width } = useWindowSize();
-    const isMobile = width < 800;
     
     return (
         <header className="relative z-10 flex items-center h-[60px] md:h-[100px] w-screen px-7">
