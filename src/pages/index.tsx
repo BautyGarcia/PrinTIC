@@ -24,7 +24,7 @@ const Home: NextPage = () => {
       </Head>
       <HomeHeader />
       <main className="relative z-10 flex min-h-screen flex-col items-center justify-around gap-10 p-10 pt-0 lg:gap-0 overflow-x-hidden">
-        <div className="flex min-h-screen flex-col items-center justify-center gap-4">
+        <div className="flex noHeaderScreen flex-col items-center justify-center gap-4">
           <div className="flex flex-col items-center">
             <Title>{"<PrinTIC/>"}</Title>
             <Subtitle className="text-center">La forma más fácil de imprimir en TIC</Subtitle>

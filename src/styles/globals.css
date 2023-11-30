@@ -91,3 +91,13 @@ button {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
 }
+
+.noHeaderScreen {
+    @media (max-width: 800px) {
+        height: calc(100vh - 60px);
+    }
+    
+    @media (min-width: 800px) {
+        height: calc(100vh - 100px);
+    }
+}
