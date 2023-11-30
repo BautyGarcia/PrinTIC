@@ -1,5 +1,6 @@
 import { twMerge } from "tailwind-merge"
 import { Heading } from "../utils/texts";
+
 const UserBox = ({
     nombre,
     curso,
@@ -11,8 +12,8 @@ const UserBox = ({
 }) => {
     return (
         <div className={twMerge("flex items-center gap-5", className)}>
-            <Heading className="sm:text-[30px]">{`${nombre} -`}</Heading>
-            <Heading className="sm:text-[30px]">{curso}</Heading>
+            <Heading className="sm:text-[30px] w-min md:w-fit">{`${nombre}`}</Heading>
+            <Heading className="sm:text-[30px] w-min md:w-fit">{curso}</Heading>
         </div>
     );
 }
