@@ -28,7 +28,7 @@ const DashboardNavBar = ({ isOpened, nombre, curso, setOpen }: { isOpened: boole
         }>
             {/* Este div se muestra solo en Mobile mode */}
             <div className="flex flex-col md:hidden p-5 gap-8">
-                <div className="flex justify-between px-5">
+                <div className="flex justify-between px-5 items-center">
                     <UserBox nombre={nombre} curso={curso} className="flex" />
                     <div onClick={() => setOpen(false)} className="md:hidden hover:bg-appshell_background_hover rounded-md">
                         <IconX className="" size={50} />
