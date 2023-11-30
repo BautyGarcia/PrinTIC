@@ -15,7 +15,7 @@ const DashboardHeader = ({
 }) => {
   return (
     <header className={`${ opened ? "hidden": "flex" } justify-between relative z-10 w-full h-[60px] md:h-[100px] bg-appshell_background items-center p-5`}>
-      <TicXIcon />
+      <TicXIcon redirect="/dashboard"/>
       <UserBox nombre={nombre} curso={curso} className="hidden md:flex"/>
       <div onClick={() => setIsOpened(!opened)} className="md:hidden hover:bg-appshell_background_hover rounded-md">
         <IconMenu2 className="" size={50} />
