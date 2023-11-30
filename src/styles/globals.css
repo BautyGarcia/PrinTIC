@@ -46,6 +46,7 @@ body {
     font-family: "Roboto";
     color: azure;
     outline: none;
+    overflow-x: hidden;
 }
 
 textarea,
@@ -96,7 +97,7 @@ button {
     @media (max-width: 800px) {
         height: calc(100vh - 60px);
     }
-    
+
     @media (min-width: 800px) {
         height: calc(100vh - 100px);
     }
