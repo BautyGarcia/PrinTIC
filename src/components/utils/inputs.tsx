@@ -300,7 +300,7 @@ export const DropdownSelect = ({
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [initialValue, setValue]);
+  }, []);
   
   return (
     <div className="flex flex-col">
