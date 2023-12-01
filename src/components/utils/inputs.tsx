@@ -273,16 +273,18 @@ export const DropdownSelect = ({
   values,
   setValue,
   title,
-  inputClassName
+  inputClassName,
+  initialValue,
 }: {
   labels: string[],
   values: string[],
   setValue: Dispatch<SetStateAction<string>>,
   title: string
   inputClassName?: string
+  initialValue?: string
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [label, setLabel] = useState("");
+  const [label, setLabel] = useState(initialValue || "");
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const handleClickOutside = (event: MouseEvent) => {
@@ -292,6 +294,7 @@ export const DropdownSelect = ({
   };
 
   useEffect(() => {
+    setValue(initialValue || "");
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
@@ -311,7 +314,7 @@ export const DropdownSelect = ({
         </ActionButton>
         {
           isOpen && (
-            <div className="absolute flex flex-col right-0 w-[178px] p-1 mt-1 rounded-lg bg-input_background">
+            <div className="absolute flex flex-col right-0 w-[178px] p-1.5 mt-1 rounded-lg bg-input_background">
               {labels.map((label, index) => (
                 <ActionButton
                   key={index}
