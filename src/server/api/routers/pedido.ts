@@ -4,7 +4,29 @@ import {
     protectedProcedure,
     publicProcedure,
 } from "~/server/api/trpc";
-import type { Materia } from "@prisma/client";
+import type { Estado, Materia } from "@prisma/client";
+import path from "path";
+import nodemailer from 'nodemailer';
+import { cambioEstadoTemplate } from "~/utils/emailTemplates";
+
+const transporter = nodemailer.createTransport({
+    service: "gmail",
+    host: "smtp.gmail.com",
+    port: 587,
+    auth: {
+        user: process.env.SMTP_MAIL,
+        pass: process.env.SMTP_PASSWORD,
+    },
+});
+
+const imagePath = path.join(process.cwd(), 'public', 'ticLogo.png');
+const attachments = [
+    {
+        filename: 'ticLogo.png',
+        path: imagePath,
+        cid: 'ticLogo'
+    }
+];
 
 export const pedidoRouter = createTRPCRouter({
     crearPedido: protectedProcedure
@@ -52,6 +74,7 @@ export const pedidoRouter = createTRPCRouter({
                         select: {
                             name: true,
                             curso: true,
+                            email: true,
                         }
                     },
                     piezas: {
@@ -102,5 +125,41 @@ export const pedidoRouter = createTRPCRouter({
             });
 
             return pedido;
+        }),
+    cambiarEstado: protectedProcedure
+        .input(z.object({ id: z.string(), estado: z.string(), motivos: z.string().optional(), studentEmail: z.string().optional(), studentName: z.string().optional(), teacherId: z.string().optional(), teacherName: z.string().optional() }))
+        .mutation(async ({ input, ctx }) => {
+            const { id, estado, motivos, studentEmail, studentName, teacherId, teacherName } = input;
+
+            await ctx.db.pedido.update({
+                where: {
+                    id
+                },
+                data: {
+                    estado: estado as Estado,
+                    observacionesProfesor: motivos,
+                    aprobador: {
+                        connect: {
+                            id: teacherId
+                        }
+                    }
+                }
+            })
+
+            const needMotivos = estado === "CON_ERRORES" || estado === "DENEGADO";
+            try {
+                const info = await transporter.sendMail({
+                    from: 'PrinTIC <contact.printic@gmail.com>',
+                    to: studentEmail,
+                    subject: 'Se ha cambiado el estado de tu impresión',
+                    html: cambioEstadoTemplate(studentName ?? "", estado, teacherName ?? "", motivos ?? "", needMotivos), attachments
+                });
+
+                console.log('Message sent: %s', info.messageId);
+            } catch (error) {
+                throw new Error("Error mandando mail");
+            }
+            
+            return true;
         }),
 });

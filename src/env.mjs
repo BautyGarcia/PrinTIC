@@ -35,6 +35,8 @@ export const env = createEnv({
     PRIVATE_KEY: z.string(),
     CLIENT_EMAIL: z.string(),
     CLIENT_ID: z.string(),
+    SMTP_MAIL: z.string(),
+    SMTP_PASSWORD: z.string(),
   },
 
   /**
@@ -61,6 +63,8 @@ export const env = createEnv({
     PRIVATE_KEY: process.env.PRIVATE_KEY,
     CLIENT_EMAIL: process.env.CLIENT_EMAIL,
     CLIENT_ID: process.env.CLIENT_ID,
+    SMTP_MAIL: process.env.SMTP_MAIL,
+    SMTP_PASSWORD: process.env.SMTP_PASSWORD,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
