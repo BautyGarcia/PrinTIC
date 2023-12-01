@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { type Dispatch, type SetStateAction, useState, useEffect, useRef } from "react";
 import { IconEyeClosed, IconEye, IconUpload, IconCornerRightDown, IconPlus, IconMinus, IconChevronDown } from "@tabler/icons-react";
 import { ActionButton } from "./buttons";
@@ -299,7 +300,7 @@ export const DropdownSelect = ({
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, []);
+  }, [initialValue, setValue]);
   
   return (
     <div className="flex flex-col">

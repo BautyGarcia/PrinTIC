@@ -23,7 +23,7 @@ const SubirArchivo: NextPage = () => {
   const [materia, setMateria] = useState("PROYECTO");
   const [cantidades, setCantidades] = useState<Array<number>>([]);
   const { data: sessionData } = useSession();
-  
+
   const handleReset = () => {
     setErrorMessage("");
     setFiles(null);
@@ -153,7 +153,7 @@ const SubirArchivo: NextPage = () => {
                   }
                 </div>
                 <div className="flex flex-col w-full lg:w-1/3 h-fit bg-appshell_background rounded-lg p-5 gap-5">
-                  <DropdownSelect 
+                  <DropdownSelect
                     title="Materia"
                     labels={["Proyecto", "TIMI"]}
                     values={["PROYECTO", "TIMI"]}
