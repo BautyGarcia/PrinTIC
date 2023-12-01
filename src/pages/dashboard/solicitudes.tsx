@@ -43,6 +43,7 @@ export const Solicitudes: NextPage = () => {
     const { mutate: cambiarEstado } = api.pedidos.cambiarEstado.useMutation();
     const [opened, setOpened] = useState(false);
     const { data: sessionData } = useSession();
+    const [isChanging, setIsChanging] = useState(false);
 
     const formatDate = (date: Date) => {
         const now = new Date();
@@ -107,29 +108,36 @@ export const Solicitudes: NextPage = () => {
     }
 
     const handleChangeEstado = () => {
-        if (!estadosCambioPedidoKeys.includes(newEstado)) {
-            toast.error("Estado invalido");
-            return;
-        }
-
-        cambiarEstado({
-            id: currentPedidoId,
-            estado: newEstado,
-            motivos: motivos || "No hay motivos",
-            studentEmail: currentPedidoStudentEmail,
-            studentName: currentPedidoStudentName,
-            teacherId: sessionData?.user?.id ?? "",
-            teacherName: sessionData?.user?.name ?? ""
-        }, {
-            onSuccess: () => {
-                toast.success("Estado cambiado");
-                refetch();
-                filterData();
-                setOpened(false);
-            },
-            onError: () => {
-                toast.error("Error al cambiar estado");
+        return new Promise<void>((resolve, reject) => {
+            setIsChanging(true);
+            if (!estadosCambioPedidoKeys.includes(newEstado)) {
+                toast.error("Estado invalido");
+                reject();
             }
+    
+            cambiarEstado({
+                id: currentPedidoId,
+                estado: newEstado,
+                motivos: motivos || "No hay motivos",
+                studentEmail: currentPedidoStudentEmail,
+                studentName: currentPedidoStudentName,
+                teacherId: sessionData?.user?.id ?? "",
+                teacherName: sessionData?.user?.name ?? ""
+            }, {
+                onSuccess: () => {
+                    toast.success("Estado cambiado");
+                    void refetch();
+                    filterData();
+                    setIsChanging(false);
+                    resolve();
+                    setOpened(false);
+                },
+                onError: () => {
+                    toast.error("Error al cambiar estado");
+                    setIsChanging(false);
+                    reject();
+                }
+            })
         })
     }
 
@@ -178,8 +186,9 @@ export const Solicitudes: NextPage = () => {
                 </div>
                 <ActionButton
                     className="font-spacemono text-[18px]"
+                    isLoading={isChanging}
                     onClick={() => {
-                        handleChangeEstado();
+                        void handleChangeEstado();
                     }}
                 >Cambiar</ActionButton>
             </Modal>
