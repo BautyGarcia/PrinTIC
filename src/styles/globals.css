@@ -120,3 +120,33 @@ button {
 ::-webkit-scrollbar-thumb:hover {
     background: #BF0D53;
 }
+
+.modal-backdrop {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    z-index: 0;
+    width: 100vw;
+    height: 100vh;
+    backdrop-filter: blur(0);
+    opacity: 0;
+    transition: opacity 0.15s ease, backdrop-filter 0.15s ease, z-index 0.15s ease;
+}
+
+.modal-backdrop.open {
+    backdrop-filter: blur(15px);
+    opacity: 1;
+    z-index: 20;
+}
+
+.modal-content {
+    transition: transform 0.1s ease;
+    transform: translateY(-20px);
+    opacity: 0;
+}
+
+.modal-content.open {
+    transform: translateY(0);
+    opacity: 1;
+}

@@ -4,12 +4,14 @@ import Head from "next/head";
 import { api } from "~/utils/api";
 import { Heading, Text } from "~/components/utils/texts";
 import { ActionButton, DropdownMenu } from "~/components/utils/buttons";
-import { TextInput, DropdownSelect } from "~/components/utils/inputs";
+import { TextInput, DropdownSelect, TextZone } from "~/components/utils/inputs";
 import { useState } from "react";
-import { estadosPedidoKeys, estadosPedidoValues } from "~/utils/objects";
+import { estadosPedidoKeys, estadosPedidoValues, estadosCambioPedidoKeys, estadosCambioPedidoValues } from "~/utils/objects";
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 import { PageLoader } from "~/components/utils/loaders";
+import { Modal } from "~/components/utils/popups";
+import { IconX } from "@tabler/icons-react";
 
 const coloresPedido = {
     "PENDIENTE": "bg-[#ff6c31]",
@@ -28,9 +30,12 @@ const coloresPedido = {
 export const Solicitudes: NextPage = () => {
     const [materia, setMateria] = useState("");
     const [estado, setEstado] = useState("");
+    const [newEstado, setNewEstado] = useState("");
     const [alumnoName, setAlumnoName] = useState("");
+    const [motivos, setMotivos] = useState("");
     const [curso, setCurso] = useState("");
     const { data: pedidosData, isLoading } = api.pedidos.getAllPedidos.useQuery({});
+    const [opened, setOpened] = useState(false);
 
     const formatDate = (date: Date) => {
         const now = new Date();
@@ -101,6 +106,46 @@ export const Solicitudes: NextPage = () => {
                 <meta name="description" content="PrinTIC" />
                 <link rel="icon" href="/general/ticLogo.ico" />
             </Head>
+            <Modal
+                isOpen={opened}
+                close={() => setOpened(false)}
+                className="flex flex-col gap-7 solicitud w-[450px] h-[800px] bg-modalBackground rounded-lg p-5 px-6"
+            >
+                <div className="flex justify-between items-center">
+                    <Heading className="text-[30px]">Cambiar estado</Heading>
+                    <ActionButton className="p-0 bg-transparent hover:bg-blue_tic_hover"
+                        onClick={() => setOpened(false)}
+                    >
+                        <IconX size={50} />
+                    </ActionButton>
+                </div>
+                <DropdownSelect
+                    title="Estado"
+                    labels={estadosCambioPedidoValues}
+                    values={estadosCambioPedidoKeys}
+                    inputClassName="w-full md:w-full"
+                    setValue={(e) => {
+                        setNewEstado(e);
+                        filterData();
+                    }}
+                />
+                {
+                    (newEstado === "DENEGADO" || newEstado === "CON_ERRORES") && (
+                        <TextZone 
+                            placeholder="Fijate que..."
+                            setValue={setMotivos}
+                            title="Motivos"
+                            className=""
+                        />
+                    )
+                }
+                <ActionButton
+                    className="font-spacemono text-[18px]"
+                    onClick={() => {
+                        setOpened(false);
+                    }}
+                >Cambiar</ActionButton>
+            </Modal>
             <Dashboard>
                 <div className="flex flex-wrap items-center p-3 px-5 gap-5 w-full h-min bg-appshell_secondary">
                     <DropdownSelect
@@ -156,7 +201,7 @@ export const Solicitudes: NextPage = () => {
                                     <div key={pedido.id} className="solicitud flex flex-col w-[500px] h-[500px] bg-appshell_background rounded-lg p-6 gap-5">
                                         <Heading className="text-[40px]">{`${pedido.user.name} - ${pedido.user.curso}`}</Heading>
                                         <div className="flex gap-4">
-                                            <Heading className={`text-[15px] ${coloresPedido[pedido.estado]} w-min p-2 px-4 rounded-full`}>{pedido.estado}</Heading>
+                                            <Heading className={`text-[15px] ${coloresPedido[pedido.estado]} w-min p-2 px-4 rounded-full hover:cursor-pointer`} onClick={() => setOpened(true)}>{pedido.estado}</Heading>
                                             <Heading className={`text-[15px] ${coloresPedido[pedido.materia]} w-min p-2 px-4 rounded-full`}>{pedido.materia}</Heading>
                                         </div>
                                         <Text>{formatDate(pedido.fecha)}</Text>
@@ -179,7 +224,7 @@ export const Solicitudes: NextPage = () => {
                                                         {
                                                             label: "Cambiar Estado",
                                                             onClick: () => {
-                                                                console.log("Cambiar Estado");
+                                                                setOpened(true);
                                                             }
                                                         },
                                                         {

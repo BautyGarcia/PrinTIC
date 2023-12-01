@@ -9,7 +9,7 @@ export const TextInput = ({
   placeholder,
   value,
   setValue,
-  isError,
+  isError = false,
   className,
   titleClassName,
 }: {
@@ -17,7 +17,7 @@ export const TextInput = ({
   placeholder: string,
   value: string,
   setValue: Dispatch<SetStateAction<string>>,
-  isError: boolean,
+  isError?: boolean,
   className?: string
   titleClassName?: string
 }) => {
@@ -216,7 +216,7 @@ export const TextZone = ({
   setValue: Dispatch<SetStateAction<string>>;
 }) => {
   return (
-    <>
+    <div className="flex flex-col">
       {title && <Heading className="text-[25px]">{title}</Heading>}
       <textarea
         className={twMerge(
@@ -228,7 +228,7 @@ export const TextZone = ({
           setValue(e.target.value);
         }}
       />
-    </>
+    </div>
   );
 }
 

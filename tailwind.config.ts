@@ -36,7 +36,8 @@ export default {
       "lightBlue_tic": "#00D1FF",
       "red_tic": "#FF4343",
       "red_tic_hover": "#D12C2C",
-      "skeleton": "rgba(245, 245, 245, 0.31)"
+      "skeleton": "rgba(245, 245, 245, 0.31)",
+      "modalBackground": "rgba(3, 0, 38, 0.75)",
     },
     fontFamily: {
       "raleway": ['Raleway'],

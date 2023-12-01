@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react"
 import { twMerge } from "tailwind-merge" 
 
@@ -29,15 +30,19 @@ export const Subtitle = ({
 
 export const Heading = ({
     children, 
-    className 
+    className,
+    onClick
 }: { 
     children: string, 
-    className?: string 
+    className?: string,
+    onClick?: () => any
 }) => {
     return <h2 className={twMerge(
         "text-[40px] font-spacemono font-bold",
         className,
-    )}>{children}</h2>
+    )}
+    onClick={onClick}
+    >{children}</h2>
 }
 
 export const Text = ({
