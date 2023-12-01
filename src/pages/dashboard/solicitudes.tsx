@@ -115,12 +115,14 @@ export const Solicitudes: NextPage = () => {
                 toast.error("Estado invalido");
                 setIsChanging(false);
                 reject();
+                return;
             }
-            console.log(newEstado, currentPedidoEstado)
+            
             if (newEstado === currentPedidoEstado) {
                 toast.error("El estado es el mismo");
                 setIsChanging(false);
                 reject();
+                return;
             }
     
             cambiarEstado({
