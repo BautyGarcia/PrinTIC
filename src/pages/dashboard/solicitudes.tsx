@@ -37,6 +37,7 @@ export const Solicitudes: NextPage = () => {
     const [motivos, setMotivos] = useState("");
     const [curso, setCurso] = useState("");
     const [currentPedidoId, setCurrentPedidoId] = useState("");
+    const [currentPedidoEstado, setCurrentPedidoEstado] = useState("");
     const [currentPedidoStudentEmail, setCurrentPedidoStudentEmail] = useState("");
     const [currentPedidoStudentName, setCurrentPedidoStudentName] = useState("");
     const { data: pedidosData, isLoading, refetch } = api.pedidos.getAllPedidos.useQuery({});
@@ -112,6 +113,13 @@ export const Solicitudes: NextPage = () => {
             setIsChanging(true);
             if (!estadosCambioPedidoKeys.includes(newEstado)) {
                 toast.error("Estado invalido");
+                setIsChanging(false);
+                reject();
+            }
+            console.log(newEstado, currentPedidoEstado)
+            if (newEstado === currentPedidoEstado) {
+                toast.error("El estado es el mismo");
+                setIsChanging(false);
                 reject();
             }
     
@@ -252,6 +260,7 @@ export const Solicitudes: NextPage = () => {
                                                 setCurrentPedidoId(pedido.id);
                                                 setCurrentPedidoStudentEmail(pedido.user.email ?? "");
                                                 setCurrentPedidoStudentName(pedido.user.name ?? "");
+                                                setCurrentPedidoEstado(pedido.estado);
                                             }}>{pedido.estado}</Heading>
                                             <Heading className={`text-[15px] ${coloresPedido[pedido.materia]} w-min p-2 px-4 rounded-full`}>{pedido.materia}</Heading>
                                         </div>
@@ -279,6 +288,7 @@ export const Solicitudes: NextPage = () => {
                                                                 setCurrentPedidoId(pedido.id);
                                                                 setCurrentPedidoStudentEmail(pedido.user.email ?? "");
                                                                 setCurrentPedidoStudentName(pedido.user.name ?? "");
+                                                                setCurrentPedidoEstado(pedido.estado);
                                                             }
                                                         },
                                                         {
