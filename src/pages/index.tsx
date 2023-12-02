@@ -10,11 +10,14 @@ import { ActionButton } from "~/components/utils/buttons";
 import { Subtitle, Title, Text, Heading } from "~/components/utils/texts";
 import { TextZone } from "~/components/utils/inputs";
 import { useState } from "react";
+import { api } from "~/utils/api";
+import { toast } from "react-toastify";
 
 const Home: NextPage = () => {
   const router = useRouter();
   const [feedback, setFeedback] = useState("");
-
+  const { mutate: mandarFeedback } = api.feedback.mandarFeedback.useMutation();
+  const [sendingFeedback, setSendingFeedback] = useState(false);
   return (
     <>
       <Head>
@@ -79,8 +82,27 @@ const Home: NextPage = () => {
               placeholder="Cambiaría..."
               className="w-full md:w-1/3 min-h-[300px] md:min-w-[550px] max-w-[250px] sm:max-w-[400px] md:max-w-[800px] max-h-[800px]"
               setValue={setFeedback}
+              value={feedback}
             />
-            <ActionButton className="w-2/3 max-w-[200px] font-spacemono">Enviar</ActionButton>
+            <ActionButton className="w-2/3 max-w-[200px] font-spacemono"
+              isLoading={sendingFeedback}
+              onClick={() => {
+                setSendingFeedback(true);
+                mandarFeedback({
+                  texto: feedback,
+                }, {
+                  onSuccess: () => {
+                    setFeedback("");
+                    toast.success("Feedback enviado");
+                    setSendingFeedback(false);
+                  },
+                  onError: () => {
+                    toast.error("Error al enviar feedback");
+                    setSendingFeedback(false);
+                  },
+                });
+              }}
+            >Enviar</ActionButton>
           </div>
         </div>
       </main>

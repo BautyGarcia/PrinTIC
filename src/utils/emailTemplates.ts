@@ -58,12 +58,12 @@ export const cambioEstadoTemplate = (username: string, newState: string, teacher
                     <img src="cid:ticLogo" alt="App Logo" class="logo">
                 </div>
                 <div class="content">
-                    <h1>¡Hola ${username}!</h1>
+                    <h1>Hola ${username},</h1>
                     <p>El estado de tu impresión ha cambiado a <b>${newState}</b>.</p>
                     ${
                         needMotivos ? `<p>Los motivos son: ${motivos || "No hay motivos"}</p>` : ""
                     }
-                    <p>Si tenes algunad duda sobre esto, habla con ${teacherName}.</p>
+                    <p>Si tenés alguna duda sobre esto, hablá con ${teacherName}.</p>
                     <p>¡Gracias por usar PrinTIC!</p>
                 </div>
             </div>

@@ -210,11 +210,13 @@ export const TextZone = ({
   placeholder,
   className,
   setValue,
+  value
 }: {
   title?: string;
   placeholder: string;
   className?: string;
   setValue: Dispatch<SetStateAction<string>>;
+  value: string;
 }) => {
   return (
     <div className="flex flex-col">
@@ -228,6 +230,7 @@ export const TextZone = ({
         onChange={(e) => {
           setValue(e.target.value);
         }}
+        value={value}
       />
     </div>
   );

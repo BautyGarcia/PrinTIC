@@ -165,6 +165,7 @@ const SubirArchivo: NextPage = () => {
                     className="w-full resize-y max-h-[400px] min-h-[200px]"
                     title="Notas"
                     setValue={setNotes}
+                    value={notes}
                   />
                   <div className="flex gap-3">
                     <ActionButton

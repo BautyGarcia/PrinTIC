@@ -14,6 +14,7 @@ import { Modal } from "~/components/utils/popups";
 import { IconX } from "@tabler/icons-react";
 import { toast } from "react-toastify";
 import { useSession } from "next-auth/react";
+import { formatDate } from "~/utils/scripts";
 
 const coloresPedido = {
     "PENDIENTE": "bg-[#ff6c31]",
@@ -40,30 +41,11 @@ export const Solicitudes: NextPage = () => {
     const [currentPedidoEstado, setCurrentPedidoEstado] = useState("");
     const [currentPedidoStudentEmail, setCurrentPedidoStudentEmail] = useState("");
     const [currentPedidoStudentName, setCurrentPedidoStudentName] = useState("");
-    const { data: pedidosData, isLoading, refetch } = api.pedidos.getAllPedidos.useQuery({});
+    const { data: pedidosData, isLoading, refetch } = api.pedidos.getAllPedidos.useQuery();
     const { mutate: cambiarEstado } = api.pedidos.cambiarEstado.useMutation();
     const [opened, setOpened] = useState(false);
     const { data: sessionData } = useSession();
     const [isChanging, setIsChanging] = useState(false);
-
-    const formatDate = (date: Date) => {
-        const now = new Date();
-        const diffTime = Math.abs(now.getTime() - date.getTime());
-        const diffHours = diffTime / (1000 * 60 * 60);
-
-        if (diffHours < 0.1) {
-            return `Hace ${Math.floor(diffHours * 60 * 60)} segundos`;
-        }
-        else if (diffHours <= 1) {
-            return `Hace ${Math.floor(diffHours * 60)} minutos`;
-        }
-        else if (diffHours < 24) {
-            return `Hace ${Math.floor(diffHours)} horas`;
-        }
-        else {
-            return `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear().toString().slice(-2)}`;
-        }
-    }
 
     const filterData = () => {
         let filteredData = pedidosData;
@@ -128,7 +110,7 @@ export const Solicitudes: NextPage = () => {
             cambiarEstado({
                 id: currentPedidoId,
                 estado: newEstado,
-                motivos: motivos || "No hay motivos",
+                motivos: motivos,
                 studentEmail: currentPedidoStudentEmail,
                 studentName: currentPedidoStudentName,
                 teacherId: sessionData?.user?.id ?? "",
@@ -190,6 +172,7 @@ export const Solicitudes: NextPage = () => {
                                 setValue={setMotivos}
                                 title="Motivos"
                                 className="resize-none h-[100px] md:h-[250px]"
+                                value={motivos}
                             />
                         )
                     }

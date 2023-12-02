@@ -59,6 +59,12 @@ model Pieza {
   @@index([pedidoId])
 }
 
+model Feedback {
+  id    String   @id @default(cuid())
+  fecha DateTime
+  texto String
+}
+
 // Necessary for Next auth
 model Account {
   id                String  @id @default(cuid())
