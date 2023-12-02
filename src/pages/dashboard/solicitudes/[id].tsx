@@ -82,14 +82,6 @@ const Solicitud: NextPage = () => {
                                     url={urlPieza}
                                     orbitControls
                                     className={`h-full w-full`}
-                                    modelProps={
-                                        {
-                                            scale: 2,
-                                            positionX: 100,
-                                            positionY: 1,
-                                            rotationX: 0.5,
-                                        }
-                                    }
                                     onFinishLoading={() => setIsLoadingSTL(false)}
                                     onError={() => setIsLoadingSTL(false)}
                                 />

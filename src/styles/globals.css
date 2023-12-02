@@ -99,7 +99,17 @@ button {
     }
 
     @media (min-width: 800px) {
-        height: calc(100vh - 100px);
+        height: calc(100vh - 140px);
+    }
+}
+
+.noHeaderScreenMax {
+    @media (max-width: 800px) {
+        max-height: calc(100vh - 60px);
+    }
+
+    @media (min-width: 800px) {
+        max-height: calc(100vh - 100px);
     }
 }
 

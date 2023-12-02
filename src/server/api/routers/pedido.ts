@@ -59,17 +59,9 @@ export const pedidoRouter = createTRPCRouter({
             return pedido.id;
         }),
     getAllPedidos: publicProcedure
-        .input(z.object({}))
         .query(async ({ ctx }) => {
             const pedidos = await ctx.db.pedido.findMany({
-                select: {
-                    id: true,
-                    aprobador: true,
-                    materia: true,
-                    observacionesAlumno: true,
-                    observacionesProfesor: true,
-                    estado: true,
-                    fecha: true,
+                include: {
                     user: {
                         select: {
                             name: true,
@@ -82,6 +74,12 @@ export const pedidoRouter = createTRPCRouter({
                             nombre: true,
                             cantidad: true,
                             url: true,
+                        }
+                    },
+                    aprobador: {
+                        select: {
+                            name: true,
+                            email: true,
                         }
                     }
                 },
