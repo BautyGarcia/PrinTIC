@@ -33,7 +33,7 @@ export const Heading = ({
     className,
     onClick
 }: { 
-    children: string, 
+    children: any, 
     className?: string,
     onClick?: () => any
 }) => {
