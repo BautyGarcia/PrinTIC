@@ -4,6 +4,7 @@ import Head from "next/head";
 import { api } from "~/utils/api";
 import { formatDate } from "~/utils/scripts";
 import { PageLoader } from "~/components/utils/loaders";
+import { estadosCambioPedido } from "~/utils/objects";
 
 const CuantoFalta: NextPage = () => {
     const { data: pedidos, isLoading } = api.pedidos.getAllPedidos.useQuery();
@@ -44,7 +45,7 @@ const CuantoFalta: NextPage = () => {
                                                     <td className="px-4 py-4">{formatDate(pedido.fecha)}</td>
                                                     <td className="px-4 whitespace-nowrap">{pedido.user.name}</td>
                                                     <td className="px-4">{pedido.user.curso}</td>
-                                                    <td className="px-4">{pedido.estado}</td>
+                                                    <td className="px-4 whitespace-nowrap">{estadosCambioPedido[pedido.estado].toUpperCase()}</td>
                                                     <td className="px-4">{pedido.materia}</td>
                                                     <td className="px-4">{pedido.observacionesAlumno}</td>
                                                     <td className="px-4">{pedido.aprobador?.name ?? "Ninguno"}</td>

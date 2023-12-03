@@ -11,7 +11,7 @@ const estadosPedido = {
     "": "Todos"
 }
 
-const estadosCambioPedido = {
+export const estadosCambioPedido = {
     "PENDIENTE": "Pendiente",
     "APROBADO": "Aprobado",
     "IMPRIMIENDO": "Imprimiendo",

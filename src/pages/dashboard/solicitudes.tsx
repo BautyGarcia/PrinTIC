@@ -6,7 +6,7 @@ import { Heading, Text } from "~/components/utils/texts";
 import { ActionButton, DropdownMenu } from "~/components/utils/buttons";
 import { TextInput, DropdownSelect, TextZone } from "~/components/utils/inputs";
 import { useState } from "react";
-import { estadosPedidoKeys, estadosPedidoValues, estadosCambioPedidoKeys, estadosCambioPedidoValues } from "~/utils/objects";
+import { estadosPedidoKeys, estadosPedidoValues, estadosCambioPedidoKeys, estadosCambioPedidoValues, estadosCambioPedido } from "~/utils/objects";
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 import { PageLoader } from "~/components/utils/loaders";
@@ -18,7 +18,7 @@ import { formatDate } from "~/utils/scripts";
 
 const coloresPedido = {
     "PENDIENTE": "bg-[#ff6c31]",
-    "APROBADO": "bg-[#65FF7E]",
+    "APROBADO": "bg-[#48a856]",
     "IMPRIMIENDO": "bg-[#5e2b97]",
     "ESPERANDO_RETIRO": "bg-[#18d0da]",
     "ENTREGADO": "bg-[#E61366]",
@@ -240,14 +240,14 @@ export const Solicitudes: NextPage = () => {
                                     <div key={pedido.id} className="solicitud flex flex-col w-[500px] h-[500px] bg-appshell_background rounded-lg p-6 gap-5">
                                         <Heading className="text-[40px]">{`${pedido.user.name} - ${pedido.user.curso}`}</Heading>
                                         <div className="flex gap-4">
-                                            <Heading className={`text-[15px] ${coloresPedido[pedido.estado]} w-min p-2 px-4 rounded-full hover:cursor-pointer`} onClick={() => {
+                                            <Heading className={`text-[15px] ${coloresPedido[pedido.estado]} w-fit p-2 px-4 rounded-full hover:cursor-pointer`} onClick={() => {
                                                 setOpened(true)
                                                 setCurrentPedidoId(pedido.id);
                                                 setCurrentPedidoStudentEmail(pedido.user.email ?? "");
                                                 setCurrentPedidoStudentName(pedido.user.name ?? "");
                                                 setCurrentPedidoEstado(pedido.estado);
-                                            }}>{pedido.estado}</Heading>
-                                            <Heading className={`text-[15px] ${coloresPedido[pedido.materia]} w-min p-2 px-4 rounded-full`}>{pedido.materia}</Heading>
+                                            }}>{estadosCambioPedido[pedido.estado].toUpperCase()}</Heading>
+                                            <Heading className={`text-[15px] ${coloresPedido[pedido.materia]} w-fit p-2 px-4 rounded-full`}>{pedido.materia}</Heading>
                                         </div>
                                         <Text>{formatDate(pedido.fecha)}</Text>
                                         <div className="w-full h-[5px] bg-pink_tic" />
