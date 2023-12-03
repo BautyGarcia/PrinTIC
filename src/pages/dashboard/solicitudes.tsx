@@ -99,14 +99,14 @@ export const Solicitudes: NextPage = () => {
                 reject();
                 return;
             }
-            
+
             if (newEstado === currentPedidoEstado) {
                 toast.error("El estado es el mismo");
                 setIsChanging(false);
                 reject();
                 return;
             }
-    
+
             cambiarEstado({
                 id: currentPedidoId,
                 estado: newEstado,
@@ -248,6 +248,9 @@ export const Solicitudes: NextPage = () => {
                                                 setCurrentPedidoEstado(pedido.estado);
                                             }}>{estadosCambioPedido[pedido.estado].toUpperCase()}</Heading>
                                             <Heading className={`text-[15px] ${coloresPedido[pedido.materia]} w-fit p-2 px-4 rounded-full`}>{pedido.materia}</Heading>
+                                            {
+                                                pedido.aprobador && <Heading className={`text-[15px] bg-[#9b7894] w-fit p-2 px-4 rounded-full`}>{pedido.aprobador.name?.toUpperCase()}</Heading>
+                                            }
                                         </div>
                                         <Text>{formatDate(pedido.fecha)}</Text>
                                         <div className="w-full h-[5px] bg-pink_tic" />
