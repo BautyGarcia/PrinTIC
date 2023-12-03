@@ -32,7 +32,7 @@ const Dashboard: NextPage<DashboardProps> = ({ children }) => {
       </Head>
       <SessionChecker />
       <AppShell nombre={sessionData?.user?.name ?? "Anonimo"} curso={sessionData?.user?.curso ?? "Anonimo"}>
-        <div className="w-full h-full">
+        <div className="w-full h-full overflow-auto">
           {children}
         </div>
       </AppShell>

@@ -15,31 +15,37 @@ const CuantoFalta: NextPage = () => {
                 <link rel="icon" href="/general/ticLogo.ico" />
             </Head>
             <Dashboard>
-                <div className="p-5 noHeaderScreenMax overflow-auto">
-                    <table className="bg-appshell_background noHeaderScreen w-full">
+                <div className="p-5 pb-28">
+                    <table className="w-full h-full bg-appshell_background solicitud">
                         <thead className="">
-                            <tr>
-                                <th className="">Fecha</th>
-                                <th className="">Alumno</th>
-                                <th className="">Estado</th>
-                                <th className="">Materia</th>
-                                <th className="">Notas</th>
-                                <th className="">Modificado por</th>
-                                <th className="">Comentarios</th>
+                            <tr className="h-[85px] font-spacemono text-[20px] bg-appshell_secondary text-left">
+                                <th className="px-4 w-[150px] ">Fecha</th>
+                                <th className="px-4">Alumno</th>
+                                <th className="px-4">Curso</th>
+                                <th className="px-4">Estado</th>
+                                <th className="px-4">Materia</th>
+                                <th className="px-4">Notas</th>
+                                <th className="px-4">Profesor</th>
+                                <th className="px-4 pr-5">Motivos</th>
                             </tr>
                         </thead>
-                        <tbody className="">
-                            {pedidos?.map((pedido) => (
-                                <tr key={pedido.id}>
-                                    <td className="">{formatDate(pedido.fecha)}</td>
-                                    <td className="">{`${pedido.user.name} ${pedido.user.curso}`}</td>
-                                    <td className="">{pedido.estado}</td>
-                                    <td className="">{pedido.materia}</td>
-                                    <td className="">{pedido.observacionesAlumno}</td>
-                                    <td className="">{pedido.aprobador?.name ?? "Nadie"}</td>
-                                    <td className="">{pedido.observacionesProfesor}</td>
-                                </tr>
-                            ))}
+                        <tbody>
+                            {
+                                pedidos?.map((pedido, index) => {
+                                    return (
+                                        <tr key={index} className="h-[50px] text-lg border-b-2 border-b-appshell_secondary hover:bg-pink_tic_light">
+                                            <td className="px-4 py-4">{formatDate(pedido.fecha)}</td>
+                                            <td className="px-4 whitespace-nowrap">{pedido.user.name}</td>
+                                            <td className="px-4">{pedido.user.curso}</td>
+                                            <td className="px-4">{pedido.estado}</td>
+                                            <td className="px-4">{pedido.materia}</td>
+                                            <td className="px-4">{pedido.observacionesAlumno}</td>
+                                            <td className="px-4">{pedido.aprobador?.name ?? "Ninguno"}</td>
+                                            <td className="px-4">{pedido.observacionesProfesor}</td>
+                                        </tr>
+                                    )
+                                })
+                            }
                         </tbody>
                     </table>
                 </div>

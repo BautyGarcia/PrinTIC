@@ -159,6 +159,7 @@ const SubirArchivo: NextPage = () => {
                     values={["PROYECTO", "TIMI"]}
                     setValue={setMateria}
                     inputClassName="w-full md:w-full"
+                    initialValue="Proyecto"
                   />
                   <TextZone
                     placeholder="Fijate que..."

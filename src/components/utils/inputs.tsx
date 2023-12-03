@@ -298,7 +298,8 @@ export const DropdownSelect = ({
   };
 
   useEffect(() => {
-    setValue(initialValue || "");
+    const initialIndex = labels.indexOf(initialValue ?? "")
+    setValue(values[initialIndex] || "");
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
@@ -314,7 +315,7 @@ export const DropdownSelect = ({
           onClick={() => setIsOpen(!isOpen)}
           withAnimation={false}
         >
-          {label || "Todas"} <IconChevronDown />
+          {label || title} <IconChevronDown />
         </ActionButton>
         {
           isOpen && (

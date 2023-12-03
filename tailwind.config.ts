@@ -28,6 +28,7 @@ export default {
       "input_background": "#0a0a0a",
       "input_border": "#282828",
       "pink_tic": "#E61366",
+      "pink_tic_light": "rgba(230, 19, 102, 0.2)",
       "pink_tic_hover": "#BF0D53",
       'container_background': 'rgba(5, 4, 9, 0.7)',
       'appshell_background': 'rgba(3, 0, 28, 0.3)',
