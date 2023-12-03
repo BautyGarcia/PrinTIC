@@ -145,7 +145,7 @@ export const FileInput = ({
           {
             !isError && (
               <>
-                <Heading className="sm:text-[20px]">
+                <Heading className="sm:text-[20px] text-center">
                   Arrastralos acá ó
                 </Heading>
                 <ActionButton onClick={() => document.getElementById("fileInput")?.click()} className="font-spacemono">Seleccionalos</ActionButton>
