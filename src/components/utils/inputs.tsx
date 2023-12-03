@@ -116,13 +116,36 @@ export const FileInput = ({
   inputFileRef: React.MutableRefObject<HTMLInputElement | null>;
 }) => {
   const isError = !(errorMessage.length === 0);
+
+  const handleDragOver = (event: React.DragEvent<HTMLLabelElement>) => {
+    event.preventDefault();
+    // Your drag over logic here
+  };
+
+  const handleDrop = (event: React.DragEvent<HTMLLabelElement>) => {
+    event.preventDefault();
+    const droppedFiles = event.dataTransfer.files;
+    setFiles(droppedFiles);
+    setFilesSelected(true);
+
+    for (const file of droppedFiles) {
+      setFileNameList((prev) => [...prev, file.name]);
+      setCantidades((prev) => [...prev, 1]);
+    }
+    // And other state updates as necessary
+  };
+
   return (
     <div className="flex flex-col h-full w-full items-center justify-center gap-10 px-5">
       <div className="flex items-center justify-center text-center">
         <Heading>{title ?? ""}</Heading>
         {withArrowIcon && <IconCornerRightDown size={50} className="hidden lg:block mt-8" />}
       </div>
-      <label className="flex flex-col items-center justify-center w-full py-20 md:w-2/3 max-w-[800px] h-2/3 max-h-[500px] bg-appshell_background rounded-xl border-solid border-[3px] border-pink_tic gap-10">
+      <label
+        className="flex flex-col items-center justify-center w-full py-20 md:w-2/3 max-w-[800px] h-2/3 max-h-[500px] bg-appshell_background rounded-xl border-solid border-[3px] border-pink_tic gap-10"
+        onDragOver={handleDragOver}
+        onDrop={handleDrop}
+      >
         <input
           multiple
           ref={inputFileRef}
@@ -305,7 +328,7 @@ export const DropdownSelect = ({
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
-  
+
   return (
     <div className="flex flex-col">
       <Heading className="text-[25px]">{title}</Heading>
