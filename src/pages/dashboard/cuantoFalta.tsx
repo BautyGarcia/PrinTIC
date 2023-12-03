@@ -14,7 +14,7 @@ const CuantoFalta: NextPage = () => {
                 <meta name="description" content="PrinTIC" />
                 <link rel="icon" href="/general/ticLogo.ico" />
             </Head>
-            <Dashboard>
+            <Dashboard isOverflowHidden={false}>
                 <div className="p-5 pb-28">
                     <table className="w-full h-full bg-appshell_background solicitud">
                         <thead className="">

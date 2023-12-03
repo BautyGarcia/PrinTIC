@@ -8,9 +8,10 @@ import Head from "next/head";
 
 interface DashboardProps {
   children: React.ReactNode;
+  isOverflowHidden?: boolean;
 }
 
-const Dashboard: NextPage<DashboardProps> = ({ children }) => {
+const Dashboard: NextPage<DashboardProps> = ({ children, isOverflowHidden = true }) => {
   const { data: sessionData } = useSession();
   const router = useRouter();
 
@@ -32,7 +33,7 @@ const Dashboard: NextPage<DashboardProps> = ({ children }) => {
       </Head>
       <SessionChecker />
       <AppShell nombre={sessionData?.user?.name ?? "Anonimo"} curso={sessionData?.user?.curso ?? "Anonimo"}>
-        <div className="w-full h-full overflow-auto">
+        <div className={`w-full h-full ${isOverflowHidden ? "overflow-hidden" : "overflow-auto"}`}>
           {children}
         </div>
       </AppShell>
