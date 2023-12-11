@@ -66,23 +66,27 @@ export const authOptions: NextAuthOptions = {
           password: string;
         };
 
-        const user = await db.user.findUnique({
-          where: {
-            email
-          },
-        });
-
-        if (!user) {
-          throw new Error("Email incorrecto");
+        try {
+          const user = await db.user.findUnique({
+            where: {
+              email
+            },
+          });
+  
+          if (!user) {
+            throw new Error("Email incorrecto");
+          }
+  
+          const validatedPassword = await bcrypt.compare(password, user.password!);
+  
+          if (!validatedPassword) {
+            throw new Error("Contraseña incorrecta");
+          }
+  
+          return user;
+        } catch {
+          throw new Error("Hubo un problema, revisa la conexión ó mostrale a un profesor.");
         }
-
-        const validatedPassword = await bcrypt.compare(password, user.password!);
-
-        if (!validatedPassword) {
-          throw new Error("Contraseña incorrecta");
-        }
-
-        return user;
       },
     })
   ],

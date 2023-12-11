@@ -52,7 +52,7 @@ const DashboardNavBar = ({ isOpened, nombre, curso, setOpen }: { isOpened: boole
                         }
                     </div>
                     <ActionButton
-                        className="text-xl font-spacemono bg-transparent mb-11 p-2 rounded-lg flex items-center gap-3 self-center hover:bg-pink_tic_light hover:cursor-pointer"
+                        className="text-xl font-spacemono bg-transparent mb-11 p-3 rounded-lg flex items-center gap-3 self-center hover:bg-pink_tic_light hover:cursor-pointer"
                         onClick={() => signOut({ redirect: false }).then(() => router.push("/ingreso"))}
                     >Salir<IconLogout size={30} />
                     </ActionButton>
@@ -77,7 +77,7 @@ const DashboardNavBar = ({ isOpened, nombre, curso, setOpen }: { isOpened: boole
                     }
                 </div>
                 <ActionButton
-                    className="text-xl font-spacemono bg-transparent mb-11 p-2 rounded-lg flex items-center gap-3 self-center hover:bg-pink_tic_light hover:cursor-pointer"
+                    className="text-xl font-spacemono bg-transparent mb-11 p-3 rounded-lg flex items-center gap-3 self-center hover:bg-pink_tic_light hover:cursor-pointer"
                     onClick={() => signOut({ redirect: false }).then(() => router.push("/ingreso"))}
                 >Salir<IconLogout size={30} />
                 </ActionButton>

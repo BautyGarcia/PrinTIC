@@ -96,19 +96,20 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  password      String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  dni           String?
-  curso         String
-  role          RoleType  @default(STUDENT)
-  accounts      Account[]
-  sessions      Session[]
-  pedidos       Pedido[]  @relation("Alumno")
-  aprobaciones  Pedido[]  @relation("Profesor")
+  id                String    @id @default(cuid())
+  name              String?
+  password          String?
+  email             String?   @unique
+  emailVerified     DateTime?
+  image             String?
+  dni               String?
+  curso             String
+  isPasswordChanged Boolean   @default(false)
+  role              RoleType  @default(STUDENT)
+  accounts          Account[]
+  sessions          Session[]
+  pedidos           Pedido[]  @relation("Alumno")
+  aprobaciones      Pedido[]  @relation("Profesor")
 }
 
 model VerificationToken {
