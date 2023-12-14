@@ -81,6 +81,13 @@ export const pedidoRouter = createTRPCRouter({
                             name: true,
                             email: true,
                         }
+                    },
+                    observacionesProfesor: {
+                        select: {
+                            profesor: true,
+                            id: true,
+                            texto: true,
+                        }
                     }
                 },
                 orderBy: {
@@ -103,7 +110,6 @@ export const pedidoRouter = createTRPCRouter({
                     aprobador: true,
                     materia: true,
                     observacionesAlumno: true,
-                    observacionesProfesor: true,
                     estado: true,
                     fecha: true,
                     user: {
@@ -117,6 +123,13 @@ export const pedidoRouter = createTRPCRouter({
                             nombre: true,
                             cantidad: true,
                             url: true,
+                        }
+                    },
+                    observacionesProfesor: {
+                        select: {
+                            profesor: true,
+                            id: true,
+                            texto: true,
                         }
                     }
                 },
@@ -135,7 +148,17 @@ export const pedidoRouter = createTRPCRouter({
                 },
                 data: {
                     estado: estado as Estado,
-                    observacionesProfesor: motivos,
+                    observacionesProfesor: {
+                        create: {
+                            fecha: new Date(),
+                            texto: motivos ?? "No Hay Motivos",
+                            profesor: {
+                                connect: {
+                                    id: ctx.session?.user?.id
+                                }
+                            }
+                        }
+                    },
                     aprobador: {
                         connect: {
                             id: teacherId

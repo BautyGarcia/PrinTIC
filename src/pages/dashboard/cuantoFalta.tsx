@@ -34,7 +34,7 @@ const CuantoFalta: NextPage = () => {
                                         <th className="px-4">Materia</th>
                                         <th className="px-4">Notas</th>
                                         <th className="px-4">Profesor</th>
-                                        <th className="px-4 pr-5">Motivos</th>
+                                        <th className="px-4 pr-5">Último motivo</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -49,7 +49,7 @@ const CuantoFalta: NextPage = () => {
                                                     <td className="px-4">{pedido.materia}</td>
                                                     <td className="px-4">{pedido.observacionesAlumno}</td>
                                                     <td className="px-4">{pedido.aprobador?.name ?? "Ninguno"}</td>
-                                                    <td className="px-4">{pedido.observacionesProfesor}</td>
+                                                    <td className="px-4">{(pedido.observacionesProfesor).at(-1)?.texto ?? "No hay motivo"}</td>
                                                 </tr>
                                             )
                                         })

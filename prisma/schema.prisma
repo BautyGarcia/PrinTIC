@@ -32,17 +32,17 @@ enum Materia {
 }
 
 model Pedido {
-  id                    String   @id @default(cuid())
+  id                    String                  @id @default(cuid())
   fecha                 DateTime
-  estado                Estado   @default(PENDIENTE)
-  user                  User     @relation("Alumno", fields: [userId], references: [id], onDelete: Cascade)
+  estado                Estado                  @default(PENDIENTE)
+  user                  User                    @relation("Alumno", fields: [userId], references: [id], onDelete: Cascade)
   userId                String
   materia               Materia
   piezas                Pieza[]
-  aprobador             User?    @relation("Profesor", fields: [aprobadorId], references: [id])
+  aprobador             User?                   @relation("Profesor", fields: [aprobadorId], references: [id])
   aprobadorId           String?
-  observacionesAlumno   String?  @db.Text
-  observacionesProfesor String?
+  observacionesAlumno   String?                 @db.Text
+  observacionesProfesor observacionesProfesor[]
 
   @@index([userId])
   @@index([aprobadorId])
@@ -63,6 +63,19 @@ model Feedback {
   id    String   @id @default(cuid())
   fecha DateTime
   texto String
+}
+
+model observacionesProfesor {
+  id         String   @id @default(cuid())
+  fecha      DateTime
+  texto      String
+  profesor   User     @relation(fields: [profesorId], references: [id])
+  profesorId String
+  pedido     Pedido   @relation(fields: [pedidoId], references: [id])
+  pedidoId   String
+
+  @@index([profesorId])
+  @@index([pedidoId])
 }
 
 // Necessary for Next auth
@@ -96,20 +109,21 @@ model Session {
 }
 
 model User {
-  id                String    @id @default(cuid())
+  id                String                  @id @default(cuid())
   name              String?
   password          String?
-  email             String?   @unique
+  email             String?                 @unique
   emailVerified     DateTime?
   image             String?
   dni               String?
   curso             String
-  isPasswordChanged Boolean   @default(false)
-  role              RoleType  @default(STUDENT)
+  isPasswordChanged Boolean                 @default(false)
+  role              RoleType                @default(STUDENT)
   accounts          Account[]
   sessions          Session[]
-  pedidos           Pedido[]  @relation("Alumno")
-  aprobaciones      Pedido[]  @relation("Profesor")
+  pedidos           Pedido[]                @relation("Alumno")
+  aprobaciones      Pedido[]                @relation("Profesor")
+  observaciones     observacionesProfesor[]
 }
 
 model VerificationToken {

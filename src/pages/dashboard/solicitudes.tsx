@@ -2,7 +2,7 @@ import { type NextPage } from "next";
 import Dashboard from ".";
 import Head from "next/head";
 import { api } from "~/utils/api";
-import { Heading, Text } from "~/components/utils/texts";
+import { Heading, Text, Pill } from "~/components/utils/texts";
 import { ActionButton, DropdownMenu } from "~/components/utils/buttons";
 import { TextInput, DropdownSelect, TextZone } from "~/components/utils/inputs";
 import { useState } from "react";
@@ -240,16 +240,16 @@ export const Solicitudes: NextPage = () => {
                                     <div key={pedido.id} className="solicitud flex flex-col w-[500px] h-[500px] bg-appshell_background rounded-lg p-6 gap-5">
                                         <Heading className="text-[40px]">{`${pedido.user.name} - ${pedido.user.curso}`}</Heading>
                                         <div className="flex gap-4">
-                                            <Heading className={`text-[15px] ${coloresPedido[pedido.estado]} w-fit p-2 px-4 rounded-full hover:cursor-pointer`} onClick={() => {
+                                            <Pill colorBg={coloresPedido[pedido.estado]} className="hover:cursor-pointer" onClick={() => {
                                                 setOpened(true)
                                                 setCurrentPedidoId(pedido.id);
                                                 setCurrentPedidoStudentEmail(pedido.user.email ?? "");
                                                 setCurrentPedidoStudentName(pedido.user.name ?? "");
                                                 setCurrentPedidoEstado(pedido.estado);
-                                            }}>{estadosCambioPedido[pedido.estado].toUpperCase()}</Heading>
-                                            <Heading className={`text-[15px] ${coloresPedido[pedido.materia]} w-fit p-2 px-4 rounded-full`}>{pedido.materia}</Heading>
+                                            }}>{estadosCambioPedido[pedido.estado].toUpperCase()}</Pill>
+                                            <Pill colorBg={coloresPedido[pedido.materia]}>{pedido.materia}</Pill>
                                             {
-                                                pedido.aprobador && <Heading className={`text-[15px] bg-[#9b7894] w-fit p-2 px-4 rounded-full`}>{pedido.aprobador.name?.toUpperCase()}</Heading>
+                                                pedido.aprobador && <Pill colorBg="bg-[#9b7894]">{pedido.aprobador.name?.toUpperCase()}</Pill>
                                             }
                                         </div>
                                         <Text>{formatDate(pedido.fecha)}</Text>

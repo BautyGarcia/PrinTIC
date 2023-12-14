@@ -10,6 +10,13 @@
 }
 
 @font-face {
+    font-family: 'Raleway-Base';
+    src: url('/fonts/Raleway.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
     font-family: 'Space Mono';
     src: url('/fonts/SpaceMono.ttf') format('truetype');
     font-weight: normal;

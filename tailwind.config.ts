@@ -39,11 +39,13 @@ export default {
       "red_tic_hover": "#D12C2C",
       "skeleton": "rgba(245, 245, 245, 0.31)",
       "modalBackground": "rgba(3, 0, 38, 0.8)",
+      "grayTranslucent": "rgba(217, 217, 217, 0.4)",
     },
     fontFamily: {
       "raleway": ['Raleway'],
       "spacemono": ['Space Mono'],
       "roboto": ['roboto'],
+      "ralewayBase": ['Raleway-Base'],
     },
   },
   plugins: [],
