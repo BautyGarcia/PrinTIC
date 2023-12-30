@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Heading, Subtitle, Title, Text, Pill } from '~/components/utils/texts';
+import { Subtitle, Title, Text, Pill } from '~/components/utils/texts';
 import { useRouter } from 'next/router';
 import { type NextPage } from 'next';
 import { api } from '~/utils/api';
-import { StlViewer } from 'react-stl-viewer';
 import { ActionButton } from '~/components/utils/buttons';
 import Head from 'next/head';
 import Glassbox from '~/components/utils/glassbox';
-import { PageLoader } from '~/components/utils/loaders';
 import { IconChevronLeft } from '@tabler/icons-react';
+import Carousel from '~/components/utils/carousel';
+import { downloadAsZip } from '~/utils/downloadFile';
 
 const coloresPedido = {
     "PENDIENTE": "bg-[#ff6c31]",
@@ -24,34 +24,43 @@ const coloresPedido = {
     "PROYECTO": "bg-[#18d0da]"
 }
 
+interface FileInfo {
+    url: string,
+    name: string
+}
+
 const Solicitud: NextPage = () => {
     const router = useRouter();
     const { id } = router.query;
     const { data: pedido, isLoading } = api.pedidos.getPedidoById.useQuery({
         id: id as string
     });
+
     const [nombrePieza, setNombrePieza] = useState("");
     const [cantidadPieza, setCantidadPieza] = useState(0);
-    const [urlPieza, setUrlPieza] = useState("");
     const [activeIndex, setActiveIndex] = useState(0);
-    const [isLoadingSTL, setIsLoadingSTL] = useState(true);
+    const [studentInfo, setStudentInfo] = useState({
+        studentName: "",
+        curso: ""
+    });
+    const [files, setFiles] = useState<FileInfo[]>([]);
 
     useEffect(() => {
         if (pedido) {
             setNombrePieza(pedido.piezas[activeIndex]?.nombre ?? "");
             setCantidadPieza(pedido.piezas[activeIndex]?.cantidad ?? 0);
-            setUrlPieza(pedido.piezas[activeIndex]?.url ?? "");
+            setStudentInfo({
+                studentName: pedido.user.name ?? "",
+                curso: pedido.user.curso
+            });
+            setFiles(pedido.piezas.map(pieza => {
+                return {
+                    url: pieza.url,
+                    name: pieza.nombre
+                }
+            }));
         }
     }, [pedido, activeIndex]);
-
-    const handleDownload = (url: string, fileName: string) => {
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = fileName || 'download';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-    }
 
     return (
         <>
@@ -60,18 +69,18 @@ const Solicitud: NextPage = () => {
                 <meta name='description' content='PrinTIC' />
                 <link rel='icon' href='/general/ticLogo.ico' />
             </Head>
-            <div className='flex flex-col md:flex-row relative z-10 w-screen h-screen p-12 px-12 gap-10 pb-[6rem]'>
-                <div className='flex flex-col h-full w-1/2 gap-8'>
-                    <Title className='font-spacemono font-bold flex items-center md:text-[24px] hover:cursor-pointer'><IconChevronLeft size={30} />{`REGRESAR`}</Title>
+            <div className='flex flex-col md:flex-row relative z-10 w-screen max-md:min-h-screen md:h-screen p-12 px-12 gap-10 pb-[6rem]'>
+                <div className='flex flex-col h-full w-full md:w-1/2 gap-8'>
+                    <Title className='font-spacemono font-bold flex items-center text-xl md:text-[24px] hover:cursor-pointer'><IconChevronLeft size={30} />{`REGRESAR`}</Title>
                     <div className='flex flex-col gap-4'>
-                        <Title className='font-spacemono font-bold tracking-[4px] md:text-[32px]'>SOLICITUD</Title>
-                        <div className='flex items-center gap-[2rem]'>
+                        <Title className='font-spacemono font-bold tracking-[4px] md:text-[32px] text-center md:text-left'>SOLICITUD</Title>
+                        <div className='flex items-center gap-[2rem] justify-center md:justify-start'>
                             <Subtitle className='leading-none font-ralewayBase md:text-[5rem]'>{pedido?.user.name}</Subtitle>
                             <div className='bg-grayTranslucent w-fit p-1 px-3 rounded-md'>
                                 <Text>{pedido?.user.curso} | {pedido?.materia}</Text>
                             </div>
                         </div>
-                        <div className='flex gap-2'>
+                        <div className='flex gap-2 justify-center md:justify-start'>
                             <Pill colorBg={coloresPedido[pedido?.estado ?? "PENDIENTE"]}>{pedido?.estado}</Pill>
                             {pedido?.aprobador && <Pill colorBg="bg-[#9b7894]">{pedido?.aprobador?.name}</Pill>}
                         </div>
@@ -80,24 +89,36 @@ const Solicitud: NextPage = () => {
                         {
                             pedido?.observacionesProfesor.map((observacion, index) => {
                                 return (
-                                    <div key={index} className='flex gap-6 items-center pb-8 border-b-[1px] border-b-pink_tic'>
-                                        <Pill colorBg='bg-[#FF6C31]' className='w-[80px] h-fit text-center'>{observacion.profesor.name}</Pill>
-                                        <Text className='flex-grow w-min'>{observacion.texto}</Text>
+                                    <div key={index} className='flex flex-col md:flex-row gap-6 items-center pb-8 border-b-[1px] border-b-pink_tic'>
+                                        <Pill colorBg='bg-[#FF6C31]' className='w-[80px] self-start h-fit text-center'>{observacion.profesor.name}</Pill>
+                                        <Text className='flex-grow md:w-min text-sm md:text-[20px]'>{observacion.texto}</Text>
                                     </div>
                                 )
                             })
                         }
                     </div>
-                    <ActionButton className='font-spacemono px-8 text-lg w-fit'>
+                    <ActionButton
+                        className='font-spacemono px-8 text-lg w-fit'
+                        onClick={() => downloadAsZip(files, studentInfo)}
+                    >    
                         DESCARGAR TODO
                     </ActionButton>
                 </div>
-                <div className='flex h-full w-1/2 pt-[4rem]'>
+                <div className='flex h-full w-full md:w-1/2 pt-[4rem]'>
                     <Glassbox
                         className='h-full w-full'
                         containerClassName='w-full h-full'
                     >
-                        <></>
+                        <Carousel
+                            stl_list={pedido?.piezas.map(pieza => pieza.url) ?? []}
+                            activeIndex={activeIndex}
+                            setActiveIndex={setActiveIndex}
+                            isFetching={isLoading}
+                            activeFile={{
+                                nombre: nombrePieza,
+                                cantidad: cantidadPieza
+                            }}
+                        />
                     </Glassbox>
                 </div>
             </div>
@@ -106,76 +127,3 @@ const Solicitud: NextPage = () => {
 };
 
 export default Solicitud;
-
-
-/**
- *                 <div className='flex flex-col justify-center h-full w-full md:w-1/2 gap-5'>
-                    <div className='flex w-full h-[80px] gap-5 overflow-x-auto'>
-                        {
-                            pedido?.piezas.map((pieza, index) => {
-                                return (
-                                    <ActionButton
-                                        key={index}
-                                        className={`w-min h-min p-5 px-8 text-xl font-spacemono  ${activeIndex === index ? "bg-[#FFF] text-pink_tic hover:bg-[#DDD]" : ""}`}
-                                        onClick={() => {
-                                            setNombrePieza(pieza.nombre);
-                                            setCantidadPieza(pieza.cantidad);
-                                            setUrlPieza(pieza.url);
-                                            setActiveIndex(index);
-                                        }}
-                                    >{`${index + 1}`}</ActionButton>
-                                )
-                            })
-                        }
-                    </div>
-                    {
-                        urlPieza && (
-                            <Glassbox
-                                className='h-2/3 w-full'
-                                containerClassName='w-full h-full'
-                            >
-                                {
-                                    isLoadingSTL && (
-                                        <div className='flex w-full h-full justify-center items-end mt-10'>
-                                            <PageLoader />
-                                        </div>
-                                    )
-                                }
-                                <StlViewer
-                                    url={urlPieza}
-                                    orbitControls
-                                    className={`h-full w-full`}
-                                    onFinishLoading={() => setIsLoadingSTL(false)}
-                                    onError={() => setIsLoadingSTL(false)}
-                                />
-                            </Glassbox>
-                        )
-                    }
-                    <ActionButton
-                        className='text-xl w-fit p-3 font-spacemono self-center md:self-start'
-                        onClick={() => handleDownload(urlPieza, nombrePieza)}
-                    >Descargar esta pieza</ActionButton>
-                </div>
-                <div className={`flex flex-col h-min w-1/2 gap-4 items-center self-center text-center`}>
-                    {
-                        isLoading ? (
-                            <PageLoader />
-                        ) : (
-                            <>
-                                <div>
-                                    <Heading className='md:text-[75px]'>{`${pedido?.user.name} - ${pedido?.user.curso}`}</Heading>
-                                    <Heading className=''>{`Materia: ${pedido?.materia}`}</Heading>
-                                </div>
-                                <div>
-                                    <Heading className='flex flex-row'>{`${cantidadPieza}x ${nombrePieza}`}</Heading>
-                                </div>
-                                <div>
-                                    <Heading>
-                                        {pedido?.observacionesAlumno || "No hay notas"}
-                                    </Heading>
-                                </div>
-                            </>
-                        )
-                    }
-                </div>
- */

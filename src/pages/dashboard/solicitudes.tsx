@@ -7,14 +7,13 @@ import { ActionButton, DropdownMenu } from "~/components/utils/buttons";
 import { TextInput, DropdownSelect, TextZone } from "~/components/utils/inputs";
 import { useState } from "react";
 import { estadosPedidoKeys, estadosPedidoValues, estadosCambioPedidoKeys, estadosCambioPedidoValues, estadosCambioPedido } from "~/utils/objects";
-import JSZip from 'jszip';
-import { saveAs } from 'file-saver';
 import { PageLoader } from "~/components/utils/loaders";
 import { Modal } from "~/components/utils/popups";
 import { IconX } from "@tabler/icons-react";
 import { toast } from "react-toastify";
 import { useSession } from "next-auth/react";
 import { formatDate } from "~/utils/scripts";
+import { downloadAsZip } from "~/utils/downloadFile";
 
 const coloresPedido = {
     "PENDIENTE": "bg-[#ff6c31]",
@@ -75,19 +74,6 @@ export const Solicitudes: NextPage = () => {
         }
 
         return filteredData;
-    }
-
-    async function downloadAsZip(urls: { url: string, name: string }[], studentInfo: { studentName: string, curso: string }) {
-        const zip = new JSZip();
-
-        for (const url of urls) {
-            const response = await fetch(url.url);
-            const blob = await response.blob();
-            zip.file(`${url.name}.stl`, blob);
-        }
-
-        const zipBlob = await zip.generateAsync({ type: "blob" });
-        saveAs(zipBlob, `${studentInfo.studentName}_${studentInfo.curso}_${Date.now()}.zip`);
     }
 
     const handleChangeEstado = () => {
