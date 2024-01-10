@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 import { StlViewer } from "react-stl-viewer";
 import { IconChevronLeft, IconChevronRight, IconDownload } from "@tabler/icons-react";
 import { PageLoader } from "./loaders";
-import { ActionButton } from "./buttons";
 import { handleDownload } from "~/utils/downloadFile";
 
 interface STLFile {
@@ -43,11 +42,14 @@ const Carousel = ({
     return (
         <div className="h-full w-full">
             <div className="flex justify-end w-full absolute p-3">
-                <ActionButton 
+                <motion.button 
+                    whileHover={{
+                        
+                    }}
                     onClick={() => handleDownload(stl_list[activeIndex] ?? "", `${activeFile.cantidad}x ${activeFile.nombre}`)}
-                    className="z-10 aspect-square items-center p-2.5">
+                    className="z-10 aspect-square items-center p-2.5 bg-pink_tic hover:bg-pink_tic_hover rounded-md button-animation">
                         <IconDownload size={40}/>
-                </ActionButton>
+                </motion.button>
             </div>
             <div className="absolute w-full top-[50%] flex justify-between px-2">
                 <motion.button
@@ -94,6 +96,7 @@ const Carousel = ({
                         <StlViewer
                             url={stl_list[activeIndex] ?? ""}
                             orbitControls
+                            canvasId="stl-canvas"
                             className={`h-full w-full`}
                             onFinishLoading={() => setIsLoadingSTL(false)}
                             onError={() => setIsLoadingSTL(false)}
