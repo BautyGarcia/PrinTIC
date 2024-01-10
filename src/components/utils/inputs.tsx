@@ -342,7 +342,7 @@ export const DropdownSelect = ({
         </ActionButton>
         {
           isOpen && (
-            <div className="absolute flex flex-col right-0 w-[178px] p-1.5 mt-1 rounded-lg bg-input_background">
+            <div className="absolute flex flex-col right-0 w-full p-1.5 mt-1 rounded-lg bg-input_background">
               {labels.map((label, index) => (
                 <ActionButton
                   key={index}

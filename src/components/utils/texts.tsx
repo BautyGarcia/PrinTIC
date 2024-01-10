@@ -62,20 +62,24 @@ export const Pill = ({
     children,
     className,
     colorBg,
-    onClick
+    onClick,
+    icon
 }: {
     children: any,
     className?: string,
     colorBg: string,
+    icon?: React.ReactNode
     onClick?: () => any
 }) => {
     return (
         <Heading
             onClick={onClick}
             className={twMerge(
-                `text-[15px] ${colorBg} w-fit p-2 px-4 rounded-full`,
+                `flex gap-2 items-center text-[15px] ${colorBg} w-fit p-2 px-4 rounded-full`,
                 className,
-            )}>{children}
+            )}>
+            {icon}
+            {children}
         </Heading>
     )
 }

@@ -9,6 +9,7 @@ import Glassbox from '~/components/utils/glassbox';
 import { IconChevronLeft } from '@tabler/icons-react';
 import Carousel from '~/components/utils/carousel';
 import { downloadAsZip } from '~/utils/downloadFile';
+import SolicitudesScreenSkeleton from '~/components/skeletons/solicitudScreenSkeleton';
 
 const coloresPedido = {
     "PENDIENTE": "bg-[#ff6c31]",
@@ -35,7 +36,6 @@ const Solicitud: NextPage = () => {
     const { data: pedido, isLoading } = api.pedidos.getPedidoById.useQuery({
         id: id as string
     });
-
     const [nombrePieza, setNombrePieza] = useState("");
     const [cantidadPieza, setCantidadPieza] = useState(0);
     const [activeIndex, setActiveIndex] = useState(0);
@@ -71,38 +71,44 @@ const Solicitud: NextPage = () => {
             </Head>
             <div className='flex flex-col md:flex-row relative z-10 w-screen max-md:min-h-screen md:h-screen p-12 px-12 gap-10 pb-[6rem]'>
                 <div className='flex flex-col h-full w-full md:w-1/2 gap-8'>
-                    <Title className='font-spacemono font-bold flex items-center text-xl md:text-[24px] hover:cursor-pointer'><IconChevronLeft size={30} />{`REGRESAR`}</Title>
-                    <div className='flex flex-col gap-4'>
-                        <Title className='font-spacemono font-bold tracking-[4px] md:text-[32px] text-center md:text-left'>SOLICITUD</Title>
-                        <div className='flex items-center gap-[2rem] justify-center md:justify-start'>
-                            <Subtitle className='leading-none font-ralewayBase md:text-[5rem]'>{pedido?.user.name}</Subtitle>
-                            <div className='bg-grayTranslucent w-fit p-1 px-3 rounded-md'>
-                                <Text>{pedido?.user.curso} | {pedido?.materia}</Text>
-                            </div>
-                        </div>
-                        <div className='flex gap-2 justify-center md:justify-start'>
-                            <Pill colorBg={coloresPedido[pedido?.estado ?? "PENDIENTE"]}>{pedido?.estado}</Pill>
-                            {pedido?.aprobador && <Pill colorBg="bg-[#9b7894]">{pedido?.aprobador?.name}</Pill>}
-                        </div>
-                    </div>
-                    <div className='solicitud flex flex-col flex-grow bg-appshell_secondary rounded-lg p-8 overflow-y-auto gap-8'>
-                        {
-                            pedido?.observacionesProfesor.map((observacion, index) => {
-                                return (
-                                    <div key={index} className='flex flex-col md:flex-row gap-6 items-center pb-8 border-b-[1px] border-b-pink_tic'>
-                                        <Pill colorBg='bg-[#FF6C31]' className='w-[80px] self-start h-fit text-center'>{observacion.profesor.name}</Pill>
-                                        <Text className='flex-grow md:w-min text-sm md:text-[20px]'>{observacion.texto}</Text>
+                    {isLoading ? (
+                        <SolicitudesScreenSkeleton />
+                    ) : (
+                        <>
+                            <Title className='font-spacemono font-bold flex items-center text-xl md:text-[24px] hover:cursor-pointer'><IconChevronLeft size={30} />{`REGRESAR`}</Title>
+                            <div className='flex flex-col gap-4'>
+                                <Title className='font-spacemono font-bold tracking-[4px] md:text-[32px] text-center md:text-left'>SOLICITUD</Title>
+                                <div className='flex items-center gap-[2rem] justify-center md:justify-start'>
+                                    <Subtitle className='leading-none font-ralewayBase md:text-[5rem]'>{pedido?.user.name}</Subtitle>
+                                    <div className='bg-grayTranslucent w-fit p-1 px-3 rounded-md'>
+                                        <Text>{pedido?.user.curso} | {pedido?.materia}</Text>
                                     </div>
-                                )
-                            })
-                        }
-                    </div>
-                    <ActionButton
-                        className='font-spacemono px-8 text-lg w-fit'
-                        onClick={() => downloadAsZip(files, studentInfo)}
-                    >    
-                        DESCARGAR TODO
-                    </ActionButton>
+                                </div>
+                                <div className='flex gap-2 justify-center md:justify-start'>
+                                    <Pill colorBg={coloresPedido[pedido?.estado ?? "PENDIENTE"]}>{pedido?.estado}</Pill>
+                                    {pedido?.aprobador && <Pill colorBg="bg-[#9b7894]">{pedido?.aprobador?.name}</Pill>}
+                                </div>
+                            </div>
+                            <div className='solicitud flex flex-col flex-grow bg-appshell_secondary rounded-lg p-8 overflow-y-auto gap-8'>
+                                {
+                                    pedido?.observacionesProfesor.map((observacion, index) => {
+                                        return (
+                                            <div key={index} className='flex flex-col md:flex-row gap-6 items-center pb-8 border-b-[1px] border-b-pink_tic'>
+                                                <Pill colorBg='bg-[#FF6C31]' className='w-[80px] self-start h-fit justify-center'>{observacion.profesor.name}</Pill>
+                                                <Text className='flex-grow md:w-min text-sm md:text-[20px]'>{observacion.texto}</Text>
+                                            </div>
+                                        )
+                                    })
+                                }
+                            </div>
+                            <ActionButton
+                                className='font-spacemono px-8 text-lg w-fit'
+                                onClick={() => downloadAsZip(files, studentInfo)}
+                            >
+                                DESCARGAR TODO
+                            </ActionButton>
+                        </>
+                    )}
                 </div>
                 <div className='flex h-full w-full md:w-1/2 pt-[4rem]'>
                     <Glassbox

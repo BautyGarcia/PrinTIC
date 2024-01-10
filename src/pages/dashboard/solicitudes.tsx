@@ -9,7 +9,7 @@ import { useState } from "react";
 import { estadosPedidoKeys, estadosPedidoValues, estadosCambioPedidoKeys, estadosCambioPedidoValues, estadosCambioPedido } from "~/utils/objects";
 import { PageLoader } from "~/components/utils/loaders";
 import { Modal } from "~/components/utils/popups";
-import { IconX } from "@tabler/icons-react";
+import { IconX, IconPencil } from "@tabler/icons-react";
 import { toast } from "react-toastify";
 import { useSession } from "next-auth/react";
 import { formatDate } from "~/utils/scripts";
@@ -223,27 +223,43 @@ export const Solicitudes: NextPage = () => {
                         ) : (
                             filterData()?.map((pedido) => {
                                 return (
-                                    <div key={pedido.id} className="solicitud flex flex-col w-[500px] h-[500px] bg-appshell_background rounded-lg p-6 gap-5">
-                                        <Heading className="text-[40px]">{`${pedido.user.name} - ${pedido.user.curso}`}</Heading>
-                                        <div className="flex gap-4">
-                                            <Pill colorBg={coloresPedido[pedido.estado]} className="hover:cursor-pointer" onClick={() => {
-                                                setOpened(true)
-                                                setCurrentPedidoId(pedido.id);
-                                                setCurrentPedidoStudentEmail(pedido.user.email ?? "");
-                                                setCurrentPedidoStudentName(pedido.user.name ?? "");
-                                                setCurrentPedidoEstado(pedido.estado);
-                                            }}>{estadosCambioPedido[pedido.estado].toUpperCase()}</Pill>
+                                    <div key={pedido.id} className="solicitud flex flex-col w-[300px] h-fit bg-appshell_background rounded-lg p-6 gap-8">
+                                        <div className="flex justify-between items-center">
+                                            <Heading className="text-[20px] leading-none">{pedido.user.name}</Heading>
+                                            <Text>{formatDate(pedido.fecha)}</Text>
+                                        </div>
+                                        <div className="flex gap-4 flex-wrap">
+                                            <Pill
+                                                colorBg={coloresPedido[pedido.estado]}
+                                                className="hover:cursor-pointer "
+                                                icon={<IconPencil size={20} />}
+                                                onClick={() => {
+                                                    setOpened(true)
+                                                    setCurrentPedidoId(pedido.id);
+                                                    setCurrentPedidoStudentEmail(pedido.user.email ?? "");
+                                                    setCurrentPedidoStudentName(pedido.user.name ?? "");
+                                                    setCurrentPedidoEstado(pedido.estado);
+                                                }}>{estadosCambioPedido[pedido.estado].toUpperCase()}
+                                            </Pill>
+                                            <Pill colorBg="bg-[#b8860b]">{pedido.user.curso}</Pill>
                                             <Pill colorBg={coloresPedido[pedido.materia]}>{pedido.materia}</Pill>
                                             {
                                                 pedido.aprobador && <Pill colorBg="bg-[#9b7894]">{pedido.aprobador.name?.toUpperCase()}</Pill>
                                             }
                                         </div>
-                                        <Text>{formatDate(pedido.fecha)}</Text>
-                                        <div className="w-full h-[5px] bg-pink_tic" />
 
-                                        <div className="h-full">
-                                            <Text className="break-all line-clamp-4 overflow-auto">{`${pedido.observacionesAlumno ? pedido.observacionesAlumno : "No hay notas"}`}</Text>
-                                        </div>
+                                        {
+                                            pedido.observacionesAlumno && (
+                                                <>
+                                                    {/* Esto es solo un divider, bauty del futuro hacelo un componente porfa */}
+                                                    <div className="w-full h-[5px] bg-pink_tic"/>
+
+                                                    <div className="h-full">
+                                                        <Text className="break-all line-clamp-4 overflow-auto">{`${pedido.observacionesAlumno ? pedido.observacionesAlumno : "No hay notas"}`}</Text>
+                                                    </div>
+                                                </>
+                                            )
+                                        }
 
                                         <div className="flex w-full h-min self-end justify-between">
                                             <ActionButton
@@ -252,31 +268,24 @@ export const Solicitudes: NextPage = () => {
                                                     void window.open(`solicitudes/${pedido.id}`, "_blank");
                                                 }}
                                             >Ver</ActionButton>
-                                            <DropdownMenu
-                                                options={
-                                                    [
-                                                        {
-                                                            label: "Cambiar Estado",
-                                                            onClick: () => {
-                                                                setOpened(true);
-                                                                setCurrentPedidoId(pedido.id);
-                                                                setCurrentPedidoStudentEmail(pedido.user.email ?? "");
-                                                                setCurrentPedidoStudentName(pedido.user.name ?? "");
-                                                                setCurrentPedidoEstado(pedido.estado);
-                                                            }
-                                                        },
-                                                        {
-                                                            label: "Descargar Todo",
-                                                            onClick: () => {
-                                                                const urls: { url: string, name: string }[] = [];
-                                                                pedido.piezas.forEach((pieza) => {
-                                                                    urls.push({ url: pieza.url, name: pieza.nombre });
-                                                                });
-                                                                void downloadAsZip(urls, { studentName: pedido.user.name ?? "", curso: pedido.user.curso });
-                                                            }
+                                            <ActionButton
+                                                className="font-spacemono text-[18px]"
+                                                onClick={() => {
+                                                    const files = pedido.piezas.map(pieza => {
+                                                        return {
+                                                            url: pieza.url,
+                                                            name: pieza.nombre
                                                         }
-                                                    ]
-                                                } />
+                                                    });
+
+                                                    const studentInfo = {
+                                                        studentName: pedido.user.name ?? "",
+                                                        curso: pedido.user.curso
+                                                    }
+
+                                                    void downloadAsZip(files, studentInfo);
+                                                }}
+                                            >Descargar</ActionButton>
                                         </div>
                                     </div>
                                 )
