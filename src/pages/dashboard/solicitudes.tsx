@@ -3,7 +3,7 @@ import Dashboard from ".";
 import Head from "next/head";
 import { api } from "~/utils/api";
 import { Heading, Text, Pill } from "~/components/utils/texts";
-import { ActionButton, DropdownMenu } from "~/components/utils/buttons";
+import { ActionButton } from "~/components/utils/buttons";
 import { TextInput, DropdownSelect, TextZone } from "~/components/utils/inputs";
 import { useState } from "react";
 import { estadosPedidoKeys, estadosPedidoValues, estadosCambioPedidoKeys, estadosCambioPedidoValues, estadosCambioPedido } from "~/utils/objects";
@@ -252,7 +252,7 @@ export const Solicitudes: NextPage = () => {
                                             pedido.observacionesAlumno && (
                                                 <>
                                                     {/* Esto es solo un divider, bauty del futuro hacelo un componente porfa */}
-                                                    <div className="w-full h-[5px] bg-pink_tic"/>
+                                                    <div className="w-full h-[3px] bg-pink_tic"/>
 
                                                     <div className="h-full">
                                                         <Text className="break-all line-clamp-4 overflow-auto">{`${pedido.observacionesAlumno ? pedido.observacionesAlumno : "No hay notas"}`}</Text>

@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { Title } from "~/components/utils/texts";
 import { ActionButton } from "~/components/utils/buttons";
 import Head from "next/head";
+import { api } from "~/utils/api";
 
 const Ingreso: NextPage = () => {
     const [mail, setMail] = useState("")
@@ -14,6 +15,8 @@ const Ingreso: NextPage = () => {
     const [loading, setLoading] = useState(false)
     const [errorMessage, setErrorMessage] = useState("");
     const router = useRouter();
+    const { mutate: checkPasswordChange } = api.users.isPasswordChanged.useMutation();
+    let isPasswordChanged = false;
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -23,6 +26,18 @@ const Ingreso: NextPage = () => {
             return;
         }
         setLoading(true);
+
+        checkPasswordChange({
+            email: mail
+        }, {
+            onSuccess: (data) => {
+                isPasswordChanged = data;
+            },
+            onError: (error) => {
+                setErrorMessage(error.message ?? "Hubo un error al verificar si la contraseña fue cambiada");
+            }
+        });
+
         await signIn("credentials", {
             redirect: false,
             email: mail,
@@ -31,7 +46,11 @@ const Ingreso: NextPage = () => {
             if (response?.ok) {
                 setLoading(false);
                 setErrorMessage("");
-                void router.push("/dashboard");
+                if (isPasswordChanged) {
+                    void router.push("/dashboard");
+                    return;
+                }
+                void router.push("/nuevaClave");
             } else {
                 setLoading(false);
                 setErrorMessage(response?.error ?? "Email o contraseña incorrectos");

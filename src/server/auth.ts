@@ -10,6 +10,7 @@ import { env } from "~/env.mjs";
 import { db } from "~/server/db";
 import bcrypt from "bcrypt";
 import { type RoleType } from "@prisma/client";
+
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
  * object and keep type safety.
@@ -76,7 +77,7 @@ export const authOptions: NextAuthOptions = {
           if (!user) {
             throw new Error("Email incorrecto");
           }
-  
+
           const validatedPassword = await bcrypt.compare(password, user.password!);
   
           if (!validatedPassword) {
@@ -84,8 +85,8 @@ export const authOptions: NextAuthOptions = {
           }
   
           return user;
-        } catch {
-          throw new Error("Hubo un problema, revisa la conexión ó mostrale a un profesor.");
+        } catch (error) {
+          throw new Error((error as Error).message ?? "Hubo un problema, revisa la conexión ó mostrale a un profesor.");
         }
       },
     })
