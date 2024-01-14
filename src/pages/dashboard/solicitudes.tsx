@@ -7,13 +7,13 @@ import { ActionButton } from "~/components/utils/buttons";
 import { TextInput, DropdownSelect, TextZone } from "~/components/utils/inputs";
 import { useState } from "react";
 import { estadosPedidoKeys, estadosPedidoValues, estadosCambioPedidoKeys, estadosCambioPedidoValues, estadosCambioPedido } from "~/utils/objects";
-import { PageLoader } from "~/components/utils/loaders";
 import { Modal } from "~/components/utils/popups";
 import { IconX, IconPencil } from "@tabler/icons-react";
 import { toast } from "react-toastify";
 import { useSession } from "next-auth/react";
 import { formatDate } from "~/utils/scripts";
 import { downloadAsZip } from "~/utils/downloadFile";
+import SolicitudesListSkeleton from "~/components/skeletons/solicitudesListSkeleton";
 
 const coloresPedido = {
     "PENDIENTE": "bg-[#ff6c31]",
@@ -217,16 +217,14 @@ export const Solicitudes: NextPage = () => {
                 <div className="flex flex-wrap w-full justify-center h-full p-8 pb-[400px] gap-8 overflow-scroll">
                     {
                         isLoading ? (
-                            <div className="flex w-full h-full justify-center items-end pb-10">
-                                <PageLoader />
-                            </div>
+                            <SolicitudesListSkeleton />
                         ) : (
                             filterData()?.map((pedido) => {
                                 return (
                                     <div key={pedido.id} className="solicitud flex flex-col w-[300px] h-fit bg-appshell_background rounded-lg p-6 gap-8">
-                                        <div className="flex justify-between items-center">
-                                            <Heading className="text-[20px] leading-none">{pedido.user.name}</Heading>
-                                            <Text>{formatDate(pedido.fecha)}</Text>
+                                        <div className="flex justify-between items-start">
+                                            <Heading className="text-[20px] leading-[1.4]">{pedido.user.name}</Heading>
+                                            <Text className="w-fit text-end">{formatDate(pedido.fecha)}</Text>
                                         </div>
                                         <div className="flex gap-4 flex-wrap">
                                             <Pill
@@ -252,7 +250,7 @@ export const Solicitudes: NextPage = () => {
                                             pedido.observacionesAlumno && (
                                                 <>
                                                     {/* Esto es solo un divider, bauty del futuro hacelo un componente porfa */}
-                                                    <div className="w-full h-[3px] bg-pink_tic"/>
+                                                    <div className="w-full h-[3px] bg-pink_tic" />
 
                                                     <div className="h-full">
                                                         <Text className="break-all line-clamp-4 overflow-auto">{`${pedido.observacionesAlumno ? pedido.observacionesAlumno : "No hay notas"}`}</Text>

@@ -242,7 +242,7 @@ export const TextZone = ({
   value: string;
 }) => {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col w-full">
       {title && <Heading className="text-[25px]">{title}</Heading>}
       <textarea
         className={twMerge(
