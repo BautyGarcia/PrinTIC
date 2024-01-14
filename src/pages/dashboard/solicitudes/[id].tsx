@@ -76,7 +76,7 @@ const Solicitud: NextPage = () => {
             onSuccess: () => {
                 setIsSendingNote(false);
                 setNote("");
-                refetch();
+                void refetch();
                 toast.success("Nota enviada exitosamente");
             },
             onError: () => {
