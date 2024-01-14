@@ -27,3 +27,5 @@ export const estadosPedidoValues = Object.values(estadosPedido);
 export const estadosPedidoKeys = Object.keys(estadosPedido); 
 export const estadosCambioPedidoValues = Object.values(estadosCambioPedido);
 export const estadosCambioPedidoKeys = Object.keys(estadosCambioPedido);
+
+export const estadosTermiandos = ["ENTREGADO", "DENEGADO", "CON_ERRORES", "CADUCADO"]

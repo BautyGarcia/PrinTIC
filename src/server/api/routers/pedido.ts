@@ -8,6 +8,7 @@ import type { Estado, Materia } from "@prisma/client";
 import path from "path";
 import nodemailer from 'nodemailer';
 import { cambioEstadoTemplate } from "~/utils/emailTemplates";
+import { estadosTermiandos } from "~/utils/objects";
 
 const transporter = nodemailer.createTransport({
     service: "gmail",
@@ -90,9 +91,14 @@ export const pedidoRouter = createTRPCRouter({
                         }
                     }
                 },
-                orderBy: {
-                    fecha: "desc",
-                }
+                orderBy: [
+                    {
+                        index: "desc"
+                    },
+                    {
+                        fecha: "asc"
+                    },
+                ]
             });
 
             return pedidos;
@@ -148,6 +154,7 @@ export const pedidoRouter = createTRPCRouter({
                 },
                 data: {
                     estado: estado as Estado,
+                    index: estadosTermiandos.includes(estado) ? 0 : 1,
                     observacionesProfesor: {
                         create: {
                             fecha: new Date(),
@@ -181,6 +188,30 @@ export const pedidoRouter = createTRPCRouter({
                 throw new Error("Error mandando mail");
             }
             
+            return true;
+        }),
+    agregarNota: protectedProcedure
+        .input(z.object({ id: z.string(), nota: z.string() }))
+        .mutation(async ({ input, ctx }) => {
+            const { id, nota } = input;
+
+            await ctx.db.observacionesProfesor.create({
+                data: {
+                    pedido: {
+                        connect: {
+                            id
+                        }
+                    },
+                    profesor: {
+                        connect: {
+                            id: ctx.session?.user?.id
+                        }
+                    },
+                    texto: nota,
+                    fecha: new Date(),
+                }
+            })
+
             return true;
         }),
 });

@@ -43,6 +43,7 @@ model Pedido {
   aprobadorId           String?
   observacionesAlumno   String?                 @db.Text
   observacionesProfesor observacionesProfesor[]
+  index                 Int                     @default(1)
 
   @@index([userId])
   @@index([aprobadorId])
