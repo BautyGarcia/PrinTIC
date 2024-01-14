@@ -26,6 +26,7 @@ const Carousel = ({
     const [isLoadingSTL, setIsLoadingSTL] = useState(true);
 
     const handleNext = () => {
+        if (stl_list.length === 1) return;
         setIsLoadingSTL(true);
         setActiveIndex((prevIndex) =>
             prevIndex + 1 === stl_list.length ? 0 : prevIndex + 1
@@ -33,6 +34,7 @@ const Carousel = ({
     };
 
     const handlePrevious = () => {
+        if (stl_list.length === 1) return;
         setIsLoadingSTL(true);
         setActiveIndex((prevIndex) =>
             prevIndex - 1 < 0 ? stl_list.length - 1 : prevIndex - 1
