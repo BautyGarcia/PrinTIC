@@ -2,8 +2,8 @@ export const formatDate = (date: Date) => {
     const now = new Date();
     const diffTime = Math.abs(now.getTime() - date.getTime());
     const diffHours = diffTime / (1000 * 60 * 60);
-
-    if (diffHours < 0.1) {
+    
+    if (diffHours < 0.016) {
         return `Hace ${Math.floor(diffHours * 60 * 60)} segundos`;
     }
     else if (diffHours <= 1) {
