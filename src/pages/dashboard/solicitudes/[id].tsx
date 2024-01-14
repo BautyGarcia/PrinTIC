@@ -6,10 +6,12 @@ import { api } from '~/utils/api';
 import { ActionButton } from '~/components/utils/buttons';
 import Head from 'next/head';
 import Glassbox from '~/components/utils/glassbox';
-import { IconChevronLeft } from '@tabler/icons-react';
+import { IconChevronLeft, IconMessageX } from '@tabler/icons-react';
 import Carousel from '~/components/utils/carousel';
 import { downloadAsZip } from '~/utils/downloadFile';
 import SolicitudesScreenSkeleton from '~/components/skeletons/solicitudScreenSkeleton';
+import { TextZone } from '~/components/utils/inputs';
+import { toast } from 'react-toastify';
 
 const coloresPedido = {
     "PENDIENTE": "bg-[#ff6c31]",
@@ -33,9 +35,10 @@ interface FileInfo {
 const Solicitud: NextPage = () => {
     const router = useRouter();
     const { id } = router.query;
-    const { data: pedido, isLoading } = api.pedidos.getPedidoById.useQuery({
+    const { data: pedido, isLoading, refetch } = api.pedidos.getPedidoById.useQuery({
         id: id as string
     });
+    const { mutate: createNote } = api.pedidos.agregarNota.useMutation();
     const [nombrePieza, setNombrePieza] = useState("");
     const [cantidadPieza, setCantidadPieza] = useState(0);
     const [activeIndex, setActiveIndex] = useState(0);
@@ -44,6 +47,8 @@ const Solicitud: NextPage = () => {
         curso: ""
     });
     const [files, setFiles] = useState<FileInfo[]>([]);
+    const [note, setNote] = useState("");
+    const [isSendingNote, setIsSendingNote] = useState(false);
 
     useEffect(() => {
         if (pedido) {
@@ -61,6 +66,25 @@ const Solicitud: NextPage = () => {
             }));
         }
     }, [pedido, activeIndex]);
+
+    const handleCreateComment = () => {
+        setIsSendingNote(true);
+        createNote({
+            id: id as string,
+            nota: note
+        }, {
+            onSuccess: () => {
+                setIsSendingNote(false);
+                setNote("");
+                refetch();
+                toast.success("Nota enviada exitosamente");
+            },
+            onError: () => {
+                setIsSendingNote(false);
+                toast.error("Hubo un error al enviar la nota");
+            }
+        })
+    }
 
     return (
         <>
@@ -89,17 +113,41 @@ const Solicitud: NextPage = () => {
                                     {pedido?.aprobador && <Pill colorBg="bg-[#9b7894]">{pedido?.aprobador?.name}</Pill>}
                                 </div>
                             </div>
-                            <div className='solicitud flex flex-col flex-grow bg-appshell_secondary rounded-lg p-8 overflow-y-auto gap-8'>
+                            <div className='solicitud flex flex-col flex-grow justify-between bg-appshell_secondary rounded-lg overflow-y-auto p-8 pt-0'>
                                 {
                                     pedido?.observacionesProfesor.map((observacion, index) => {
                                         return (
-                                            <div key={index} className='flex flex-col md:flex-row gap-6 items-center pb-8 border-b-[1px] border-b-pink_tic'>
+                                            <div key={index} className='flex flex-col md:flex-row gap-6 items-center py-8 border-b-[1px] border-b-pink_tic'>
                                                 <Pill colorBg='bg-[#FF6C31]' className='w-[80px] self-start h-fit justify-center'>{observacion.profesor.name}</Pill>
                                                 <Text className='flex-grow md:w-min text-sm md:text-[20px]'>{observacion.texto}</Text>
                                             </div>
                                         )
                                     })
                                 }
+                                {
+                                    pedido?.observacionesProfesor.length === 0 && (
+                                        <div className='flex h-full flex-col items-center justify-center pt-8'>
+                                            <IconMessageX size={80} />
+                                            <Text className='text-lg text-center'>No hay notas</Text>
+                                            <Text className='text-sm text-center'>(Poca pala)</Text>
+                                        </div>
+                                    )
+                                }
+                            </div>
+                            <div className='solicitud flex w-full justify-between bg-appshell_secondary min-h-[100px] p-4 gap-4 rounded-lg'>
+                                <TextZone
+                                    value={note}
+                                    setValue={setNote}
+                                    placeholder='Opino que...'
+                                    className='resize-none w-full'
+                                />
+                                <ActionButton
+                                    className='flex items-center  self-end font-spacemono'
+                                    isLoading={isSendingNote}
+                                    onClick={handleCreateComment}
+                                >
+                                    {isSendingNote ? "" : "Enviar"}
+                                </ActionButton>
                             </div>
                             <ActionButton
                                 className='font-spacemono px-8 text-lg w-fit'
