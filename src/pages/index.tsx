@@ -77,14 +77,14 @@ const Home: NextPage = () => {
             <Title>{"<Feedback/>"}</Title>
             <Subtitle>Ayudame a mejorar PrinTIC</Subtitle>
           </div>
-          <div className="flex w-screen flex-col items-center gap-8 p-10">
+          <div className="flex w-screen flex-col gap-8 p-10">
             <TextZone
               placeholder="Cambiaría..."
-              className="w-full md:w-1/3 min-h-[300px] md:min-w-[550px] max-w-[250px] sm:max-w-[400px] md:max-w-[800px] max-h-[800px]"
+              className="w-full md:w-1/3 self-center min-h-[300px] md:min-w-[550px] max-w-[250px] sm:max-w-[400px] md:max-w-[800px] max-h-[800px]"
               setValue={setFeedback}
               value={feedback}
             />
-            <ActionButton className="w-2/3 max-w-[200px] font-spacemono"
+            <ActionButton className="w-2/3 max-w-[200px] font-spacemono self-center"
               isLoading={sendingFeedback}
               onClick={() => {
                 setSendingFeedback(true);

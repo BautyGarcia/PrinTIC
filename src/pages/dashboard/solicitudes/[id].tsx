@@ -12,6 +12,7 @@ import { downloadAsZip } from '~/utils/downloadFile';
 import SolicitudesScreenSkeleton from '~/components/skeletons/solicitudScreenSkeleton';
 import { TextZone } from '~/components/utils/inputs';
 import { toast } from 'react-toastify';
+import Link from 'next/link';
 
 const coloresPedido = {
     "PENDIENTE": "bg-[#ff6c31]",
@@ -99,7 +100,13 @@ const Solicitud: NextPage = () => {
                         <SolicitudesScreenSkeleton />
                     ) : (
                         <>
-                            <Title className='font-spacemono font-bold flex items-center text-xl md:text-[24px] hover:cursor-pointer'><IconChevronLeft size={30} />{`REGRESAR`}</Title>
+                            <Title 
+                                className='font-spacemono font-bold text-xl md:text-[24px] hover:cursor-pointer'
+                            >
+                                <Link className="flex items-center" href={'/dashboard/solicitudes'}>
+                                    <IconChevronLeft size={30} />{`REGRESAR`}
+                                </Link>
+                            </Title>
                             <div className='flex flex-col gap-4'>
                                 <Title className='font-spacemono font-bold tracking-[4px] md:text-[32px] text-center md:text-left'>SOLICITUD</Title>
                                 <div className='flex items-center gap-[2rem] justify-center md:justify-start'>
